@@ -226,13 +226,22 @@
   document.querySelectorAll('.view-button').forEach((button) => button.addEventListener('click', () => { layout = button.dataset.layout; document.querySelectorAll('.view-button').forEach((item) => item.classList.toggle('selected', item === button)); renderNotes(); }));
   editorTitle.addEventListener('input', saveEditor); editorBody.addEventListener('input', () => { updateWordCount(); saveEditor(); });
   $('closeEditorBtn').addEventListener('click', closeEditor); $('pinNoteBtn').addEventListener('click', togglePin);
-  $('deleteNoteBtn').addEventListener('click', () => { if (activeNoteId) deleteNote(activeNoteId); closeEditor(); });
+  $('deleteNoteBtn').addEventListener('click', () => { if (activeNoteId) deleteNote(activeNoteId); });
   noteModal.addEventListener('click', (event) => { if (event.target === noteModal) closeEditor(); });
   $('taskForm').addEventListener('submit', addTask);
   document.querySelectorAll('.task-filter').forEach((button) => button.addEventListener('click', () => { selectedTaskFilter = button.dataset.taskFilter; renderTasks(); }));
   $('clearCompleted').addEventListener('click', () => { data.tasks = data.tasks.filter((task) => !task.done); persist(); renderTasks(); renderLabels(); showToast('Completed tasks cleared'); });
-  $('themeBtn').addEventListener('click', () => { data.dark = !data.dark; document.body.classList.toggle('dark', data.dark); persist(); });
-  $('menuBtn').addEventListener('click', () => $('sidebar').classList.toggle('open'));
+  $('themeBtn').addEventListener('click', () => {
+    data.dark = !data.dark;
+    document.body.classList.toggle('dark', data.dark);
+    document.querySelector('meta[name="theme-color"]').content = data.dark ? '#151416' : '#000000';
+    persist();
+  });
+  $('menuBtn').addEventListener('click', () => {
+    const isOpen = $('sidebar').classList.toggle('open');
+    $('menuBtn').setAttribute('aria-expanded', String(isOpen));
+    $('menuBtn').setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+  });
   document.addEventListener('keydown', (event) => {
     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); $('searchInput').focus(); }
     if (!event.metaKey && !event.ctrlKey && event.key.toLowerCase() === 'n' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName) && noteModal.hidden) { event.preventDefault(); createNote(); }

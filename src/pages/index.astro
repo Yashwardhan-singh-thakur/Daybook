@@ -4,15 +4,18 @@ import "../styles/global.css";
 <!doctype html>
 <html lang="en">
   <head>
+    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MWJR6JPC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f9fafc" />
+    <meta name="theme-color" content="#000000" />
     <meta name="description" content="A calm, considered space for notes, ideas, and everyday tasks." />
     <link rel="canonical" href="https://daybook.com/" />
     <title>DayBook — Make room for what matters</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -44,25 +47,45 @@ import "../styles/global.css";
       </aside>
 
       <main class="main-area min-h-screen" id="main-content" tabindex="-1">
+        <section class="hero-stage" aria-labelledby="pageTitle">
         <header class="topbar">
           <button class="mobile-menu icon-button" id="menuBtn" aria-label="Open navigation"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
           <div class="breadcrumb"><span>Your space</span><span class="crumb-slash">/</span><strong id="breadcrumbTitle">All notes</strong></div>
           <div class="topbar-right"><span class="today-date" id="todayDate"></span><button class="icon-button theme-button" id="themeBtn" aria-label="Toggle color theme"><svg viewBox="0 0 24 24"><path d="M20.5 15.2A8.4 8.4 0 0 1 8.8 3.5 8.5 8.5 0 1 0 20.5 15.2Z"/></svg></button></div>
         </header>
 
-        <section class="content-wrap">
+        <div class="hero-body">
           <div class="page-heading">
             <div><p class="eyebrow" id="pageEyebrow">A LITTLE SPACE FOR YOURSELF</p><h1 id="pageTitle">Your notes<span class="heading-period">.</span></h1><p class="page-subtitle" id="pageSubtitle">Thoughts, plans, and everything in between.</p></div>
             <button class="primary-button" id="newNoteBtnTop"><span>＋</span> New note</button>
           </div>
+          <div class="hero-art" role="img" aria-label="A vivid color study orbiting a dark center, representing ideas in motion">
+            <svg viewBox="0 0 360 300" aria-hidden="true">
+              <defs>
+                <linearGradient id="spectrum" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#550098"/><stop offset=".38" stop-color="#cb009e"/><stop offset=".68" stop-color="#a1490f"/><stop offset="1" stop-color="#727d00"/></linearGradient>
+                <radialGradient id="core"><stop stop-color="#000"/><stop offset=".75" stop-color="#09060b"/><stop offset="1" stop-color="#231025"/></radialGradient>
+              </defs>
+              <ellipse cx="180" cy="155" rx="137" ry="78" fill="none" stroke="#89868a" stroke-opacity=".42" stroke-width="1" transform="rotate(-28 180 155)"/>
+              <ellipse cx="180" cy="155" rx="105" ry="121" fill="none" stroke="#89868a" stroke-opacity=".26" stroke-width="1" transform="rotate(34 180 155)"/>
+              <circle cx="180" cy="155" r="74" fill="url(#core)" stroke="#fff" stroke-opacity=".15"/>
+              <path d="M132 169c8-36 31-60 63-66 25-5 43 7 49 24-18-8-35-4-48 7-19 15-26 39-47 49-8 4-14 2-17-14Z" fill="url(#spectrum)"/>
+              <circle cx="105" cy="99" r="10" fill="#cb009e"/><circle cx="279" cy="206" r="7" fill="#727d00"/><circle cx="224" cy="39" r="4" fill="#a1490f"/>
+              <path d="M98 223h51M211 82h37M82 137h20" stroke="#fff" stroke-opacity=".5" stroke-width="1"/>
+              <text x="98" y="239" fill="#fff" fill-opacity=".72" font-size="9" font-family="monospace" letter-spacing="2">IDEAS IN MOTION</text>
+              <text x="212" y="75" fill="#fff" fill-opacity=".55" font-size="8" font-family="monospace">L 0.68 · C 0.21</text>
+            </svg>
+          </div>
+        </div>
+        </section>
 
+        <section class="content-wrap">
           <div class="toolbar" id="notesToolbar">
             <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="searchInput" name="search" type="search" placeholder="Search your notes…" autocomplete="off" /><kbd>⌘ K</kbd></label>
             <div class="toolbar-right"><button class="filter-button" id="labelFilterBtn"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6.5 7.5V19l-3 1v-7.5z"/></svg><span id="filterLabel">All labels</span><span class="chevron">⌄</span></button><div class="view-switch"><button class="view-button selected" data-layout="grid" aria-label="Grid view"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></button><button class="view-button" data-layout="list" aria-label="List view"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></button></div></div>
           </div>
 
           <div id="notesView">
-            <div class="section-row"><h2 id="notesSectionTitle">RECENT NOTES <span id="shownCount"></span></h2><button class="sort-button" id="sortBtn">Recently edited <span>⌄</span></button></div>
+            <div class="section-row"><h2><span id="notesSectionTitle">RECENT NOTES</span> <span id="shownCount"></span></h2><button class="sort-button" id="sortBtn">Recently edited <span>⌄</span></button></div>
             <div class="notes-grid" id="notesGrid"></div>
             <div class="empty-state" id="notesEmpty" hidden><div class="empty-illustration"><span>✳</span><i></i></div><h3 id="emptyTitle">A fresh page, just for you.</h3><p id="emptyText">Start with a thought, an idea, or anything you’d like to remember.</p><button class="primary-button" id="emptyCreateBtn">＋ Create your first note</button></div>
           </div>
