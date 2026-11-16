@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f7f4" />
+    <meta name="description" content="A quiet place for your notes and daily tasks." />
+    <title>Daybook — notes for your day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#" aria-label="Daybook home">
+          <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.75h8.5L19 8.3v11.95H6z"/><path d="M14.5 3.75V8.5H19M9 12h7M9 15.5h7"/></svg></span>
+          <span class="brand-name">daybook<span class="brand-period">.</span></span>
+        </a>
+
+        <button class="new-note-button" id="newNoteBtn"><span class="plus">＋</span> New note <kbd>N</kbd></button>
+
+        <div class="nav-group">
+          <p class="nav-heading">YOUR SPACE</p>
+          <button class="nav-item active" data-view="notes"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 3.75h8.5L19 8.3v11.95H6z"/><path d="M14.5 3.75V8.5H19M9 12h7M9 15.5h5"/></svg></span>All notes<span class="nav-count" id="notesCount">0</span></button>
+          <button class="nav-item" data-view="pinned"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m16 4 4 4-3 1-3 4v4l-2 2-2-5-5-2 2-2h4l4-3zM8 16l-4 4"/></svg></span>Pinned</button>
+          <button class="nav-item" data-view="tasks"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><path d="M20 12v7H4V5h11"/></svg></span>To-do list<span class="nav-count" id="tasksCount">0</span></button>
+        </div>
+
+        <div class="nav-group labels-group">
+          <p class="nav-heading">LABELS <button id="addLabelBtn" class="tiny-add" aria-label="Add label">＋</button></p>
+          <div id="labelList" class="label-list"></div>
+        </div>
+
+        <div class="sidebar-bottom">
+          <div class="storage-note"><span class="storage-dot"></span><span>Saved on this device</span></div>
+          <div class="profile"><div class="avatar">D</div><div><strong>Your daybook</strong><small>Personal space</small></div><span class="profile-more">···</span></div>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <button class="mobile-menu icon-button" id="menuBtn" aria-label="Open navigation"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+          <div class="breadcrumb"><span>Your space</span><span class="crumb-slash">/</span><strong id="breadcrumbTitle">All notes</strong></div>
+          <div class="topbar-right"><span class="today-date" id="todayDate"></span><button class="icon-button theme-button" id="themeBtn" aria-label="Toggle color theme"><svg viewBox="0 0 24 24"><path d="M20.5 15.2A8.4 8.4 0 0 1 8.8 3.5 8.5 8.5 0 1 0 20.5 15.2Z"/></svg></button></div>
+        </header>
+
+        <section class="content-wrap">
+          <div class="page-heading">
+            <div><p class="eyebrow" id="pageEyebrow">A LITTLE SPACE FOR YOURSELF</p><h1 id="pageTitle">Your notes<span class="heading-period">.</span></h1><p class="page-subtitle" id="pageSubtitle">Thoughts, plans, and everything in between.</p></div>
+            <button class="primary-button" id="newNoteBtnTop"><span>＋</span> New note</button>
+          </div>
+
+          <div class="toolbar" id="notesToolbar">
+            <label class="search-box"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="searchInput" type="search" placeholder="Search your notes..." autocomplete="off" /><kbd>⌘ K</kbd></label>
+            <div class="toolbar-right"><button class="filter-button" id="labelFilterBtn"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6.5 7.5V19l-3 1v-7.5z"/></svg><span id="filterLabel">All labels</span><span class="chevron">⌄</span></button><div class="view-switch"><button class="view-button selected" data-layout="grid" aria-label="Grid view"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></button><button class="view-button" data-layout="list" aria-label="List view"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></button></div></div>
+          </div>
+
+          <div id="notesView">
+            <div class="section-row"><h2 id="notesSectionTitle">RECENT NOTES <span id="shownCount"></span></h2><button class="sort-button" id="sortBtn">Recently edited <span>⌄</span></button></div>
+            <div class="notes-grid" id="notesGrid"></div>
+            <div class="empty-state" id="notesEmpty" hidden><div class="empty-illustration"><span>✳</span><i></i></div><h3 id="emptyTitle">A fresh page, just for you.</h3><p id="emptyText">Start with a thought, an idea, or anything you’d like to remember.</p><button class="primary-button" id="emptyCreateBtn">＋ Create your first note</button></div>
+          </div>
+
+          <section class="tasks-view" id="tasksView" hidden>
+            <div class="task-summary"><div><span class="summary-label">YOUR PROGRESS</span><strong id="taskProgress">0 of 0 done</strong></div><div class="progress-track"><span id="progressBar"></span></div><span class="progress-percent" id="progressPercent">0%</span></div>
+            <form class="task-composer" id="taskForm"><span class="composer-plus">＋</span><input id="taskInput" placeholder="What needs to get done?" maxlength="180" autocomplete="off" required /><select id="taskPriority" aria-label="Task priority"><option value="normal">Normal</option><option value="high">High priority</option><option value="low">Low priority</option></select><button type="submit">Add task <span>↗</span></button></form>
+            <div class="task-filters"><div><button class="task-filter active" data-task-filter="all">All <span id="allTaskCount">0</span></button><button class="task-filter" data-task-filter="active">To do <span id="activeTaskCount">0</span></button><button class="task-filter" data-task-filter="completed">Completed</button></div><button class="clear-completed" id="clearCompleted">Clear completed</button></div>
+            <div id="taskList" class="task-list"></div>
+            <div class="task-empty" id="tasksEmpty" hidden><span>✓</span><h3>All clear for now.</h3><p>Add a task above and give your day some shape.</p></div>
+          </section>
+          <footer class="page-footer"><span>Make room for what matters.</span><span>Made for your everyday <span class="footer-spark">✳</span></span></footer>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="noteModal" hidden>
+      <section class="note-editor" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+        <div class="editor-top"><span class="editor-status"><span class="status-dot"></span><span id="saveStatus">Saved</span></span><div class="editor-actions"><button id="pinNoteBtn" class="editor-icon" aria-label="Pin note" title="Pin note"><svg viewBox="0 0 24 24"><path d="m16 4 4 4-3 1-3 4v4l-2 2-2-5-5-2 2-2h4l4-3zM8 16l-4 4"/></svg></button><button id="deleteNoteBtn" class="editor-icon delete-icon" aria-label="Delete note" title="Delete note"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 13h12l1-13M9 7V4h6v3"/></svg></button><button id="closeEditorBtn" class="editor-close" aria-label="Close editor">×</button></div></div>
+        <input class="editor-title" id="editorTitle" placeholder="Untitled note" maxlength="100" />
+        <div class="editor-meta"><span id="editorDate"></span><span class="meta-divider">·</span><span id="wordCount">0 words</span><button class="editor-label-button" id="editorLabelBtn"><span class="label-dot"></span><span id="editorLabelText">Add label</span><span>⌄</span></button></div>
+        <textarea class="editor-body" id="editorBody" placeholder="Begin anywhere...&#10;&#10;A thought, a plan, a little reminder to yourself."></textarea>
+        <div class="editor-footer"><span>⌘ ↵ <span>to close</span></span><span>Only you can see this</span></div>
+      </section>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
