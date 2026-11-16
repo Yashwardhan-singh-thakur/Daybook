@@ -1,6 +1,6 @@
-# Daybook
+# DayBook
 
-A static notes and to-do app built with plain HTML, CSS, and JavaScript. Cloudflare Pages serves the files in `public/`; there is no build step or server-side data store. Notes, labels, theme preference, and tasks are stored in the browser's local storage on each device.
+A calm, editorial notes and to-do app built with Astro and Tailwind CSS v4. The interface is statically generated for Cloudflare Pages. Notes, labels, theme preference, and tasks are stored in browser local storage on each device.
 
 ## Run locally
 
@@ -11,7 +11,9 @@ npm install
 npm run dev
 ```
 
-Wrangler starts a local Pages preview. Open the local URL it prints.
+Astro starts the development server. Open the local URL it prints.
+
+To check the production output locally, run `npm run build` followed by `npm run preview`.
 
 ## Deploy to Cloudflare Pages with Wrangler
 
@@ -34,11 +36,11 @@ Wrangler starts a local Pages preview. Open the local URL it prints.
    npm run deploy
    ```
 
-The Pages project name in `wrangler.jsonc` and the deploy script must match. The deployment will be available at `https://daybook-notes.pages.dev` if that name is available.
+The Pages project name in `wrangler.jsonc` and the deploy script must match. The deployment will be available at `https://daybook-notes.pages.dev` if that name is available. Connect `daybook.com` to the Pages project in Cloudflare when its DNS is ready.
 
 ## Deploy with Git integration
 
-Connect this repository in **Cloudflare Dashboard → Workers & Pages → Create application → Pages → Connect to Git**. Choose the repository root as the root directory and `public` as the build output directory. There is no build command; if the dashboard requires one, use `exit 0`. Set the production branch to `main` (or the branch you use). New commits will then deploy automatically.
+Connect this repository in **Cloudflare Dashboard → Workers & Pages → Create application → Pages → Connect to Git**. Use the repository root, `npm run build` as the build command, and `dist` as the build output directory. Set the production branch to `main` (or the branch you use). New commits will then deploy automatically.
 
 ## Data note
 

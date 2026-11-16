@@ -1,22 +1,26 @@
+---
+import "../styles/global.css";
+---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f7f7f4" />
-    <meta name="description" content="A quiet place for your notes and daily tasks." />
-    <title>Daybook — notes for your day</title>
+    <meta name="theme-color" content="#f9fafc" />
+    <meta name="description" content="A calm, considered space for notes, ideas, and everyday tasks." />
+    <link rel="canonical" href="https://daybook.com/" />
+    <title>DayBook — Make room for what matters</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <div class="app-shell">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="app-shell min-h-screen">
       <aside class="sidebar" id="sidebar">
-        <a class="brand" href="#" aria-label="Daybook home">
+        <a class="brand" href="/" aria-label="DayBook home">
           <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.75h8.5L19 8.3v11.95H6z"/><path d="M14.5 3.75V8.5H19M9 12h7M9 15.5h7"/></svg></span>
-          <span class="brand-name">daybook<span class="brand-period">.</span></span>
+          <span class="brand-name">DayBook<span class="brand-period">.</span></span>
         </a>
 
         <button class="new-note-button" id="newNoteBtn"><span class="plus">＋</span> New note <kbd>N</kbd></button>
@@ -35,11 +39,11 @@
 
         <div class="sidebar-bottom">
           <div class="storage-note"><span class="storage-dot"></span><span>Saved on this device</span></div>
-          <div class="profile"><div class="avatar">D</div><div><strong>Your daybook</strong><small>Personal space</small></div><span class="profile-more">···</span></div>
+          <div class="profile"><div class="avatar">D</div><div><strong>Your DayBook</strong><small>Personal space</small></div><span class="profile-more">···</span></div>
         </div>
       </aside>
 
-      <main class="main-area">
+      <main class="main-area min-h-screen" id="main-content" tabindex="-1">
         <header class="topbar">
           <button class="mobile-menu icon-button" id="menuBtn" aria-label="Open navigation"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
           <div class="breadcrumb"><span>Your space</span><span class="crumb-slash">/</span><strong id="breadcrumbTitle">All notes</strong></div>
@@ -53,7 +57,7 @@
           </div>
 
           <div class="toolbar" id="notesToolbar">
-            <label class="search-box"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="searchInput" type="search" placeholder="Search your notes..." autocomplete="off" /><kbd>⌘ K</kbd></label>
+            <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="searchInput" name="search" type="search" placeholder="Search your notes…" autocomplete="off" /><kbd>⌘ K</kbd></label>
             <div class="toolbar-right"><button class="filter-button" id="labelFilterBtn"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6.5 7.5V19l-3 1v-7.5z"/></svg><span id="filterLabel">All labels</span><span class="chevron">⌄</span></button><div class="view-switch"><button class="view-button selected" data-layout="grid" aria-label="Grid view"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></button><button class="view-button" data-layout="list" aria-label="List view"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></button></div></div>
           </div>
 
@@ -65,7 +69,7 @@
 
           <section class="tasks-view" id="tasksView" hidden>
             <div class="task-summary"><div><span class="summary-label">YOUR PROGRESS</span><strong id="taskProgress">0 of 0 done</strong></div><div class="progress-track"><span id="progressBar"></span></div><span class="progress-percent" id="progressPercent">0%</span></div>
-            <form class="task-composer" id="taskForm"><span class="composer-plus">＋</span><input id="taskInput" placeholder="What needs to get done?" maxlength="180" autocomplete="off" required /><select id="taskPriority" aria-label="Task priority"><option value="normal">Normal</option><option value="high">High priority</option><option value="low">Low priority</option></select><button type="submit">Add task <span>↗</span></button></form>
+            <form class="task-composer" id="taskForm"><span class="composer-plus" aria-hidden="true">＋</span><input id="taskInput" name="task" aria-label="New task" placeholder="What needs to get done?" maxlength="180" autocomplete="off" required /><select id="taskPriority" name="priority" aria-label="Task priority"><option value="normal">Normal</option><option value="high">High priority</option><option value="low">Low priority</option></select><button type="submit">Add task <span aria-hidden="true">↗</span></button></form>
             <div class="task-filters"><div><button class="task-filter active" data-task-filter="all">All <span id="allTaskCount">0</span></button><button class="task-filter" data-task-filter="active">To do <span id="activeTaskCount">0</span></button><button class="task-filter" data-task-filter="completed">Completed</button></div><button class="clear-completed" id="clearCompleted">Clear completed</button></div>
             <div id="taskList" class="task-list"></div>
             <div class="task-empty" id="tasksEmpty" hidden><span>✓</span><h3>All clear for now.</h3><p>Add a task above and give your day some shape.</p></div>
@@ -78,13 +82,13 @@
     <div class="modal-backdrop" id="noteModal" hidden>
       <section class="note-editor" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
         <div class="editor-top"><span class="editor-status"><span class="status-dot"></span><span id="saveStatus">Saved</span></span><div class="editor-actions"><button id="pinNoteBtn" class="editor-icon" aria-label="Pin note" title="Pin note"><svg viewBox="0 0 24 24"><path d="m16 4 4 4-3 1-3 4v4l-2 2-2-5-5-2 2-2h4l4-3zM8 16l-4 4"/></svg></button><button id="deleteNoteBtn" class="editor-icon delete-icon" aria-label="Delete note" title="Delete note"><svg viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 13h12l1-13M9 7V4h6v3"/></svg></button><button id="closeEditorBtn" class="editor-close" aria-label="Close editor">×</button></div></div>
-        <input class="editor-title" id="editorTitle" placeholder="Untitled note" maxlength="100" />
+        <input class="editor-title" id="editorTitle" name="note-title" aria-label="Note title" placeholder="Untitled note" maxlength="100" />
         <div class="editor-meta"><span id="editorDate"></span><span class="meta-divider">·</span><span id="wordCount">0 words</span><button class="editor-label-button" id="editorLabelBtn"><span class="label-dot"></span><span id="editorLabelText">Add label</span><span>⌄</span></button></div>
-        <textarea class="editor-body" id="editorBody" placeholder="Begin anywhere...&#10;&#10;A thought, a plan, a little reminder to yourself."></textarea>
+        <textarea class="editor-body" id="editorBody" name="note-body" aria-label="Note text" placeholder="Begin anywhere…&#10;&#10;A thought, a plan, a little reminder to yourself."></textarea>
         <div class="editor-footer"><span>⌘ ↵ <span>to close</span></span><span>Only you can see this</span></div>
       </section>
     </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js"></script>
+    <script src="/app.js" is:inline defer></script>
   </body>
 </html>

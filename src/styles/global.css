@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@import "./base.css";
+
+@theme {
+  --color-ink: #171817;
+  --color-muted-ink: #717286;
+  --color-canvas: #f9fafc;
+  --color-canvas-warm: #f6f4f2;
+  --color-surface: #fff;
+  --color-mint: #ccddd8;
+  --color-coral: #ff5924;
+  --color-coral-light: #fff1f1;
+  --color-line: #e4e8ec;
+  --font-display: "Playfair Display", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-body: "DM Sans", "Avenir Next", sans-serif;
+}
+
+:root {
+  --bg: #f9fafc;
+  --paper: #fff;
+  --paper-soft: #fbfaf9;
+  --ink: #171817;
+  --muted: #717286;
+  --line: #e4e8ec;
+  --green: #ff5924;
+  --green-dark: #e94b19;
+  --green-pale: #fff1f1;
+  --orange: #ff5924;
+  --shadow: 0 8px 28px #25252b0b;
+  --sidebar: 254px;
+}
+
+body { font-family: var(--font-body); background: var(--bg); color: var(--ink); }
+.sidebar { background: #f6f4f2; border-color: #e5eaf2; padding: 32px 20px 18px; }
+.brand { margin-bottom: 42px; }
+.brand-mark { background: #ffede7; color: #ef5528; border-radius: 50%; }
+.brand-name { font-family: var(--font-display); font-size: 25px; font-weight: 500; }
+.brand-period, .heading-period { color: #ff5924; }
+.new-note-button, .primary-button, .task-composer button { background: #ff5924; border-radius: 999px; box-shadow: none; }
+.new-note-button { height: 46px; padding-inline: 17px; }
+.new-note-button:hover, .primary-button:hover, .task-composer button:hover { background: #e94b19; }
+.nav-group { margin-top: 39px; }
+.nav-heading { letter-spacing: .14em; }
+.nav-item { border-radius: 999px; height: 42px; }
+.nav-item.active { background: #fff; color: #262724; box-shadow: 0 1px 3px #2627240b; }
+.labels-group { margin-top: 38px; }
+.topbar { background: #f9fafce8; backdrop-filter: blur(14px); }
+.content-wrap { max-width: 1240px; padding-top: 62px; padding-bottom: 32px; }
+.eyebrow { font-family: Inter, sans-serif; letter-spacing: .16em; }
+.page-heading h1 { font-family: var(--font-display); font-size: clamp(42px, 5vw, 62px); font-weight: 400; letter-spacing: -.055em; line-height: .96; }
+.page-subtitle { font-size: 15px; line-height: 1.6; }
+.primary-button { min-height: 44px; padding-inline: 22px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.search-box, .filter-button, .view-switch { border-color: #e5eaf2; border-radius: 999px; box-shadow: none; }
+.search-box { height: 44px; padding-inline: 15px; }
+.view-switch { padding: 4px; }
+.view-button { border-radius: 999px; }
+.view-button.selected { background: #fff1f1; color: #e94b19; }
+.note-card { min-height: 222px; border-radius: 17px; border-color: #e9e9e7; padding: 22px; box-shadow: 0 8px 26px #22231f08; }
+.note-card:nth-child(n) { background: #fff; }
+.note-card:hover { border-color: #ffd1c3; box-shadow: 0 12px 30px #33231c10; }
+.note-card h3, .empty-state h3, .task-empty h3, .editor-title { font-family: var(--font-display); font-weight: 400; }
+.note-card h3 { font-size: 21px; line-height: 1.2; }
+.note-preview { font-size: 12px; line-height: 1.75; }
+.note-label { border-radius: 999px; padding: 5px 9px; background: #fff1f1; color: #a94e31; }
+.task-summary, .task-composer, .task-row { border-radius: 14px; }
+.task-summary { padding: 20px 22px; }
+.task-composer { padding: 10px 12px 10px 17px; }
+.task-composer button { border-radius: 999px; height: 36px; padding-inline: 16px; }
+.task-row { min-height: 60px; }
+.page-footer { margin-top: 58px; }
+:focus-visible { outline: 3px solid #ff9d7e; outline-offset: 3px; }
+.skip-link { position: fixed; z-index: 50; top: 12px; left: 12px; transform: translateY(-160%); padding: 10px 16px; border-radius: 999px; color: #fff; background: #171817; }
+.skip-link:focus { transform: translateY(0); }
+.note-editor { overscroll-behavior: contain; }
+.page-heading h1 { text-wrap: balance; }
+.toast { transition: opacity .2s, transform .2s; }
+.dark { color-scheme: dark; }
+@media (max-width: 700px) {
+  .content-wrap { padding-top: 36px; }
+  .page-heading h1 { font-size: 42px; }
+  .note-card { min-height: 190px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}

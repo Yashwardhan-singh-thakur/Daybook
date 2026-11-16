@@ -1,13 +1,18 @@
 {
-  "name": "daybook-notes",
+  "name": "daybook",
   "version": "1.0.0",
   "private": true,
-  "description": "A personal notes and to-do app hosted on Cloudflare Pages.",
+  "description": "A calm, editorial home for your notes and daily tasks.",
   "scripts": {
-    "dev": "wrangler pages dev ./public",
-    "deploy": "wrangler pages deploy ./public --project-name daybook-notes"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler pages dev ./dist",
+    "deploy": "wrangler pages deploy ./dist --project-name daybook-notes"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.12",
+    "tailwindcss": "^4.3.5",
     "wrangler": "^4.0.0"
   }
 }

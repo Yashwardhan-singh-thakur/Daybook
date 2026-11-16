@@ -147,6 +147,7 @@
   }
   function deleteNote(id) {
     const note = data.notes.find((item) => item.id === id); if (!note) return;
+    if (!window.confirm(`Delete “${note.title.trim() || 'Untitled note'}”? This cannot be undone.`)) return;
     data.notes = data.notes.filter((item) => item.id !== id); if (activeNoteId === id) closeEditor();
     persist(); renderNotes(); renderLabels(); showToast('Note deleted');
   }
