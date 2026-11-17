@@ -47,7 +47,7 @@ const canonicalUrl = `https://daybook.com${canonicalPath}`;
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="author" content="DayBook" />
-    <meta name="theme-color" content="#066DE8" />
+    <meta name="theme-color" content="#111111" />
     <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph -->
@@ -76,10 +76,10 @@ const canonicalUrl = `https://daybook.com${canonicalPath}`;
     <meta name="apple-mobile-web-app-title" content="DayBook" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Web Fonts: Inter exclusively across all weights (per DESIGN.md) -->
+    <!-- Web Fonts: Brier (Bodoni Moda) display serif & Mona Sans technical sans per DESIGN.md -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;1,6..96,700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
 
     <!-- Structured Data: BreadcrumbList -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -109,21 +109,11 @@ const canonicalUrl = `https://daybook.com${canonicalPath}`;
         <a class="brand" href="/" aria-label="DayBook home">
           <span class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 40 40" aria-hidden="true">
-              <defs>
-                <linearGradient id="page-logo-d" x1="16" y1="9" x2="30" y2="31" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#FFFFFF"/>
-                  <stop offset="1" stop-color="#E3EDF8"/>
-                </linearGradient>
-                <linearGradient id="page-logo-rib" x1="18" y1="9" x2="22.5" y2="20.5" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#3381F7"/>
-                  <stop offset="1" stop-color="#066DE8"/>
-                </linearGradient>
-              </defs>
-              <rect width="40" height="40" rx="10" fill="#0A0E17" stroke="#1E293B" stroke-width="1.2"/>
-              <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#FFFFFF"/>
-              <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="url(#page-logo-d)"/>
-              <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#0A0E17"/>
-              <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="url(#page-logo-rib)"/>
+              <rect width="40" height="40" rx="10" fill="#111111" stroke="#333333" stroke-width="1.2"/>
+              <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#F5F5F0"/>
+              <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="#F5F5F0"/>
+              <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#111111"/>
+              <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="#D1FF00"/>
             </svg>
           </span>
           <span class="brand-name">DayBook<span class="brand-period">.</span></span>
@@ -188,58 +178,59 @@ const canonicalUrl = `https://daybook.com${canonicalPath}`;
             <slot />
           </div>
 
-          <!-- Universal Footer -->
-          <footer class="universal-footer">
-            <div class="footer-grid">
-              <div class="footer-col brand-col">
-                <div class="footer-brand">
-                  <span class="brand-mark" style="width:28px;height:28px;display:inline-flex;">
-                    <svg viewBox="0 0 40 40">
-                      <rect width="40" height="40" rx="9" fill="#0A0E17" stroke="#1E293B" stroke-width="1.2"/>
-                      <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#FFFFFF"/>
-                      <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="url(#page-logo-d)"/>
-                      <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#0A0E17"/>
-                      <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="url(#page-logo-rib)"/>
-                    </svg>
-                  </span>
-                  <span class="footer-brand-name">DayBook<span class="brand-period">.</span></span>
+          <!-- Contained Rounded Footer Panel with Lime Border Frame per DESIGN.md -->
+          <footer class="footer-frame">
+            <div class="footer-panel">
+              <div class="footer-grid">
+                <!-- Zone 1: Navigation links left -->
+                <div class="footer-zone-nav">
+                  <p class="footer-heading">DIRECTORY</p>
+                  <ul class="footer-links">
+                    <li><a href="/">All Notes</a></li>
+                    <li><a href="/#notesView">Recent Notes</a></li>
+                    <li><a href="/#tasksView">To-Do List</a></li>
+                    <li><a href="/#faq">Frequently Asked Questions</a></li>
+                  </ul>
                 </div>
-                <p class="footer-desc">A calm, private, and distraction-free workspace for notes, ideas, and daily tasks. Built client-side with 100% local storage.</p>
-                <p class="footer-contact">Inquiries: <a href="mailto:work.sumritatiyagi@gmail.com">work.sumritatiyagi@gmail.com</a></p>
+
+                <!-- Zone 2: Brand & Inquiries center -->
+                <div class="footer-zone-center">
+                  <div class="footer-brand">
+                    <span class="brand-mark" style="width:30px;height:30px;display:inline-flex;">
+                      <svg viewBox="0 0 40 40">
+                        <rect width="40" height="40" rx="10" fill="#111111" stroke="#333333" stroke-width="1.2"/>
+                        <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#F5F5F0"/>
+                        <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="#F5F5F0"/>
+                        <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#111111"/>
+                        <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="#D1FF00"/>
+                      </svg>
+                    </span>
+                    <span class="footer-brand-name">DayBook<span class="brand-period">.</span></span>
+                  </div>
+                  <p class="footer-desc">Editorial Formula Utility. Zero tracking, distraction-free, 100% client-side local storage.</p>
+                  <p class="footer-contact">COMMUNICATIONS: <a href="mailto:work.sumritatiyagi@gmail.com">work.sumritatiyagi@gmail.com</a></p>
+                </div>
+
+                <!-- Zone 3: Company & Policies right -->
+                <div class="footer-zone-legal">
+                  <p class="footer-heading">EDITIONS &amp; POLICIES</p>
+                  <ul class="footer-links">
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/feedback">Give Feedback</a></li>
+                    <li><a href="/privacy">Privacy Policy (AdSense)</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/terms">Terms &amp; Conditions</a></li>
+                  </ul>
+                </div>
               </div>
 
-              <div class="footer-col">
-                <p class="footer-heading">NAVIGATION</p>
-                <ul class="footer-links">
-                  <li><a href="/">All Notes</a></li>
-                  <li><a href="/#notesView">Recent Notes</a></li>
-                  <li><a href="/#tasksView">To-Do List</a></li>
-                  <li><a href="/#faq">Frequently Asked Questions</a></li>
-                </ul>
+              <!-- Sponsor / Technical Strip spanning bottom edge -->
+              <div class="footer-sponsor-strip">
+                <span>DAYBOOK // MOTORSPORT SPEC 2026</span>
+                <span>NEON LIME // ZERO TELEMETRY</span>
+                <span>© {new Date().getFullYear()} ALL RIGHTS RESERVED</span>
               </div>
-
-              <div class="footer-col">
-                <p class="footer-heading">COMPANY</p>
-                <ul class="footer-links">
-                  <li><a href="/about">About Us</a></li>
-                  <li><a href="/contact">Contact Us</a></li>
-                  <li><a href="/feedback">Give Feedback</a></li>
-                </ul>
-              </div>
-
-              <div class="footer-col">
-                <p class="footer-heading">LEGAL &amp; POLICIES</p>
-                <ul class="footer-links">
-                  <li><a href="/privacy">Privacy Policy (AdSense)</a></li>
-                  <li><a href="/disclaimer">Disclaimer</a></li>
-                  <li><a href="/terms">Terms &amp; Conditions</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="footer-bottom">
-              <span>© {new Date().getFullYear()} DayBook. All rights reserved.</span>
-              <span>Made with care for your everyday <span class="footer-spark">✳</span></span>
             </div>
           </footer>
         </article>

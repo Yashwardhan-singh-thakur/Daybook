@@ -1,22 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 40" width="180" height="40" fill="none">
-  <defs>
-    <linearGradient id="logo-d-grad" x1="16" y1="9" x2="30" y2="31" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#E3EDF8"/>
-    </linearGradient>
-    <linearGradient id="logo-ribbon" x1="18" y1="9" x2="22.5" y2="20.5" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#3381F7"/>
-      <stop offset="1" stop-color="#066DE8"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 40" width="190" height="40" fill="none">
   <!-- Brand Mark Icon -->
   <g transform="translate(0, 0)">
-    <rect width="40" height="40" rx="10" fill="#0A0E17" stroke="#1E293B" stroke-width="1.2"/>
-    <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#FFFFFF"/>
-    <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="url(#logo-d-grad)"/>
-    <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#0A0E17"/>
-    <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="url(#logo-ribbon)"/>
+    <rect width="40" height="40" rx="10" fill="#111111" stroke="#333333" stroke-width="1.2"/>
+    <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#F5F5F0"/>
+    <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="#F5F5F0"/>
+    <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#111111"/>
+    <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="#D1FF00"/>
   </g>
-  <!-- Wordmark in Inter Bold with invideo electric blue period -->
-  <text x="52" y="27" fill="#FFFFFF" font-family="'Inter', system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" letter-spacing="-0.03em">DayBook<tspan fill="#066DE8">.</tspan></text>
+  <!-- Wordmark in Bodoni Moda / Brier Serif with neon lime period -->
+  <text x="52" y="28" fill="#F5F5F0" font-family="'Bodoni Moda', 'Brier', 'Playfair Display', serif" font-size="24" font-weight="700" letter-spacing="-0.03em">DayBook<tspan fill="#D1FF00">.</tspan></text>
 </svg>

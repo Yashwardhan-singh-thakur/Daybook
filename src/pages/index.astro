@@ -17,7 +17,7 @@ import "../styles/global.css";
     <meta name="keywords" content="online notes app, free note taking, to-do list online, daily task planner, private notes, minimalist notepad, web notepad, daily checklist, simple todo app, pwa notes, fast notes app" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="author" content="DayBook" />
-    <meta name="theme-color" content="#066DE8" />
+    <meta name="theme-color" content="#111111" />
     <meta name="google-site-verification" content="huywtd-WB2UAcSFD3dsiemCRwUt3tIWIX8Uor4aZTOo" />
     <link rel="canonical" href="https://daybook.com/" />
 
@@ -49,10 +49,10 @@ import "../styles/global.css";
     <meta name="apple-mobile-web-app-title" content="DayBook" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Web Fonts: Inter exclusively across all weights (per DESIGN.md) -->
+    <!-- Web Fonts: Brier (Bodoni Moda) display serif & Mona Sans technical sans per DESIGN.md -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;1,6..96,700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
 
     <!-- Structured Data: WebApplication & FAQPage JSON-LD -->
     <script type="application/ld+json">
@@ -156,21 +156,11 @@ import "../styles/global.css";
         <a class="brand" href="/" aria-label="DayBook home">
           <span class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 40 40" aria-hidden="true">
-              <defs>
-                <linearGradient id="db-mark-grad" x1="16" y1="9" x2="30" y2="31" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#FFFFFF"/>
-                  <stop offset="1" stop-color="#E3EDF8"/>
-                </linearGradient>
-                <linearGradient id="db-mark-ribbon" x1="18" y1="9" x2="22.5" y2="20.5" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#3381F7"/>
-                  <stop offset="1" stop-color="#066DE8"/>
-                </linearGradient>
-              </defs>
-              <rect width="40" height="40" rx="10" fill="#0A0E17" stroke="#1E293B" stroke-width="1.2"/>
-              <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#FFFFFF"/>
-              <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="url(#db-mark-grad)"/>
-              <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#0A0E17"/>
-              <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="url(#db-mark-ribbon)"/>
+              <rect width="40" height="40" rx="10" fill="#111111" stroke="#333333" stroke-width="1.2"/>
+              <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#F5F5F0"/>
+              <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="#F5F5F0"/>
+              <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#111111"/>
+              <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="#D1FF00"/>
             </svg>
           </span>
           <span class="brand-name">DayBook<span class="brand-period">.</span></span>
@@ -206,67 +196,39 @@ import "../styles/global.css";
         </header>
 
         <div class="hero-body">
+          <div class="hero-imagery" role="img" aria-label="Wind tunnel aerodynamics and racing helmet telemetry visual">
+            <svg viewBox="0 0 340 320" aria-hidden="true">
+              <!-- Aerodynamic Wind Tunnel Curved Streamlines -->
+              <path d="M10 50 C 90 40, 180 80, 320 60" fill="none" stroke="#555555" stroke-opacity="0.3" stroke-width="1"/>
+              <path d="M10 90 C 120 70, 210 130, 330 110" fill="none" stroke="#D1FF00" stroke-opacity="0.8" stroke-width="1.4"/>
+              <path d="M10 140 C 100 130, 160 190, 320 160" fill="none" stroke="#555555" stroke-opacity="0.25" stroke-width="1"/>
+              <path d="M20 200 C 130 180, 220 250, 330 220" fill="none" stroke="#555555" stroke-opacity="0.35" stroke-width="1"/>
+              <path d="M30 260 C 140 240, 240 290, 320 270" fill="none" stroke="#D1FF00" stroke-opacity="0.5" stroke-width="1"/>
+
+              <!-- Central Precision Helmet / Aero Silhouette in Dark Charcoal with Lime Visor -->
+              <g transform="translate(45, 60)">
+                <!-- Helmet Dome Base -->
+                <path d="M40 160 C 30 120, 50 40, 130 30 C 195 20, 230 70, 235 120 C 238 150, 215 180, 185 190 C 140 205, 60 195, 40 160 Z" fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
+                <!-- Visor in signature Neon Lime -->
+                <path d="M110 75 C 160 70, 225 85, 230 125 C 232 140, 195 145, 150 145 C 115 145, 100 130, 105 100 Z" fill="#D1FF00"/>
+                <!-- Visor Tear-off Highlight -->
+                <path d="M125 85 C 165 82, 210 95, 218 120" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                <!-- Aerodynamic Chin spoiler -->
+                <path d="M150 170 L 210 165 L 195 185 Z" fill="#111111" stroke="#333333"/>
+                <!-- Technical Telemetry Data Annotations -->
+                <text x="50" y="22" fill="#555555" font-family="'Mona Sans', monospace" font-size="9" letter-spacing="0.1em">AERO_SPEC // 04</text>
+                <text x="160" y="215" fill="#D1FF00" font-family="'Mona Sans', monospace" font-size="9" font-weight="700" letter-spacing="0.1em">4.2G LATERAL</text>
+              </g>
+            </svg>
+          </div>
+
           <div class="page-heading">
             <div>
-              <p class="eyebrow" id="pageEyebrow">CINEMATIC PRODUCTIVITY &amp; DAILY UTILITY</p>
+              <p class="eyebrow" id="pageEyebrow">EDITORIAL MOTORSPORT // 2026 EDITION</p>
               <h1 id="pageTitle">Your notes<span class="heading-period">.</span></h1>
-              <p class="page-subtitle" id="pageSubtitle">Capture ideas, structure daily tasks, and create with calm cinematic clarity.</p>
+              <p class="page-subtitle" id="pageSubtitle">A high-performance editorial workspace. Expansive clarity, instant local persistence, and surgical precision.</p>
             </div>
-            <button class="primary-button pill-button" id="newNoteBtnTop"><span class="play-icon">▶</span> New note</button>
-          </div>
-          <div class="hero-art" role="img" aria-label="Cinematic creative workspace preview with timeline tracks and play pill">
-            <svg viewBox="0 0 380 290" aria-hidden="true">
-              <defs>
-                <linearGradient id="inv-glow" x1="0" y1="0" x2="1" y2="1">
-                  <stop stop-color="#066DE8" stop-opacity="0.8"/>
-                  <stop offset="0.5" stop-color="#6B33F7" stop-opacity="0.5"/>
-                  <stop offset="1" stop-color="#277CEE" stop-opacity="0"/>
-                </linearGradient>
-                <linearGradient id="inv-card-bg" x1="0" y1="0" x2="0" y2="1">
-                  <stop stop-color="#141C2E" stop-opacity="0.92"/>
-                  <stop offset="1" stop-color="#0C101C" stop-opacity="0.95"/>
-                </linearGradient>
-                <linearGradient id="track-blue" x1="0" y1="0" x2="1" y2="0">
-                  <stop stop-color="#066DE8"/>
-                  <stop offset="1" stop-color="#3381F7"/>
-                </linearGradient>
-                <linearGradient id="track-purple" x1="0" y1="0" x2="1" y2="0">
-                  <stop stop-color="#6B33F7"/>
-                  <stop offset="1" stop-color="#C933F7"/>
-                </linearGradient>
-              </defs>
-              <!-- Ambient Glow -->
-              <ellipse cx="210" cy="140" rx="150" ry="110" fill="url(#inv-glow)" opacity="0.35"/>
-              <!-- Main Floating Studio Card with 1.5rem / 20px radius -->
-              <rect x="25" y="24" width="330" height="236" rx="20" fill="url(#inv-card-bg)" stroke="#B1E5FF" stroke-opacity="0.25" stroke-width="1.2"/>
-              <!-- Card Header Bar -->
-              <circle cx="50" cy="46" r="4.5" fill="#EC6809"/>
-              <circle cx="65" cy="46" r="4.5" fill="#3381F7"/>
-              <circle cx="80" cy="46" r="4.5" fill="#6B33F7"/>
-              <!-- Pill Status Badge -->
-              <rect x="248" y="36" width="90" height="20" rx="10" fill="#066DE8" fill-opacity="0.2"/>
-              <text x="293" y="50" fill="#B1E5FF" font-family="'Inter', sans-serif" font-size="9.5" font-weight="600" text-anchor="middle" letter-spacing="0.04em">CINEMATIC</text>
-              <!-- Video / Canvas Window -->
-              <rect x="42" y="68" width="296" height="114" rx="12" fill="#070A12" stroke="#1E293B" stroke-width="1"/>
-              <!-- Central Pill Play Button per invideo design -->
-              <rect x="156" y="105" width="68" height="38" rx="19" fill="#066DE8" filter="drop-shadow(0 4px 14px rgba(6,109,232,0.6))"/>
-              <polygon points="187,118 198,124 187,130" fill="#FFFFFF"/>
-              <!-- Floating Pill Category Chips -->
-              <rect x="54" y="80" width="66" height="18" rx="9" fill="#6B33F7" fill-opacity="0.25"/>
-              <text x="87" y="93" fill="#C933F7" font-family="'Inter', sans-serif" font-size="9" font-weight="600" text-anchor="middle">IDEAS</text>
-              <rect x="126" y="80" width="58" height="18" rx="9" fill="#066DE8" fill-opacity="0.25"/>
-              <text x="155" y="93" fill="#3381F7" font-family="'Inter', sans-serif" font-size="9" font-weight="600" text-anchor="middle">TASKS</text>
-              <!-- Timeline Tracks Stack -->
-              <rect x="42" y="194" width="296" height="18" rx="9" fill="#131B2B"/>
-              <rect x="42" y="194" width="160" height="18" rx="9" fill="url(#track-blue)"/>
-              <text x="56" y="206.5" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8.5" font-weight="600">Thought Stream 01</text>
-              <rect x="42" y="218" width="296" height="18" rx="9" fill="#131B2B"/>
-              <rect x="110" y="218" width="140" height="18" rx="9" fill="url(#track-purple)"/>
-              <text x="124" y="230.5" fill="#FFFFFF" font-family="'Inter', sans-serif" font-size="8.5" font-weight="600">Daily Priorities</text>
-              <!-- Timeline Playhead Marker in action blue -->
-              <line x1="180" y1="190" x2="180" y2="240" stroke="#FFFFFF" stroke-width="2"/>
-              <polygon points="175,188 185,188 180,194" fill="#FFFFFF"/>
-            </svg>
+            <button class="primary-button" id="newNoteBtnTop"><span>＋</span> New note</button>
           </div>
         </div>
         </section>
@@ -343,58 +305,59 @@ import "../styles/global.css";
               </details>
             </div>
           </section>
-          <!-- Universal Footer -->
-          <footer class="universal-footer">
-            <div class="footer-grid">
-              <div class="footer-col brand-col">
-                <div class="footer-brand">
-                  <span class="brand-mark" style="width:28px;height:28px;display:inline-flex;">
-                    <svg viewBox="0 0 40 40">
-                      <rect width="40" height="40" rx="9" fill="#0A0E17" stroke="#1E293B" stroke-width="1.2"/>
-                      <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#FFFFFF"/>
-                      <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="url(#db-mark-grad)"/>
-                      <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#0A0E17"/>
-                      <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="url(#db-mark-ribbon)"/>
-                    </svg>
-                  </span>
-                  <span class="footer-brand-name">DayBook<span class="brand-period">.</span></span>
+          <!-- Contained Rounded Footer Panel with Lime Border Frame per DESIGN.md -->
+          <footer class="footer-frame">
+            <div class="footer-panel">
+              <div class="footer-grid">
+                <!-- Zone 1: Navigation links left -->
+                <div class="footer-zone-nav">
+                  <p class="footer-heading">DIRECTORY</p>
+                  <ul class="footer-links">
+                    <li><a href="/">All Notes</a></li>
+                    <li><a href="/#notesView">Recent Notes</a></li>
+                    <li><a href="/#tasksView">To-Do List</a></li>
+                    <li><a href="/#faq">Frequently Asked Questions</a></li>
+                  </ul>
                 </div>
-                <p class="footer-desc">A calm, private, and distraction-free workspace for notes, ideas, and daily tasks. Built client-side with 100% local storage.</p>
-                <p class="footer-contact">Contact: <a href="mailto:work.sumritatiyagi@gmail.com">work.sumritatiyagi@gmail.com</a></p>
+
+                <!-- Zone 2: Brand & Direct Inquiries center -->
+                <div class="footer-zone-center">
+                  <div class="footer-brand">
+                    <span class="brand-mark" style="width:30px;height:30px;display:inline-flex;">
+                      <svg viewBox="0 0 40 40">
+                        <rect width="40" height="40" rx="10" fill="#111111" stroke="#333333" stroke-width="1.2"/>
+                        <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#F5F5F0"/>
+                        <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="#F5F5F0"/>
+                        <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#111111"/>
+                        <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="#D1FF00"/>
+                      </svg>
+                    </span>
+                    <span class="footer-brand-name">DayBook<span class="brand-period">.</span></span>
+                  </div>
+                  <p class="footer-desc">Editorial Formula Utility. Zero tracking, distraction-free, 100% client-side local storage.</p>
+                  <p class="footer-contact">COMMUNICATIONS: <a href="mailto:work.sumritatiyagi@gmail.com">work.sumritatiyagi@gmail.com</a></p>
+                </div>
+
+                <!-- Zone 3: Company & Policies right -->
+                <div class="footer-zone-legal">
+                  <p class="footer-heading">EDITIONS &amp; POLICIES</p>
+                  <ul class="footer-links">
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/feedback">Give Feedback</a></li>
+                    <li><a href="/privacy">Privacy Policy (AdSense)</a></li>
+                    <li><a href="/disclaimer">Disclaimer</a></li>
+                    <li><a href="/terms">Terms &amp; Conditions</a></li>
+                  </ul>
+                </div>
               </div>
 
-              <div class="footer-col">
-                <p class="footer-heading">NAVIGATION</p>
-                <ul class="footer-links">
-                  <li><a href="/">All Notes</a></li>
-                  <li><a href="/#notesView">Recent Notes</a></li>
-                  <li><a href="/#tasksView">To-Do List</a></li>
-                  <li><a href="/#faq">Frequently Asked Questions</a></li>
-                </ul>
+              <!-- Sponsor / Technical Strip spanning bottom edge -->
+              <div class="footer-sponsor-strip">
+                <span>DAYBOOK // MOTORSPORT SPEC 2026</span>
+                <span>NEON LIME // ZERO TELEMETRY</span>
+                <span>© {new Date().getFullYear()} ALL RIGHTS RESERVED</span>
               </div>
-
-              <div class="footer-col">
-                <p class="footer-heading">COMPANY</p>
-                <ul class="footer-links">
-                  <li><a href="/about">About Us</a></li>
-                  <li><a href="/contact">Contact Us</a></li>
-                  <li><a href="/feedback">Give Feedback</a></li>
-                </ul>
-              </div>
-
-              <div class="footer-col">
-                <p class="footer-heading">LEGAL &amp; POLICIES</p>
-                <ul class="footer-links">
-                  <li><a href="/privacy">Privacy Policy (AdSense)</a></li>
-                  <li><a href="/disclaimer">Disclaimer</a></li>
-                  <li><a href="/terms">Terms &amp; Conditions</a></li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="footer-bottom">
-              <span>© {new Date().getFullYear()} DayBook. All rights reserved.</span>
-              <span>Made with care for your everyday <span class="footer-spark">✳</span></span>
             </div>
           </footer>
         </section>
