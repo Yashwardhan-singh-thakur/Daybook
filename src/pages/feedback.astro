@@ -1,0 +1,100 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout
+  title="Give Feedback — DayBook"
+  description="Help us make DayBook better. Share your feature ideas, bug reports, and suggestions directly with the development team."
+  canonicalPath="/feedback"
+  eyebrow="COMMUNITY &amp; IMPROVEMENT"
+  headline="Help us shape DayBook"
+  subtitle="Your suggestions, critique, and feature requests directly guide our product roadmap."
+  activeNav="feedback"
+>
+  <section>
+    <h2>We Build For You</h2>
+    <p>
+      DayBook is built by a small team dedicated to creating peaceful, distraction-free productivity tools. Every suggestion, bug report, or thought you share is read and considered carefully.
+    </p>
+
+    <form class="feedback-card" id="feedbackForm" onsubmit="event.preventDefault(); handleFeedbackSubmit();">
+      <div class="form-group">
+        <label class="form-label">How has your experience with DayBook been?</label>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+          <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;">
+            <input type="radio" name="experience" value="Loved it" checked /> 😍 Loved it
+          </label>
+          <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;">
+            <input type="radio" name="experience" value="Great" /> 😊 Great
+          </label>
+          <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;">
+            <input type="radio" name="experience" value="Good" /> 🙂 Good
+          </label>
+          <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;font-size:14px;">
+            <input type="radio" name="experience" value="Needs Work" /> 😕 Needs Work
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="feedbackCategory">Feedback Type</label>
+        <select id="feedbackCategory" name="category" class="form-select">
+          <option value="Feature Request">💡 Feature Request</option>
+          <option value="Design &amp; Usability">🎨 Design &amp; Typography Feedback</option>
+          <option value="Bug Report">🐛 Bug Report</option>
+          <option value="Performance">⚡ Performance &amp; Speed</option>
+          <option value="General Thought">💬 General Feedback</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="feedbackText">What’s on your mind?</label>
+        <textarea id="feedbackText" name="feedback" class="form-textarea" placeholder="Describe the feature you’d love to see or the issue you encountered..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="feedbackEmail">Your Email (optional, if you'd like a response)</label>
+        <input type="email" id="feedbackEmail" name="email" class="form-input" placeholder="you@example.com" />
+      </div>
+
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <button type="submit" class="primary-button" style="background:#000000;color:#ffffff;border:none;">
+          Send Feedback <span>↗</span>
+        </button>
+        <span id="feedbackStatus" style="font-size:13px;color:#727d00;font-weight:600;display:none;"></span>
+      </div>
+    </form>
+  </section>
+
+  <section>
+    <h2>Upcoming Feature Roadmap</h2>
+    <p>Here are some of the features currently in design and development:</p>
+    <ul>
+      <li><strong>Data Export &amp; Backup:</strong> One-click download of all notes as Markdown (`.md`) or structured JSON.</li>
+      <li><strong>Rich Markdown Shortcuts:</strong> Bold, italic, code spans, and heading shortcuts inside the editor.</li>
+      <li><strong>Extended Custom Labels:</strong> Ability to rename, re-color, and customize tag labels.</li>
+      <li><strong>Print &amp; PDF Export:</strong> Clean, editorial print styling for individual notes.</li>
+    </ul>
+    <p>
+      Have ideas for any of these? Email us at <a href="mailto:work.sumritatiyagi@gmail.com">work.sumritatiyagi@gmail.com</a>.
+    </p>
+  </section>
+
+  <script is:inline>
+    function handleFeedbackSubmit() {
+      const exp = document.querySelector('input[name="experience"]:checked')?.value || 'Great';
+      const category = document.getElementById('feedbackCategory').value;
+      const text = document.getElementById('feedbackText').value.trim();
+      const email = document.getElementById('feedbackEmail').value.trim();
+      const status = document.getElementById('feedbackStatus');
+
+      const mailtoUrl = `mailto:work.sumritatiyagi@gmail.com?subject=${encodeURIComponent(`[DayBook Feedback] ${category} (${exp})`)}&body=${encodeURIComponent(`Experience: ${exp}\nCategory: ${category}\nContact: ${email || 'Anonymous'}\n\nFeedback:\n${text}`)}`;
+
+      status.textContent = "Thank you! Opening your email client to send...";
+      status.style.display = 'inline-block';
+      setTimeout(() => {
+        window.location.href = mailtoUrl;
+      }, 300);
+    }
+  </script>
+</PageLayout>

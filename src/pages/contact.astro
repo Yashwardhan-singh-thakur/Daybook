@@ -1,0 +1,96 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout
+  title="Contact Us — DayBook"
+  description="Get in touch with the DayBook team. Have a question, partnership inquiry, or technical concern? Email work.sumritatiyagi@gmail.com."
+  canonicalPath="/contact"
+  eyebrow="SUPPORT &amp; INQUIRIES"
+  headline="We are here to help"
+  subtitle="Whether you have a technical question, partnership proposal, or suggestion, we would love to hear from you."
+  activeNav="contact"
+>
+  <section>
+    <h2>Get in Touch Directly</h2>
+    <p>
+      We value open communication and strive to respond to all legitimate inquiries within <strong>24 to 48 business hours</strong>.
+    </p>
+
+    <div class="contact-card">
+      <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;">
+        <div>
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.12em;color:#89868a;display:block;margin-bottom:4px;">PRIMARY CONTACT EMAIL</span>
+          <a href="mailto:work.sumritatiyagi@gmail.com" style="font-size:18px;font-weight:700;color:#000000;text-decoration:none;">work.sumritatiyagi@gmail.com</a>
+        </div>
+        <div>
+          <a href="mailto:work.sumritatiyagi@gmail.com?subject=DayBook%20Inquiry" class="primary-button" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+            <span>✉</span> Send Email Directly
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Send Us a Message</h2>
+    <p>You can also use the form below to compose your message. Submitting will open your default email client with your details prefilled:</p>
+
+    <form class="contact-card" id="contactForm" onsubmit="event.preventDefault(); handleContactSubmit();">
+      <div class="form-group">
+        <label class="form-label" for="contactName">Your Name</label>
+        <input type="text" id="contactName" name="name" class="form-input" placeholder="e.g. Jane Doe" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contactEmail">Your Email Address</label>
+        <input type="email" id="contactEmail" name="email" class="form-input" placeholder="e.g. jane@example.com" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contactSubject">Subject Category</label>
+        <select id="contactSubject" name="subject" class="form-select">
+          <option value="General Inquiry">General Question / Inquiry</option>
+          <option value="Technical Support">Technical Support / Bug Report</option>
+          <option value="Feature Suggestion">Feature Suggestion</option>
+          <option value="Privacy / Legal Inquiry">Privacy &amp; Data Inquiry</option>
+          <option value="Advertising / Business Partnership">Advertising / Partnership</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="contactMessage">Message</label>
+        <textarea id="contactMessage" name="message" class="form-textarea" placeholder="How can we help you today?" required></textarea>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+        <button type="submit" class="primary-button" style="background:#000000;color:#ffffff;border:none;">
+          Submit Message <span>↗</span>
+        </button>
+        <span id="contactStatus" style="font-size:13px;color:#727d00;font-weight:600;display:none;">Opening your email client...</span>
+      </div>
+    </form>
+  </section>
+
+  <section>
+    <h2>Quick Answers</h2>
+    <p>
+      Before writing in, your question might already be answered in our comprehensive <a href="/#faq">Frequently Asked Questions</a>, including questions about local storage, offline access, and shortcuts.
+    </p>
+  </section>
+
+  <script is:inline>
+    function handleContactSubmit() {
+      const name = document.getElementById('contactName').value.trim();
+      const email = document.getElementById('contactEmail').value.trim();
+      const subject = document.getElementById('contactSubject').value;
+      const message = document.getElementById('contactMessage').value.trim();
+      const status = document.getElementById('contactStatus');
+
+      const mailtoUrl = `mailto:work.sumritatiyagi@gmail.com?subject=${encodeURIComponent(`[DayBook] ${subject} from ${name}`)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`)}`;
+      
+      status.style.display = 'inline-block';
+      window.location.href = mailtoUrl;
+    }
+  </script>
+</PageLayout>
