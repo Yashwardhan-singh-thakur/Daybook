@@ -77,7 +77,7 @@
     clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 2100);
   }
   function setToday() { $('todayDate').textContent = new Date().toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }); }
-  
+
   function labelColor(label) {
     if (!label) return '#D1FF00';
     if (!data.labelColors) data.labelColors = { ...defaultLabelColors };
@@ -608,9 +608,9 @@
     menu.innerHTML = `
       <button data-label="" class="popover-no-label">No label</button>
       ${data.labels.map((label) => {
-        const noteCount = getNotesWithLabel(label).length;
-        const isEmpty = noteCount === 0;
-        return `
+      const noteCount = getNotesWithLabel(label).length;
+      const isEmpty = noteCount === 0;
+      return `
         <div class="popover-label-row">
           <button data-label="${safe(label)}" class="popover-label-choice">
             <span class="label-color" style="background:${labelColor(label)}; box-shadow: 0 0 6px ${labelColor(label)}"></span>
@@ -637,7 +637,7 @@
           </div>
         </div>
       `;
-      }).join('')}
+    }).join('')}
       <button data-label="__new" class="add-label-option">＋ New label</button>
     `;
     document.body.append(menu);

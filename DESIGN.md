@@ -23,19 +23,19 @@ The light mode establishes an editorial atmosphere: warm off-white canvas with n
 
 ## Typography
 
-Two font families drive the typographic hierarchy: Brier for display moments and Mona Sans for all functional text. Brier appears exclusively in bold weight, deployed for headlines and section titles where editorial personality is required. Mona Sans operates at extra-light weight, providing technical contrast and ensuring readability at smaller sizes.
+Two font families drive the typographic hierarchy: Syne (with Plus Jakarta Sans fallback) for bold display moments with uniform stroke weight, and Mona Sans for all functional text. Syne appears in bold (700/800) weight, deployed for headlines, HUD numbers, and section titles with even stroke distribution and zero vanishing hairline strokes. Mona Sans operates at regular (400) weight, providing clean readability across all screens.
 
 | token | family | size | weight | leading | tracking | use |
 |---|---|---:|---:|---:|---:|---|
-| hero-display | Brier | 6rem | 700 | 0.9 | -0.03em | Homepage hero headlines, major section titles |
-| section-display | Brier | 4rem | 700 | 0.95 | -0.02em | Subsection headings, overlay headlines |
-| body | Mona Sans | 1rem | 300 | 1.5 | 0em | Paragraphs, descriptions, general content |
-| label | Mona Sans | 0.75rem | 300 | 1.2 | 0.05em | Buttons, tags, year indicators, captions |
-| navigation | Mona Sans | 0.875rem | 300 | 1.4 | 0.02em | Menu items, footer links, social channels |
+| hero-display | Syne / Plus Jakarta Sans | 6rem | 800 | 0.95 | -0.025em | Homepage hero headlines, major section titles |
+| section-display | Syne / Plus Jakarta Sans | 4rem | 700 | 0.95 | -0.02em | Subsection headings, overlay headlines |
+| body | Mona Sans | 1rem | 400 | 1.5 | 0em | Paragraphs, descriptions, general content |
+| label | Mona Sans | 0.75rem | 500 | 1.2 | 0.05em | Buttons, tags, year indicators, captions |
+| navigation | Mona Sans | 0.875rem | 500 | 1.4 | 0.02em | Menu items, footer links, social channels |
 
-Brier is designed by Fatima Abbas. Mona Sans carries no attributed designer in the available records. Verify licensing for these families before production use.
+Syne is designed by Lucas Descroix. Mona Sans is designed by Degarism for GitHub.
 
-The type scale uses a 4px relative unit, with display sizes at 96px and 64px, body at 16px, and functional sizes at 14px and 12px. Display typography employs tight negative tracking for a compressed, impactful presence. Body text maintains neutral tracking for extended reading. All-caps treatment appears selectively in navigation and footer links, creating a secondary hierarchy without additional font weights.
+The type scale uses a 4px relative unit, with display sizes at 96px and 64px, body at 16px, and functional sizes at 14px and 12px. Display typography employs tight negative tracking for a compressed, impactful presence with uniform stroke distribution across all glyphs and numerals. Body text maintains neutral tracking for extended reading. All-caps treatment appears selectively in navigation and footer links, creating a secondary hierarchy.
 
 ## Layout
 

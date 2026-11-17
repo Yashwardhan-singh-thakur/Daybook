@@ -1,45 +1,81 @@
 ---
 import "../styles/global.css";
 ---
+
 <!doctype html>
 <html lang="en">
   <head>
-    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-MWJR6JPC"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtm.js?id=GTM-MWJR6JPC"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>DayBook — Free Online Notes & Daily To-Do List App | Private & Fast</title>
-    <meta name="description" content="DayBook is a free, fast, and private online notes and to-do list app. Capture thoughts, manage daily tasks, organize with labels, and stay focused with instant local storage — no sign-up required." />
-    <meta name="keywords" content="online notes app, free note taking, to-do list online, daily task planner, private notes, minimalist notepad, web notepad, daily checklist, simple todo app, pwa notes, fast notes app" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta
+      name="description"
+      content="DayBook is a free, fast, and private online notes and to-do list app. Capture thoughts, manage daily tasks, organize with labels, and stay focused with instant local storage — no sign-up required."
+    />
+    <meta
+      name="keywords"
+      content="online notes app, free note taking, to-do list online, daily task planner, private notes, minimalist notepad, web notepad, daily checklist, simple todo app, pwa notes, fast notes app"
+    />
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
     <meta name="author" content="DayBook" />
     <meta name="theme-color" content="#111111" />
-    <meta name="google-site-verification" content="huywtd-WB2UAcSFD3dsiemCRwUt3tIWIX8Uor4aZTOo" />
+    <meta
+      name="google-site-verification"
+      content="huywtd-WB2UAcSFD3dsiemCRwUt3tIWIX8Uor4aZTOo"
+    />
     <link rel="canonical" href="https://daybook.com/" />
 
     <!-- Open Graph / Facebook / LinkedIn / Slack -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://daybook.com/" />
-    <meta property="og:title" content="DayBook — Free Online Notes & Daily To-Do List App" />
-    <meta property="og:description" content="Capture thoughts, organize daily tasks with priorities, and stay focused. Free, fast, private, and works offline." />
+    <meta
+      property="og:title"
+      content="DayBook — Free Online Notes & Daily To-Do List App"
+    />
+    <meta
+      property="og:description"
+      content="Capture thoughts, organize daily tasks with priorities, and stay focused. Free, fast, private, and works offline."
+    />
     <meta property="og:image" content="https://daybook.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="DayBook - Free Online Notes and Daily To-Do List App" />
+    <meta
+      property="og:image:alt"
+      content="DayBook - Free Online Notes and Daily To-Do List App"
+    />
     <meta property="og:site_name" content="DayBook" />
     <meta property="og:locale" content="en_US" />
 
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://daybook.com/" />
-    <meta name="twitter:title" content="DayBook — Free Online Notes & Daily To-Do List App" />
-    <meta name="twitter:description" content="A calm, fast, and private space for your notes and daily tasks. 100% free, saved securely on your device." />
+    <meta
+      name="twitter:title"
+      content="DayBook — Free Online Notes & Daily To-Do List App"
+    />
+    <meta
+      name="twitter:description"
+      content="A calm, fast, and private space for your notes and daily tasks. 100% free, saved securely on your device."
+    />
     <meta name="twitter:image" content="https://daybook.com/og-image.png" />
-    <meta name="twitter:image:alt" content="DayBook - Free Online Notes and Daily To-Do List App" />
+    <meta
+      name="twitter:image:alt"
+      content="DayBook - Free Online Notes and Daily To-Do List App"
+    />
 
     <!-- Favicons & Web App Manifest -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
@@ -50,165 +86,349 @@ import "../styles/global.css";
     <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Web Fonts: Brier (Bodoni Moda) display serif & Mona Sans technical sans per DESIGN.md -->
+    <!-- Web Fonts: Syne & Plus Jakarta Sans bold display + Mona Sans technical sans per DESIGN.md -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;1,6..96,700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,700;1,6..96,700&family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,300..900;1,300..900&family=Plus+Jakarta+Sans:wght@700;800&family=Syne:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Structured Data: WebApplication & FAQPage JSON-LD -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebApplication",
-          "@id": "https://daybook.com/#webapp",
-          "name": "DayBook",
-          "url": "https://daybook.com/",
-          "description": "Free, fast, and private online notes and daily to-do list app with local storage, labels, priorities, and offline PWA support.",
-          "applicationCategory": "ProductivityApplication",
-          "operatingSystem": "All",
-          "browserRequirements": "Requires JavaScript. Requires HTML5.",
-          "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "USD"
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "@id": "https://daybook.com/#webapp",
+            "name": "DayBook",
+            "url": "https://daybook.com/",
+            "description": "Free, fast, and private online notes and daily to-do list app with local storage, labels, priorities, and offline PWA support.",
+            "applicationCategory": "ProductivityApplication",
+            "operatingSystem": "All",
+            "browserRequirements": "Requires JavaScript. Requires HTML5.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "featureList": [
+              "Free online notes and notepad",
+              "Daily to-do list with real-time progress bar",
+              "100% private local browser storage",
+              "Offline access as a Progressive Web App (PWA)",
+              "Color-coded labels and priority pins",
+              "Instant keyboard shortcuts (N for new note, Cmd+K search)",
+              "Dark and light theme support"
+            ]
           },
-          "featureList": [
-            "Free online notes and notepad",
-            "Daily to-do list with real-time progress bar",
-            "100% private local browser storage",
-            "Offline access as a Progressive Web App (PWA)",
-            "Color-coded labels and priority pins",
-            "Instant keyboard shortcuts (N for new note, Cmd+K search)",
-            "Dark and light theme support"
-          ]
-        },
-        {
-          "@type": "FAQPage",
-          "@id": "https://daybook.com/#faq",
-          "mainEntity": [
-            {
-              "@type": "Question",
-              "name": "What is DayBook and how does it work?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "DayBook is a free, fast, and minimalist online note-taking and daily to-do list web app. It lets you capture thoughts, organize ideas with custom labels, pin important notes, and track daily tasks with a real-time progress tracker — all with zero distractions and no sign-up required."
+          {
+            "@type": "FAQPage",
+            "@id": "https://daybook.com/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is DayBook and how does it work?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "DayBook is a free, fast, and minimalist online note-taking and daily to-do list web app. It lets you capture thoughts, organize ideas with custom labels, pin important notes, and track daily tasks with a real-time progress tracker — all with zero distractions and no sign-up required."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is DayBook completely free to use?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, DayBook is 100% free to use. There are no subscriptions, paywalls, premium tiers, or hidden fees. You get full access to all features, including unlimited notes, priority to-do lists, search, tags, and theme customization."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Are my notes and tasks private and secure?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. DayBook is privacy-first. All your notes and tasks are saved directly on your local device using browser local storage. Your data is never uploaded to external servers, shared with third parties, or used for tracking."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I use DayBook offline on mobile and desktop?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. DayBook is built as a Progressive Web App (PWA). You can install it on your iPhone, iPad, Android phone, Mac, or Windows PC directly from your browser. Once installed, it launches in standalone fullscreen mode and works seamlessly offline without an active internet connection."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How do I organize my notes with labels and pins?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You can categorize notes using custom color-coded labels such as Ideas, Personal, and Work. You can also click the pin icon to pin essential notes to the top of your workspace for instant retrieval."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What keyboard shortcuts are available in DayBook?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "DayBook supports fast keyboard workflows: press N anywhere on the page to create a new note, press Cmd+K (or Ctrl+K) to search notes, and press Cmd+Enter (or Ctrl+Enter) to save and close the note editor."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How does the built-in to-do list track daily progress?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The to-do list tab includes an automated progress bar showing the exact percentage and count of completed tasks. You can assign priority levels (High, Normal, Low) to each item, filter by active or completed tasks, and clear finished tasks with a single click."
+                }
               }
-            },
-            {
-              "@type": "Question",
-              "name": "Is DayBook completely free to use?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes, DayBook is 100% free to use. There are no subscriptions, paywalls, premium tiers, or hidden fees. You get full access to all features, including unlimited notes, priority to-do lists, search, tags, and theme customization."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Are my notes and tasks private and secure?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes. DayBook is privacy-first. All your notes and tasks are saved directly on your local device using browser local storage. Your data is never uploaded to external servers, shared with third parties, or used for tracking."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Can I use DayBook offline on mobile and desktop?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes. DayBook is built as a Progressive Web App (PWA). You can install it on your iPhone, iPad, Android phone, Mac, or Windows PC directly from your browser. Once installed, it launches in standalone fullscreen mode and works seamlessly offline without an active internet connection."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How do I organize my notes with labels and pins?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "You can categorize notes using custom color-coded labels such as Ideas, Personal, and Work. You can also click the pin icon to pin essential notes to the top of your workspace for instant retrieval."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "What keyboard shortcuts are available in DayBook?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "DayBook supports fast keyboard workflows: press N anywhere on the page to create a new note, press Cmd+K (or Ctrl+K) to search notes, and press Cmd+Enter (or Ctrl+Enter) to save and close the note editor."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "How does the built-in to-do list track daily progress?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "The to-do list tab includes an automated progress bar showing the exact percentage and count of completed tasks. You can assign priority levels (High, Normal, Low) to each item, filter by active or completed tasks, and clear finished tasks with a single click."
-              }
-            }
-          ]
-        }
-      ]
-    }
+            ]
+          }
+        ]
+      }
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <a class="skip-link" href="#main-content">
+      Skip to main content
+    </a>
     <div class="app-shell min-h-screen">
       <aside class="sidebar" id="sidebar">
         <a class="brand" href="/" aria-label="DayBook home">
           <span class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 40 40" aria-hidden="true">
-              <rect width="40" height="40" rx="10" fill="#111111" stroke="#333333" stroke-width="1.2"/>
-              <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#F5F5F0"/>
-              <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="#F5F5F0"/>
-              <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#111111"/>
-              <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="#D1FF00"/>
+              <rect
+                width="40"
+                height="40"
+                rx="10"
+                fill="#111111"
+                stroke="#333333"
+                stroke-width="1.2"
+              />
+              <path
+                d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z"
+                fill="#F5F5F0"
+              />
+              <path
+                d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z"
+                fill="#F5F5F0"
+              />
+              <path
+                d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z"
+                fill="#111111"
+              />
+              <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="#D1FF00" />
             </svg>
           </span>
-          <span class="brand-name">DayBook<span class="brand-period">.</span></span>
+          <span class="brand-name">
+            DayBook<span class="brand-period">.</span>
+          </span>
         </a>
 
-        <button class="new-note-button" id="newNoteBtn"><span class="plus">＋</span> New note <kbd>N</kbd></button>
+        <button class="new-note-button" id="newNoteBtn">
+          <span class="plus">＋</span> New note <kbd>N</kbd>
+        </button>
 
         <div class="nav-group">
           <p class="nav-heading">YOUR SPACE</p>
-          <button class="nav-item active" data-view="notes"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="M6 3.75h8.5L19 8.3v11.95H6z"/><path d="M14.5 3.75V8.5H19M9 12h7M9 15.5h5"/></svg></span>All notes<span class="nav-count" id="notesCount">0</span></button>
-          <button class="nav-item" data-view="pinned"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m16 4 4 4-3 1-3 4v4l-2 2-2-5-5-2 2-2h4l4-3zM8 16l-4 4"/></svg></span>Pinned</button>
-          <button class="nav-item" data-view="tasks"><span class="nav-icon"><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/><path d="M20 12v7H4V5h11"/></svg></span>To-do list<span class="nav-count" id="tasksCount">0</span></button>
-          <a class="nav-item" href="/year"><span class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="4" height="4" rx="1"/><rect x="10" y="3" width="4" height="4" rx="1"/><rect x="17" y="3" width="4" height="4" rx="1"/><rect x="3" y="10" width="4" height="4" rx="1"/><rect x="10" y="10" width="4" height="4" rx="1"/><rect x="17" y="10" width="4" height="4" rx="1"/><rect x="3" y="17" width="4" height="4" rx="1"/><rect x="10" y="17" width="4" height="4" rx="1"/><rect x="17" y="17" width="4" height="4" rx="1"/></svg></span>365 Days Dots</a>
-          <a class="nav-item" href="#faq"><span class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg></span>FAQ</a>
+          <button class="nav-item active" data-view="notes">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="M6 3.75h8.5L19 8.3v11.95H6z" />
+                <path d="M14.5 3.75V8.5H19M9 12h7M9 15.5h5" />
+              </svg>
+            </span>
+            All notes
+            <span class="nav-count" id="notesCount">
+              0
+            </span>
+          </button>
+          <button class="nav-item" data-view="pinned">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="m16 4 4 4-3 1-3 4v4l-2 2-2-5-5-2 2-2h4l4-3zM8 16l-4 4" />
+              </svg>
+            </span>
+            Pinned
+          </button>
+          <button class="nav-item" data-view="tasks">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <path d="m5 12 4 4L19 6" />
+                <path d="M20 12v7H4V5h11" />
+              </svg>
+            </span>
+            To-do list
+            <span class="nav-count" id="tasksCount">
+              0
+            </span>
+          </button>
+          <a class="nav-item" href="/year">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <rect x="3" y="3" width="4" height="4" rx="1" />
+                <rect x="10" y="3" width="4" height="4" rx="1" />
+                <rect x="17" y="3" width="4" height="4" rx="1" />
+                <rect x="3" y="10" width="4" height="4" rx="1" />
+                <rect x="10" y="10" width="4" height="4" rx="1" />
+                <rect x="17" y="10" width="4" height="4" rx="1" />
+                <rect x="3" y="17" width="4" height="4" rx="1" />
+                <rect x="10" y="17" width="4" height="4" rx="1" />
+                <rect x="17" y="17" width="4" height="4" rx="1" />
+              </svg>
+            </span>
+            365 Days Dots
+          </a>
+          <a class="nav-item" href="#faq">
+            <span class="nav-icon">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01" />
+              </svg>
+            </span>
+            FAQ
+          </a>
         </div>
 
         <div class="nav-group labels-group">
-          <p class="nav-heading">LABELS <button id="addLabelBtn" class="tiny-add" aria-label="Add label">＋</button></p>
+          <p class="nav-heading">
+            LABELS{" "}
+            <button id="addLabelBtn" class="tiny-add" aria-label="Add label">
+              ＋
+            </button>
+          </p>
           <div id="labelList" class="label-list"></div>
         </div>
 
         <div class="sidebar-bottom">
-          <div class="storage-note"><span class="storage-dot"></span><span>Saved on this device</span></div>
-          <div class="profile"><div class="avatar">D</div><div><strong>Your DayBook</strong><small>Personal space</small></div><span class="profile-more">···</span></div>
+          <div class="storage-note">
+            <span class="storage-dot"></span>
+            <span>Saved on this device</span>
+          </div>
+          <div class="profile">
+            <div class="avatar">D</div>
+            <div>
+              <strong>Your DayBook</strong>
+              <small>Personal space</small>
+            </div>
+            <span class="profile-more">···</span>
+          </div>
         </div>
       </aside>
 
       <main class="main-area min-h-screen" id="main-content" tabindex="-1">
         <header class="topbar">
-          <button class="mobile-menu icon-button" id="menuBtn" aria-label="Open navigation"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-          <div class="breadcrumb"><span>Your space</span><span class="crumb-slash">/</span><strong id="breadcrumbTitle">All notes</strong></div>
+          <button
+            class="mobile-menu icon-button"
+            id="menuBtn"
+            aria-label="Open navigation"
+          >
+            <svg viewBox="0 0 24 24">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </button>
+          <div class="breadcrumb">
+            <span>Your space</span>
+            <span class="crumb-slash">/</span>
+            <strong id="breadcrumbTitle">All notes</strong>
+          </div>
           <div class="topbar-right">
             <span class="today-date" id="todayDate"></span>
-            <button class="primary-button topbar-new-btn" id="topbarNewNoteBtn"><span>＋</span> New note</button>
-            <button class="icon-button theme-button" id="themeBtn" aria-label="Toggle color theme"><svg viewBox="0 0 24 24"><path d="M20.5 15.2A8.4 8.4 0 0 1 8.8 3.5 8.5 8.5 0 1 0 20.5 15.2Z"/></svg></button>
+            <button class="primary-button topbar-new-btn" id="topbarNewNoteBtn">
+              <span>＋</span> New note
+            </button>
+            <button
+              class="icon-button theme-button"
+              id="themeBtn"
+              aria-label="Toggle color theme"
+            >
+              <svg viewBox="0 0 24 24">
+                <path d="M20.5 15.2A8.4 8.4 0 0 1 8.8 3.5 8.5 8.5 0 1 0 20.5 15.2Z" />
+              </svg>
+            </button>
           </div>
         </header>
 
         <section class="content-wrap">
           <div class="toolbar" id="notesToolbar">
-            <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg><input id="searchInput" name="search" type="search" placeholder="Search your notes…" autocomplete="off" /><kbd>⌘ K</kbd></label>
-            <div class="toolbar-right"><button class="filter-button" id="labelFilterBtn"><svg viewBox="0 0 24 24"><path d="M4 5h16l-6.5 7.5V19l-3 1v-7.5z"/></svg><span id="filterLabel">All labels</span><span class="chevron">⌄</span></button><div class="view-switch"><button class="view-button selected" data-layout="grid" aria-label="Grid view"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></button><button class="view-button" data-layout="list" aria-label="List view"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg></button></div></div>
+            <label class="search-box">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10.8" cy="10.8" r="6.8" />
+                <path d="m16 16 4.5 4.5" />
+              </svg>
+              <input
+                id="searchInput"
+                name="search"
+                type="search"
+                placeholder="Search your notes…"
+                autocomplete="off"
+              />
+              <kbd>⌘ K</kbd>
+            </label>
+            <div class="toolbar-right">
+              <button class="filter-button" id="labelFilterBtn">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 5h16l-6.5 7.5V19l-3 1v-7.5z" />
+                </svg>
+                <span id="filterLabel">All labels</span>
+                <span class="chevron">⌄</span>
+              </button>
+              <div class="view-switch">
+                <button
+                  class="view-button selected"
+                  data-layout="grid"
+                  aria-label="Grid view"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <rect x="4" y="4" width="6" height="6" rx="1" />
+                    <rect x="14" y="4" width="6" height="6" rx="1" />
+                    <rect x="4" y="14" width="6" height="6" rx="1" />
+                    <rect x="14" y="14" width="6" height="6" rx="1" />
+                  </svg>
+                </button>
+                <button
+                  class="view-button"
+                  data-layout="list"
+                  aria-label="List view"
+                >
+                  <svg viewBox="0 0 24 24">
+                    <path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01" />
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
 
           <div id="notesView">
-            <div class="section-row"><h2><span id="notesSectionTitle">RECENT NOTES</span> <span id="shownCount"></span></h2><button class="sort-button" id="sortBtn">Recently edited <span>⌄</span></button></div>
+            <div class="section-row">
+              <h2>
+                <span id="notesSectionTitle">RECENT NOTES</span>{" "}
+                <span id="shownCount"></span>
+              </h2>
+              <button class="sort-button" id="sortBtn">
+                Recently edited <span>⌄</span>
+              </button>
+            </div>
             <div class="notes-grid" id="notesGrid"></div>
-            <div class="empty-state" id="notesEmpty" hidden><div class="empty-illustration"><span>✳</span><i></i></div><h3 id="emptyTitle">A fresh page, just for you.</h3><p id="emptyText">Start with a thought, an idea, or anything you’d like to remember.</p><button class="primary-button" id="emptyCreateBtn">＋ Create your first note</button></div>
+            <div class="empty-state" id="notesEmpty" hidden>
+              <div class="empty-illustration">
+                <span>✳</span>
+                <i></i>
+              </div>
+              <h3 id="emptyTitle">A fresh page, just for you.</h3>
+              <p id="emptyText">
+                Start with a thought, an idea, or anything you’d like to
+                remember.
+              </p>
+              <button class="primary-button" id="emptyCreateBtn">
+                ＋ Create your first note
+              </button>
+            </div>
           </div>
 
           <!-- Race-Engineered Telemetry To-Do List per DESIGN.md -->
@@ -220,30 +440,48 @@ import "../styles/global.css";
                   <span class="hud-dot" aria-hidden="true"></span>
                   <span>SPRINT TELEMETRY // SPEC-04</span>
                 </div>
-                <div class="hud-status-badge" id="hudStatusBadge">OPTIMAL PACE</div>
+                <div class="hud-status-badge" id="hudStatusBadge">
+                  OPTIMAL PACE
+                </div>
               </div>
 
               <div class="task-hud-body">
                 <div class="hud-metric-main">
                   <span class="hud-label">COMPLETION RATE</span>
                   <div class="hud-val-wrap">
-                    <span class="hud-big-num" id="progressPercent">0%</span>
-                    <span class="hud-fraction" id="taskProgress">0 / 0 TASKS</span>
+                    <span class="hud-big-num" id="progressPercent">
+                      0%
+                    </span>
+                    <span class="hud-fraction" id="taskProgress">
+                      0 / 0 TASKS
+                    </span>
                   </div>
                 </div>
 
                 <div class="hud-stats-grid">
                   <div class="hud-stat-box">
                     <span class="stat-box-label">ACTIVE</span>
-                    <strong class="stat-box-val" id="activeTaskCount">0</strong>
+                    <strong class="stat-box-val" id="activeTaskCount">
+                      0
+                    </strong>
                   </div>
                   <div class="hud-stat-box">
                     <span class="stat-box-label">CRITICAL P1</span>
-                    <strong class="stat-box-val text-urgent" id="criticalTaskCount">0</strong>
+                    <strong
+                      class="stat-box-val text-urgent"
+                      id="criticalTaskCount"
+                    >
+                      0
+                    </strong>
                   </div>
                   <div class="hud-stat-box">
                     <span class="stat-box-label">COMPLETED</span>
-                    <strong class="stat-box-val text-success" id="completedTaskCount">0</strong>
+                    <strong
+                      class="stat-box-val text-success"
+                      id="completedTaskCount"
+                    >
+                      0
+                    </strong>
                   </div>
                 </div>
               </div>
@@ -260,20 +498,29 @@ import "../styles/global.css";
             <form class="task-composer-card" id="taskForm">
               <div class="composer-top-row">
                 <span class="composer-icon" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <line x1="12" y1="8" x2="12" y2="16"/>
-                    <line x1="8" y1="12" x2="16" y2="12"/>
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="16"
+                    height="16"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <line x1="12" y1="8" x2="12" y2="16" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
                   </svg>
                 </span>
-                <input 
-                  id="taskInput" 
-                  name="task" 
-                  aria-label="New task" 
-                  placeholder="Record an actionable task or sprint milestone…" 
-                  maxlength="180" 
-                  autocomplete="off" 
-                  required 
+                <input
+                  id="taskInput"
+                  name="task"
+                  aria-label="New task"
+                  placeholder="Record an actionable task or sprint milestone…"
+                  maxlength="180"
+                  autocomplete="off"
+                  required
                 />
                 <button type="submit" class="composer-submit-btn">
                   <span>ADD TASK</span>
@@ -282,29 +529,61 @@ import "../styles/global.css";
               </div>
 
               <div class="composer-bottom-bar">
-                <div class="priority-selector" id="prioritySelector" role="radiogroup" aria-label="Task priority">
+                <div
+                  class="priority-selector"
+                  id="prioritySelector"
+                  role="radiogroup"
+                  aria-label="Task priority"
+                >
                   <span class="selector-heading">PRIORITY:</span>
-                  <button type="button" class="priority-opt-btn" data-priority="low" role="radio" aria-checked="false">
+                  <button
+                    type="button"
+                    class="priority-opt-btn"
+                    data-priority="low"
+                    role="radio"
+                    aria-checked="false"
+                  >
                     <span class="p-dot low"></span>
                     <span>P3 Low</span>
                   </button>
-                  <button type="button" class="priority-opt-btn active" data-priority="normal" role="radio" aria-checked="true">
+                  <button
+                    type="button"
+                    class="priority-opt-btn active"
+                    data-priority="normal"
+                    role="radio"
+                    aria-checked="true"
+                  >
                     <span class="p-dot normal"></span>
                     <span>P2 Normal</span>
                   </button>
-                  <button type="button" class="priority-opt-btn" data-priority="high" role="radio" aria-checked="false">
+                  <button
+                    type="button"
+                    class="priority-opt-btn"
+                    data-priority="high"
+                    role="radio"
+                    aria-checked="false"
+                  >
                     <span class="p-dot high"></span>
                     <span>P1 High ⚡</span>
                   </button>
                 </div>
                 <!-- Hidden native select for fallback/form compatibility -->
-                <select id="taskPriority" name="priority" hidden aria-hidden="true">
+                <select
+                  id="taskPriority"
+                  name="priority"
+                  hidden
+                  aria-hidden="true"
+                >
                   <option value="low">Low priority</option>
-                  <option value="normal" selected>Normal</option>
+                  <option value="normal" selected>
+                    Normal
+                  </option>
                   <option value="high">High priority</option>
                 </select>
                 <div class="composer-hint">
-                  <span>Press <kbd>↵ Enter</kbd> to add</span>
+                  <span>
+                    Press <kbd>↵ Enter</kbd> to add
+                  </span>
                 </div>
               </div>
             </form>
@@ -312,29 +591,68 @@ import "../styles/global.css";
             <!-- Task Filters & Toolbar -->
             <div class="task-toolbar">
               <div class="task-filters-group">
-                <button type="button" class="task-filter-pill active" data-task-filter="all">
+                <button
+                  type="button"
+                  class="task-filter-pill active"
+                  data-task-filter="all"
+                >
                   <span>ALL</span>
-                  <span class="filter-count" id="allTaskCount">0</span>
+                  <span class="filter-count" id="allTaskCount">
+                    0
+                  </span>
                 </button>
-                <button type="button" class="task-filter-pill" data-task-filter="active">
+                <button
+                  type="button"
+                  class="task-filter-pill"
+                  data-task-filter="active"
+                >
                   <span>PENDING</span>
-                  <span class="filter-count" id="activeFilterCount">0</span>
+                  <span class="filter-count" id="activeFilterCount">
+                    0
+                  </span>
                 </button>
-                <button type="button" class="task-filter-pill" data-task-filter="completed">
+                <button
+                  type="button"
+                  class="task-filter-pill"
+                  data-task-filter="completed"
+                >
                   <span>COMPLETED</span>
-                  <span class="filter-count" id="completedFilterCount">0</span>
+                  <span class="filter-count" id="completedFilterCount">
+                    0
+                  </span>
                 </button>
-                <button type="button" class="task-filter-pill priority-filter" data-task-filter="high">
+                <button
+                  type="button"
+                  class="task-filter-pill priority-filter"
+                  data-task-filter="high"
+                >
                   <span>⚡ P1 HIGH</span>
-                  <span class="filter-count" id="highFilterCount">0</span>
+                  <span class="filter-count" id="highFilterCount">
+                    0
+                  </span>
                 </button>
               </div>
 
               <div class="task-toolbar-actions">
-                <button type="button" class="clear-completed-btn" id="clearCompleted" title="Clear all completed tasks" hidden>
-                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="3 6 5 6 21 6"/>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                <button
+                  type="button"
+                  class="clear-completed-btn"
+                  id="clearCompleted"
+                  title="Clear all completed tasks"
+                  hidden
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="13"
+                    height="13"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                   </svg>
                   <span>Clear completed</span>
                 </button>
@@ -347,52 +665,144 @@ import "../styles/global.css";
             <!-- Elevated High-Tech Empty State -->
             <div class="task-empty-card" id="tasksEmpty" hidden>
               <div class="empty-telemetry-badge">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                  <polyline points="22 4 12 14.01 9 11.01"/>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="28"
+                  height="28"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
                 </svg>
               </div>
               <h3 id="tasksEmptyTitle">TRACK CLEAR // ALL SYSTEMS GO</h3>
-              <p id="tasksEmptySubtitle">No pending tasks on your sprint board. Add your next objective above.</p>
+              <p id="tasksEmptySubtitle">
+                No pending tasks on your sprint board. Add your next objective
+                above.
+              </p>
             </div>
           </section>
 
           <!-- Editorial Showcase / Telemetry Aero Section (Positioned UNDER notes & tasks) -->
           <section class="editorial-aero-section" aria-labelledby="pageTitle">
             <div class="hero-body">
-              <div class="hero-imagery" role="img" aria-label="Wind tunnel aerodynamics and racing helmet telemetry visual">
+              <div
+                class="hero-imagery"
+                role="img"
+                aria-label="Wind tunnel aerodynamics and racing helmet telemetry visual"
+              >
                 <svg viewBox="0 0 340 320" aria-hidden="true">
                   <!-- Aerodynamic Wind Tunnel Curved Streamlines -->
-                  <path d="M10 50 C 90 40, 180 80, 320 60" fill="none" stroke="#555555" stroke-opacity="0.3" stroke-width="1"/>
-                  <path d="M10 90 C 120 70, 210 130, 330 110" fill="none" stroke="#D1FF00" stroke-opacity="0.8" stroke-width="1.4"/>
-                  <path d="M10 140 C 100 130, 160 190, 320 160" fill="none" stroke="#555555" stroke-opacity="0.25" stroke-width="1"/>
-                  <path d="M20 200 C 130 180, 220 250, 330 220" fill="none" stroke="#555555" stroke-opacity="0.35" stroke-width="1"/>
-                  <path d="M30 260 C 140 240, 240 290, 320 270" fill="none" stroke="#D1FF00" stroke-opacity="0.5" stroke-width="1"/>
+                  <path
+                    d="M10 50 C 90 40, 180 80, 320 60"
+                    fill="none"
+                    stroke="#555555"
+                    stroke-opacity="0.3"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M10 90 C 120 70, 210 130, 330 110"
+                    fill="none"
+                    stroke="#D1FF00"
+                    stroke-opacity="0.8"
+                    stroke-width="1.4"
+                  />
+                  <path
+                    d="M10 140 C 100 130, 160 190, 320 160"
+                    fill="none"
+                    stroke="#555555"
+                    stroke-opacity="0.25"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M20 200 C 130 180, 220 250, 330 220"
+                    fill="none"
+                    stroke="#555555"
+                    stroke-opacity="0.35"
+                    stroke-width="1"
+                  />
+                  <path
+                    d="M30 260 C 140 240, 240 290, 320 270"
+                    fill="none"
+                    stroke="#D1FF00"
+                    stroke-opacity="0.5"
+                    stroke-width="1"
+                  />
 
                   <!-- Central Precision Helmet / Aero Silhouette in Dark Charcoal with Lime Visor -->
                   <g transform="translate(45, 60)">
                     <!-- Helmet Dome Base -->
-                    <path d="M40 160 C 30 120, 50 40, 130 30 C 195 20, 230 70, 235 120 C 238 150, 215 180, 185 190 C 140 205, 60 195, 40 160 Z" fill="#1A1A1A" stroke="#333333" stroke-width="1.5"/>
+                    <path
+                      d="M40 160 C 30 120, 50 40, 130 30 C 195 20, 230 70, 235 120 C 238 150, 215 180, 185 190 C 140 205, 60 195, 40 160 Z"
+                      fill="#1A1A1A"
+                      stroke="#333333"
+                      stroke-width="1.5"
+                    />
                     <!-- Visor in signature Neon Lime -->
-                    <path d="M110 75 C 160 70, 225 85, 230 125 C 232 140, 195 145, 150 145 C 115 145, 100 130, 105 100 Z" fill="#D1FF00"/>
+                    <path
+                      d="M110 75 C 160 70, 225 85, 230 125 C 232 140, 195 145, 150 145 C 115 145, 100 130, 105 100 Z"
+                      fill="#D1FF00"
+                    />
                     <!-- Visor Tear-off Highlight -->
-                    <path d="M125 85 C 165 82, 210 95, 218 120" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                    <path
+                      d="M125 85 C 165 82, 210 95, 218 120"
+                      fill="none"
+                      stroke="#FFFFFF"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                    />
                     <!-- Aerodynamic Chin spoiler -->
-                    <path d="M150 170 L 210 165 L 195 185 Z" fill="#111111" stroke="#333333"/>
+                    <path
+                      d="M150 170 L 210 165 L 195 185 Z"
+                      fill="#111111"
+                      stroke="#333333"
+                    />
                     <!-- Technical Telemetry Data Annotations -->
-                    <text x="50" y="22" fill="#555555" font-family="'Mona Sans', monospace" font-size="9" letter-spacing="0.1em">AERO_SPEC // 04</text>
-                    <text x="160" y="215" fill="#D1FF00" font-family="'Mona Sans', monospace" font-size="9" font-weight="700" letter-spacing="0.1em">4.2G LATERAL</text>
+                    <text
+                      x="50"
+                      y="22"
+                      fill="#555555"
+                      font-family="'Mona Sans', monospace"
+                      font-size="9"
+                      letter-spacing="0.1em"
+                    >
+                      AERO_SPEC // 04
+                    </text>
+                    <text
+                      x="160"
+                      y="215"
+                      fill="#D1FF00"
+                      font-family="'Mona Sans', monospace"
+                      font-size="9"
+                      font-weight="700"
+                      letter-spacing="0.1em"
+                    >
+                      4.2G LATERAL
+                    </text>
                   </g>
                 </svg>
               </div>
 
               <div class="page-heading">
                 <div>
-                  <p class="eyebrow" id="pageEyebrow">A LITTLE SPACE FOR YOURSELF</p>
-                  <h1 id="pageTitle">Your notes<span class="heading-period">.</span></h1>
-                  <p class="page-subtitle" id="pageSubtitle">A high-performance editorial workspace. Expansive clarity, instant local persistence, and surgical precision.</p>
+                  <p class="eyebrow" id="pageEyebrow">
+                    A LITTLE SPACE FOR YOURSELF
+                  </p>
+                  <h1 id="pageTitle">
+                    Your notes<span class="heading-period">.</span>
+                  </h1>
+                  <p class="page-subtitle" id="pageSubtitle">
+                    A high-performance editorial workspace. Expansive clarity,
+                    instant local persistence, and surgical precision.
+                  </p>
                 </div>
-                <button class="primary-button" id="newNoteBtnTop"><span>＋</span> New note</button>
+                <button class="primary-button" id="newNoteBtnTop">
+                  <span>＋</span> New note
+                </button>
               </div>
             </div>
           </section>
@@ -401,50 +811,133 @@ import "../styles/global.css";
           <section class="faq-section" id="faq" aria-labelledby="faqHeading">
             <div class="faq-header">
               <p class="eyebrow">FREQUENTLY ASKED QUESTIONS</p>
-              <h2 id="faqHeading">Common questions about DayBook<span class="heading-period">.</span></h2>
-              <p class="faq-subtitle">Everything you need to know about privacy, offline access, shortcuts, and managing your daily tasks.</p>
+              <h2 id="faqHeading">
+                Common questions about DayBook
+                <span class="heading-period">.</span>
+              </h2>
+              <p class="faq-subtitle">
+                Everything you need to know about privacy, offline access,
+                shortcuts, and managing your daily tasks.
+              </p>
             </div>
             <div class="faq-list">
               <details class="faq-item">
-                <summary class="faq-question"><span>What is DayBook and how does it work?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
+                <summary class="faq-question">
+                  <span>What is DayBook and how does it work?</span>
+                  <span class="faq-toggle" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
                 <div class="faq-answer">
-                  <p>DayBook is a free, fast, and minimalist online note-taking and daily to-do list web app. It lets you capture thoughts, organize ideas with custom labels, pin important notes, and track daily tasks with a real-time progress tracker — all with zero distractions and no sign-up required.</p>
+                  <p>
+                    DayBook is a free, fast, and minimalist online note-taking
+                    and daily to-do list web app. It lets you capture thoughts,
+                    organize ideas with custom labels, pin important notes, and
+                    track daily tasks with a real-time progress tracker — all
+                    with zero distractions and no sign-up required.
+                  </p>
                 </div>
               </details>
               <details class="faq-item">
-                <summary class="faq-question"><span>Is DayBook completely free to use?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
+                <summary class="faq-question">
+                  <span>Is DayBook completely free to use?</span>
+                  <span class="faq-toggle" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
                 <div class="faq-answer">
-                  <p>Yes, DayBook is 100% free to use. There are no subscriptions, paywalls, premium tiers, or hidden fees. You get full access to all features, including unlimited notes, priority to-do lists, search, tags, and theme customization.</p>
+                  <p>
+                    Yes, DayBook is 100% free to use. There are no
+                    subscriptions, paywalls, premium tiers, or hidden fees. You
+                    get full access to all features, including unlimited notes,
+                    priority to-do lists, search, tags, and theme customization.
+                  </p>
                 </div>
               </details>
               <details class="faq-item">
-                <summary class="faq-question"><span>Are my notes and tasks private and secure?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
+                <summary class="faq-question">
+                  <span>Are my notes and tasks private and secure?</span>
+                  <span class="faq-toggle" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
                 <div class="faq-answer">
-                  <p>Yes. DayBook is privacy-first. All your notes and tasks are saved directly on your local device using browser local storage. Your data is never uploaded to external servers, shared with third parties, or used for tracking.</p>
+                  <p>
+                    Yes. DayBook is privacy-first. All your notes and tasks are
+                    saved directly on your local device using browser local
+                    storage. Your data is never uploaded to external servers,
+                    shared with third parties, or used for tracking.
+                  </p>
                 </div>
               </details>
               <details class="faq-item">
-                <summary class="faq-question"><span>Can I use DayBook offline on mobile and desktop?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
+                <summary class="faq-question">
+                  <span>Can I use DayBook offline on mobile and desktop?</span>
+                  <span class="faq-toggle" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
                 <div class="faq-answer">
-                  <p>Yes. DayBook is built as a Progressive Web App (PWA). You can install it on your iPhone, iPad, Android phone, Mac, or Windows PC directly from your browser. Once installed, it launches in standalone fullscreen mode and works seamlessly offline without an active internet connection.</p>
+                  <p>
+                    Yes. DayBook is built as a Progressive Web App (PWA). You
+                    can install it on your iPhone, iPad, Android phone, Mac, or
+                    Windows PC directly from your browser. Once installed, it
+                    launches in standalone fullscreen mode and works seamlessly
+                    offline without an active internet connection.
+                  </p>
                 </div>
               </details>
               <details class="faq-item">
-                <summary class="faq-question"><span>How do I organize my notes with labels and pins?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
+                <summary class="faq-question">
+                  <span>How do I organize my notes with labels and pins?</span>
+                  <span class="faq-toggle" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
                 <div class="faq-answer">
-                  <p>You can categorize notes using custom color-coded labels such as Ideas, Personal, and Work. You can also click the pin icon to pin essential notes to the top of your workspace for instant retrieval.</p>
+                  <p>
+                    You can categorize notes using custom color-coded labels
+                    such as Ideas, Personal, and Work. You can also click the
+                    pin icon to pin essential notes to the top of your workspace
+                    for instant retrieval.
+                  </p>
                 </div>
               </details>
               <details class="faq-item">
-                <summary class="faq-question"><span>What keyboard shortcuts are available in DayBook?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
+                <summary class="faq-question">
+                  <span>What keyboard shortcuts are available in DayBook?</span>
+                  <span class="faq-toggle" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
                 <div class="faq-answer">
-                  <p>DayBook supports fast keyboard workflows: press <strong>N</strong> anywhere on the page to create a new note, press <strong>⌘ K</strong> (or <strong>Ctrl K</strong>) to search notes, and press <strong>⌘ Enter</strong> (or <strong>Ctrl Enter</strong>) to save and close the note editor.</p>
+                  <p>
+                    DayBook supports fast keyboard workflows: press{" "}
+                    <strong>N</strong> anywhere on the page to create a new
+                    note, press <strong>⌘ K</strong> (or <strong>Ctrl K</strong>
+                    ) to search notes, and press <strong>⌘ Enter</strong> (or{" "}
+                    <strong>Ctrl Enter</strong>) to save and close the note
+                    editor.
+                  </p>
                 </div>
               </details>
               <details class="faq-item">
-                <summary class="faq-question"><span>How does the built-in to-do list track daily progress?</span><span class="faq-toggle" aria-hidden="true">+</span></summary>
+                <summary class="faq-question">
+                  <span>
+                    How does the built-in to-do list track daily progress?
+                  </span>
+                  <span class="faq-toggle" aria-hidden="true">
+                    +
+                  </span>
+                </summary>
                 <div class="faq-answer">
-                  <p>The to-do list tab includes an automated progress bar showing the exact percentage and count of completed tasks. You can assign priority levels (High, Normal, Low) to each item, filter by active or completed tasks, and clear finished tasks with a single click.</p>
+                  <p>
+                    The to-do list tab includes an automated progress bar
+                    showing the exact percentage and count of completed tasks.
+                    You can assign priority levels (High, Normal, Low) to each
+                    item, filter by active or completed tasks, and clear
+                    finished tasks with a single click.
+                  </p>
                 </div>
               </details>
             </div>
@@ -457,42 +950,96 @@ import "../styles/global.css";
                 <div class="footer-zone-nav">
                   <p class="footer-heading">DIRECTORY</p>
                   <ul class="footer-links">
-                    <li><a href="/">All Notes</a></li>
-                    <li><a href="/year">365 Days Dots</a></li>
-                    <li><a href="/#notesView">Recent Notes</a></li>
-                    <li><a href="/#tasksView">To-Do List</a></li>
-                    <li><a href="/#faq">Frequently Asked Questions</a></li>
+                    <li>
+                      <a href="/">All Notes</a>
+                    </li>
+                    <li>
+                      <a href="/year">365 Days Dots</a>
+                    </li>
+                    <li>
+                      <a href="/#notesView">Recent Notes</a>
+                    </li>
+                    <li>
+                      <a href="/#tasksView">To-Do List</a>
+                    </li>
+                    <li>
+                      <a href="/#faq">Frequently Asked Questions</a>
+                    </li>
                   </ul>
                 </div>
 
                 <!-- Zone 2: Brand & Direct Inquiries center -->
                 <div class="footer-zone-center">
                   <div class="footer-brand">
-                    <span class="brand-mark" style="width:30px;height:30px;display:inline-flex;">
+                    <span
+                      class="brand-mark"
+                      style="width:30px;height:30px;display:inline-flex;"
+                    >
                       <svg viewBox="0 0 40 40">
-                        <rect width="40" height="40" rx="10" fill="#111111" stroke="#333333" stroke-width="1.2"/>
-                        <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#F5F5F0"/>
-                        <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="#F5F5F0"/>
-                        <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#111111"/>
-                        <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="#D1FF00"/>
+                        <rect
+                          width="40"
+                          height="40"
+                          rx="10"
+                          fill="#111111"
+                          stroke="#333333"
+                          stroke-width="1.2"
+                        />
+                        <path
+                          d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z"
+                          fill="#F5F5F0"
+                        />
+                        <path
+                          d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z"
+                          fill="#F5F5F0"
+                        />
+                        <path
+                          d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z"
+                          fill="#111111"
+                        />
+                        <path
+                          d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z"
+                          fill="#D1FF00"
+                        />
                       </svg>
                     </span>
-                    <span class="footer-brand-name">DayBook<span class="brand-period">.</span></span>
+                    <span class="footer-brand-name">
+                      DayBook<span class="brand-period">.</span>
+                    </span>
                   </div>
-                  <p class="footer-desc">Editorial Formula Utility. Zero tracking, distraction-free, 100% client-side local storage.</p>
-                  <p class="footer-contact">COMMUNICATIONS: <a href="mailto:work.sumritatiyagi@gmail.com">work.sumritatiyagi@gmail.com</a></p>
+                  <p class="footer-desc">
+                    Editorial Formula Utility. Zero tracking, distraction-free,
+                    100% client-side local storage.
+                  </p>
+                  <p class="footer-contact">
+                    COMMUNICATIONS:{" "}
+                    <a href="mailto:work.sumritatiyagi@gmail.com">
+                      work.sumritatiyagi@gmail.com
+                    </a>
+                  </p>
                 </div>
 
                 <!-- Zone 3: Company & Policies right -->
                 <div class="footer-zone-legal">
                   <p class="footer-heading">EDITIONS &amp; POLICIES</p>
                   <ul class="footer-links">
-                    <li><a href="/about">About Us</a></li>
-                    <li><a href="/contact">Contact Us</a></li>
-                    <li><a href="/feedback">Give Feedback</a></li>
-                    <li><a href="/privacy">Privacy Policy (AdSense)</a></li>
-                    <li><a href="/disclaimer">Disclaimer</a></li>
-                    <li><a href="/terms">Terms &amp; Conditions</a></li>
+                    <li>
+                      <a href="/about">About Us</a>
+                    </li>
+                    <li>
+                      <a href="/contact">Contact Us</a>
+                    </li>
+                    <li>
+                      <a href="/feedback">Give Feedback</a>
+                    </li>
+                    <li>
+                      <a href="/privacy">Privacy Policy (AdSense)</a>
+                    </li>
+                    <li>
+                      <a href="/disclaimer">Disclaimer</a>
+                    </li>
+                    <li>
+                      <a href="/terms">Terms &amp; Conditions</a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -510,39 +1057,135 @@ import "../styles/global.css";
     </div>
 
     <div class="modal-backdrop" id="noteModal" hidden>
-      <section class="note-editor" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+      <section
+        class="note-editor"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="editorTitle"
+      >
         <div class="editor-top">
-          <span class="editor-status"><span class="status-dot"></span><span id="saveStatus">Saved</span></span>
+          <span class="editor-status">
+            <span class="status-dot"></span>
+            <span id="saveStatus">Saved</span>
+          </span>
           <div class="editor-actions">
-            <button id="previewNoteBtn" class="editor-icon" aria-label="Toggle preview" title="Preview note (with clickable links)">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-                <circle cx="12" cy="12" r="3"/>
+            <button
+              id="previewNoteBtn"
+              class="editor-icon"
+              aria-label="Toggle preview"
+              title="Preview note (with clickable links)"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                <circle cx="12" cy="12" r="3" />
               </svg>
             </button>
-            <button id="pinNoteBtn" class="editor-icon" aria-label="Pin note" title="Pin note">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m16 4 4 4-3 1-3 4v4l-2 2-2-5-5-2 2-2h4l4-3z"/><line x1="8" y1="16" x2="4" y2="20"/>
+            <button
+              id="pinNoteBtn"
+              class="editor-icon"
+              aria-label="Pin note"
+              title="Pin note"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m16 4 4 4-3 1-3 4v4l-2 2-2-5-5-2 2-2h4l4-3z" />
+                <line x1="8" y1="16" x2="4" y2="20" />
               </svg>
             </button>
-            <button id="deleteNoteBtn" class="editor-icon delete-icon" aria-label="Delete note" title="Delete note">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
+            <button
+              id="deleteNoteBtn"
+              class="editor-icon delete-icon"
+              aria-label="Delete note"
+              title="Delete note"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 6h18" />
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                <line x1="10" y1="11" x2="10" y2="17" />
+                <line x1="14" y1="11" x2="14" y2="17" />
               </svg>
             </button>
-            <button id="closeEditorBtn" class="editor-close" aria-label="Close editor" title="Close editor">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            <button
+              id="closeEditorBtn"
+              class="editor-close"
+              aria-label="Close editor"
+              title="Close editor"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
           </div>
         </div>
-        <input class="editor-title" id="editorTitle" name="note-title" aria-label="Note title" placeholder="Untitled note" maxlength="100" />
-        <div class="editor-meta"><span id="editorDate"></span><span class="meta-divider">·</span><span id="wordCount">0 words</span><button class="editor-label-button" id="editorLabelBtn"><span class="label-dot"></span><span id="editorLabelText">Add label</span><span>⌄</span></button></div>
+        <input
+          class="editor-title"
+          id="editorTitle"
+          name="note-title"
+          aria-label="Note title"
+          placeholder="Untitled note"
+          maxlength="100"
+        />
+        <div class="editor-meta">
+          <span id="editorDate"></span>
+          <span class="meta-divider">·</span>
+          <span id="wordCount">0 words</span>
+          <button class="editor-label-button" id="editorLabelBtn">
+            <span class="label-dot"></span>
+            <span id="editorLabelText">Add label</span>
+            <span>⌄</span>
+          </button>
+        </div>
         <div class="editor-links-strip" id="editorLinksStrip" hidden></div>
-        <textarea class="editor-body" id="editorBody" name="note-body" aria-label="Note text" placeholder="Begin anywhere…&#10;&#10;A thought, a plan, a little reminder to yourself."></textarea>
+        <textarea
+          class="editor-body"
+          id="editorBody"
+          name="note-body"
+          aria-label="Note text"
+          placeholder="Begin anywhere…&#10;&#10;A thought, a plan, a little reminder to yourself."
+        ></textarea>
         <div class="editor-preview" id="editorPreview" hidden></div>
-        <div class="editor-footer"><span>⌘ ↵ <span>to close</span> · <span>⌘ Click link to open</span></span><span>Only you can see this</span></div>
+        <div class="editor-footer">
+          <span>
+            ⌘ ↵ <span>to close</span> · <span>⌘ Click link to open</span>
+          </span>
+          <span>Only you can see this</span>
+        </div>
       </section>
     </div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>

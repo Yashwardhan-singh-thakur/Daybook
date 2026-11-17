@@ -6,8 +6,8 @@
    - Core philosophy: Motorsport energy meets editorial sophistication
    - Color tokens: action (#D1FF00 neon lime), ink (#111111), canvas (#F5F5F0 warm off-white),
                    surface (#1A1A1A dark charcoal), border (#333333), muted-ink (#555555)
-   - Typography: Brier (Bodoni Moda) display serif (bold, tight tracking) +
-                 Mona Sans (ultra-light 300 weight for functional text)
+   - Typography: Syne & Plus Jakarta Sans bold display (uniform stroke weight) +
+                 Mona Sans (regular 400 weight for clear functional text)
    - Corner radii: Strict 0.75rem (buttons, inputs) to 1.5rem (panels, cards); no soft shadows/gradients
    - Layout: Asymmetric 1:2 split, left-weighted imagery, aerodynamic wind-tunnel lines
    - Contained rounded footer panel (#1A1A1A) with neon lime (#D1FF00) border frame
@@ -33,7 +33,7 @@
   --sidebar: 250px;
 
   /* Typography Pairing */
-  --font-display: "Brier", "Bodoni Moda", "Playfair Display", Georgia, serif;
+  --font-display: "Syne", "Plus Jakarta Sans", "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-body: "Mona Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
@@ -50,7 +50,7 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
   letter-spacing: 0em;
   -webkit-font-smoothing: antialiased;
@@ -251,11 +251,11 @@ button {
 }
 
 .nav-item {
-  color: #999999;
+  color: #AAAAAA;
   border-radius: 0.75rem;
   height: 40px;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   padding: 0 14px;
@@ -339,11 +339,11 @@ a.nav-item:focus-visible {
 
 .label-item-wrap .label-item {
   flex: 1;
-  color: #999999;
+  color: #AAAAAA;
   border-radius: 0.75rem;
   height: 36px;
   font-size: 12.5px;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   padding: 0 8px 0 14px;
@@ -578,7 +578,7 @@ a.nav-item:focus-visible {
 .breadcrumb {
   color: var(--color-muted-ink);
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   display: flex;
@@ -710,9 +710,9 @@ a.nav-item:focus-visible {
   color: var(--color-ink);
   font-family: var(--font-display);
   font-size: clamp(48px, 6.2vw, 92px);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.03em;
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
@@ -721,7 +721,7 @@ a.nav-item:focus-visible {
   margin-top: 18px;
   color: var(--color-muted-ink);
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
 }
 
@@ -785,7 +785,7 @@ a.nav-item:focus-visible {
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: 14.5px;
-  font-weight: 300;
+  font-weight: 400;
   flex: 1;
   min-width: 0;
   border: none;
@@ -976,7 +976,7 @@ kbd {
   color: #999999;
   font-family: var(--font-body);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.6;
   margin: 0;
   display: -webkit-box;
@@ -1382,7 +1382,7 @@ kbd {
   color: #F5F5F0;
   font-family: var(--font-body);
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.01em;
 }
 
@@ -1732,7 +1732,7 @@ kbd {
 .task-text {
   font-family: var(--font-body);
   font-size: 14.5px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.45;
   color: #F5F5F0;
   word-break: break-word;
@@ -1925,7 +1925,7 @@ kbd {
 .task-empty-card p {
   font-family: var(--font-body);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   color: #777777;
   max-width: 380px;
   margin: 0 auto;
@@ -2246,7 +2246,7 @@ kbd {
   color: #CCCCCC;
   font-family: var(--font-body);
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.75;
 }
 
@@ -2291,7 +2291,7 @@ kbd {
 .faq-subtitle {
   color: var(--color-muted-ink);
   font-size: 15.5px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
   max-width: 680px;
   margin: 0;
@@ -2342,7 +2342,7 @@ kbd {
 .faq-toggle {
   font-family: var(--font-body);
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 400;
   color: var(--color-action);
   transition: transform 0.2s ease;
   line-height: 1;
@@ -2357,7 +2357,7 @@ kbd {
   padding: 0 26px 22px;
   color: #AAAAAA;
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.7;
 }
 
@@ -2430,7 +2430,7 @@ kbd {
 .article-body p {
   margin: 0 0 20px;
   color: var(--color-ink);
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .article-body ul,
@@ -2519,7 +2519,7 @@ kbd {
   padding: 12px 16px;
   font-size: 14.5px;
   font-family: var(--font-body);
-  font-weight: 300;
+  font-weight: 400;
   color: #F5F5F0;
   background: #111111;
   outline: none;
@@ -2585,7 +2585,7 @@ kbd {
 
 .footer-desc {
   font-size: 13.5px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
   color: #999999;
   margin: 0 0 14px;
@@ -2635,7 +2635,7 @@ kbd {
 .footer-links li a {
   color: #CCCCCC;
   font-size: 13px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   text-decoration: none;
@@ -2720,7 +2720,7 @@ kbd {
   background: transparent;
   color: #CCCCCC;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   transition: background 0.15s ease;
@@ -2769,7 +2769,7 @@ kbd {
   background: transparent;
   color: #CCCCCC;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   cursor: pointer;
