@@ -16,6 +16,15 @@ import "../styles/global.css";
     <meta name="google-site-verification" content="huywtd-WB2UAcSFD3dsiemCRwUt3tIWIX8Uor4aZTOo" />
     <meta name="description" content="A calm, considered space for notes, ideas, and everyday tasks." />
     <link rel="canonical" href="https://daybook.com/" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="DayBook" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <title>DayBook — Make room for what matters</title>
   </head>
   <body>
@@ -23,7 +32,25 @@ import "../styles/global.css";
     <div class="app-shell min-h-screen">
       <aside class="sidebar" id="sidebar">
         <a class="brand" href="/" aria-label="DayBook home">
-          <span class="brand-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.75h8.5L19 8.3v11.95H6z"/><path d="M14.5 3.75V8.5H19M9 12h7M9 15.5h7"/></svg></span>
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 40 40" aria-hidden="true">
+              <defs>
+                <linearGradient id="db-mark-grad" x1="16" y1="9" x2="30" y2="31" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#FFFFFF"/>
+                  <stop offset="1" stop-color="#D7D5D8"/>
+                </linearGradient>
+                <linearGradient id="db-mark-ribbon" x1="18" y1="9" x2="22.5" y2="20.5" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#E226B8"/>
+                  <stop offset="1" stop-color="#CB009E"/>
+                </linearGradient>
+              </defs>
+              <rect width="40" height="40" rx="9" fill="#0C0B0E" stroke="#2C2A30" stroke-width="1.2"/>
+              <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#FFFFFF"/>
+              <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="url(#db-mark-grad)"/>
+              <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#0C0B0E"/>
+              <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="url(#db-mark-ribbon)"/>
+            </svg>
+          </span>
           <span class="brand-name">DayBook<span class="brand-period">.</span></span>
         </a>
 
