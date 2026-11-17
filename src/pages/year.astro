@@ -476,7 +476,7 @@ import PageLayout from "../layouts/PageLayout.astro";
           <div class="day-note-item">
             ${labelBadge}
             <strong>${n.title ? escapeHtml(n.title) : 'Untitled Note'}</strong>
-            <p>${escapeHtml(n.body ? n.body.slice(0, 140) : 'No preview available...')}</p>
+            <p>${linkifyText(n.body ? n.body.slice(0, 140) : 'No preview available...')}</p>
           </div>
         `;
       }).join('');
@@ -486,6 +486,35 @@ import PageLayout from "../layouts/PageLayout.astro";
 
     modal.hidden = false;
     document.body.style.overflow = 'hidden';
+  }
+
+  function cleanUrl(raw) {
+    let url = String(raw || '').replace(/^\(+/, '');
+    while (/[.,!?:;)]$/.test(url)) url = url.slice(0, -1);
+    return url;
+  }
+
+  function linkifyText(text) {
+    if (!text) return '';
+    const mdMap = {};
+    let str = escapeHtml(text);
+    str = str.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+|www\.[^\s\)]+)\)/g, (match, title, rawUrl) => {
+      const key = `__MD_${Object.keys(mdMap).length}__`;
+      const clean = cleanUrl(rawUrl);
+      const href = clean.startsWith('http') ? clean : `https://${clean}`;
+      mdMap[key] = `<a href="${href}" target="_blank" rel="noopener noreferrer" class="note-inline-link" onclick="event.stopPropagation()">${title} <span class="link-arrow">↗</span></a>`;
+      return key;
+    });
+    const urlRegex = /(https?:\/\/[^\s<>'\"()]+|www\.[^\s<>'\"()]+)/g;
+    str = str.replace(urlRegex, (rawUrl) => {
+      const clean = cleanUrl(rawUrl);
+      const href = clean.startsWith('http') ? clean : `https://${clean}`;
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="note-inline-link" onclick="event.stopPropagation()">${clean} <span class="link-arrow">↗</span></a>`;
+    });
+    for (const [key, val] of Object.entries(mdMap)) {
+      str = str.replace(key, val);
+    }
+    return str;
   }
 
   function escapeHtml(str) {

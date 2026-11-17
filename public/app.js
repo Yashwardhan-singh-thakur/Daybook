@@ -153,6 +153,136 @@
     return (!query || text.includes(query.toLowerCase())) && (selectedLabel === 'all' || note.label === selectedLabel) && (currentView !== 'pinned' || note.pinned);
   }
 
+  let isPreviewMode = false;
+
+  function cleanUrl(raw) {
+    let url = String(raw || '').replace(/^\(+/, '');
+    while (/[.,!?:;)]$/.test(url)) url = url.slice(0, -1);
+    return url;
+  }
+
+  function extractUrls(text) {
+    if (!text) return [];
+    const results = [];
+    const seen = new Set();
+    const mdRegex = /\[([^\]]+)\]\((https?:\/\/[^\s\)]+|www\.[^\s\)]+)\)/g;
+    let m;
+    while ((m = mdRegex.exec(text)) !== null) {
+      const raw = cleanUrl(m[2]);
+      const href = raw.startsWith('http') ? raw : `https://${raw}`;
+      if (!seen.has(href)) {
+        seen.add(href);
+        results.push({ title: m[1], href, raw });
+      }
+    }
+    const urlRegex = /(https?:\/\/[^\s<>'\"()]+|www\.[^\s<>'\"()]+)/g;
+    while ((m = urlRegex.exec(text)) !== null) {
+      const raw = cleanUrl(m[1]);
+      const href = raw.startsWith('http') ? raw : `https://${raw}`;
+      if (!seen.has(href)) {
+        seen.add(href);
+        const displayTitle = raw.replace(/^https?:\/\//i, '').replace(/\/$/, '');
+        results.push({ title: displayTitle, href, raw });
+      }
+    }
+    return results;
+  }
+
+  function linkifyText(text) {
+    if (!text) return '';
+    const mdMap = {};
+    let str = safe(text);
+    str = str.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+|www\.[^\s\)]+)\)/g, (match, title, rawUrl) => {
+      const key = `__MD_${Object.keys(mdMap).length}__`;
+      const clean = cleanUrl(rawUrl);
+      const href = clean.startsWith('http') ? clean : `https://${clean}`;
+      mdMap[key] = `<a href="${href}" target="_blank" rel="noopener noreferrer" class="note-inline-link" onclick="event.stopPropagation()">${title} <span class="link-arrow">↗</span></a>`;
+      return key;
+    });
+    const urlRegex = /(https?:\/\/[^\s<>'\"()]+|www\.[^\s<>'\"()]+)/g;
+    str = str.replace(urlRegex, (rawUrl) => {
+      const clean = cleanUrl(rawUrl);
+      const href = clean.startsWith('http') ? clean : `https://${clean}`;
+      return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="note-inline-link" onclick="event.stopPropagation()">${clean} <span class="link-arrow">↗</span></a>`;
+    });
+    for (const [key, val] of Object.entries(mdMap)) {
+      str = str.replace(key, val);
+    }
+    return str;
+  }
+
+  function getUrlAtPosition(text, pos) {
+    let start = pos;
+    while (start > 0 && !/\s/.test(text[start - 1])) start--;
+    let end = pos;
+    while (end < text.length && !/\s/.test(text[end])) end++;
+    const word = text.slice(start, end);
+    const urlMatch = word.match(/(https?:\/\/[^\s<>'\"()]+|www\.[^\s<>'\"()]+)/);
+    if (urlMatch) {
+      const raw = cleanUrl(urlMatch[0]);
+      const href = raw.startsWith('http') ? raw : `https://${raw}`;
+      return { raw, href };
+    }
+    return null;
+  }
+
+  function updateEditorLinks() {
+    const text = `${editorTitle.value} ${editorBody.value}`;
+    const links = extractUrls(text);
+    const strip = $('editorLinksStrip');
+    if (!strip) return;
+    if (links.length === 0) {
+      strip.hidden = true;
+      strip.innerHTML = '';
+    } else {
+      strip.hidden = false;
+      strip.innerHTML = `
+        <span class="editor-links-label">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+          </svg>
+          LINKS (${links.length}):
+        </span>
+        ${links.map((l) => `
+          <a href="${safe(l.href)}" target="_blank" rel="noopener noreferrer" class="editor-link-pill" title="Open ${safe(l.href)} in new tab">
+            <span>${safe(l.title)}</span>
+            <span class="link-arrow">↗</span>
+          </a>
+        `).join('')}
+      `;
+    }
+  }
+
+  function toggleEditorPreview() {
+    isPreviewMode = !isPreviewMode;
+    const btn = $('previewNoteBtn');
+    if (btn) {
+      btn.classList.toggle('active', isPreviewMode);
+      btn.setAttribute('title', isPreviewMode ? 'Edit note' : 'Preview note (with clickable links)');
+      btn.setAttribute('aria-label', isPreviewMode ? 'Edit note' : 'Preview note');
+    }
+    const previewEl = $('editorPreview');
+    if (isPreviewMode) {
+      editorBody.hidden = true;
+      previewEl.hidden = false;
+      const bodyContent = editorBody.value.trim();
+      if (!bodyContent) {
+        previewEl.innerHTML = '<p class="preview-empty">Nothing written yet. Switch back to edit.</p>';
+      } else {
+        const paragraphs = bodyContent.split(/\n\s*\n/);
+        previewEl.innerHTML = paragraphs.map((p) => {
+          const lines = p.split('\n').map((line) => linkifyText(line)).join('<br/>');
+          return `<p>${lines}</p>`;
+        }).join('');
+      }
+    } else {
+      editorBody.hidden = false;
+      previewEl.hidden = true;
+      editorBody.focus();
+    }
+  }
+
   function renderNotes() {
     const query = $('searchInput').value.trim();
     const filtered = data.notes.filter((note) => noteMatches(note, query)).sort((a, b) => Number(b.pinned) - Number(a.pinned) || (sortOrder === 'recent' ? new Date(b.updatedAt) - new Date(a.updatedAt) : new Date(a.updatedAt) - new Date(b.updatedAt)));
@@ -163,11 +293,21 @@
       const title = note.title.trim() || 'Untitled note';
       const preview = (note.body || '').trim() || 'A little space for a thought...';
       const label = note.label ? `<span class="note-label" data-label="${safe(note.label)}" style="--note-color:${labelColor(note.label)}"><span class="label-dot" style="background:${labelColor(note.label)}"></span>${safe(note.label)}</span>` : '';
-      return `<article class="note-card" data-id="${safe(note.id)}" tabindex="0" aria-label="Open ${safe(title)}"><div class="note-card-top">${label}<span class="pin-indicator">${note.pinned ? '⌁' : ''}</span></div><h3>${safe(title)}</h3><p class="note-preview">${safe(preview)}</p><div class="note-card-bottom"><span class="note-date">${relativeDate(note.updatedAt)}</span><button class="note-dots" data-menu-id="${safe(note.id)}" aria-label="Note options">···</button></div></article>`;
+      const previewHtml = linkifyText(preview);
+      return `<article class="note-card" data-id="${safe(note.id)}" tabindex="0" aria-label="Open ${safe(title)}"><div class="note-card-top">${label}<span class="pin-indicator">${note.pinned ? '⌁' : ''}</span></div><h3>${safe(title)}</h3><p class="note-preview">${previewHtml}</p><div class="note-card-bottom"><span class="note-date">${relativeDate(note.updatedAt)}</span><button class="note-dots" data-menu-id="${safe(note.id)}" aria-label="Note options">···</button></div></article>`;
     }).join('');
     notesGrid.querySelectorAll('.note-card').forEach((card) => {
-      card.addEventListener('click', (event) => { if (!event.target.closest('.note-dots')) openNote(card.dataset.id); });
-      card.addEventListener('keydown', (event) => { if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('.note-dots')) { event.preventDefault(); openNote(card.dataset.id); } });
+      card.addEventListener('click', (event) => {
+        if (!event.target.closest('.note-dots') && !event.target.closest('.note-inline-link')) {
+          openNote(card.dataset.id);
+        }
+      });
+      card.addEventListener('keydown', (event) => {
+        if ((event.key === 'Enter' || event.key === ' ') && !event.target.closest('.note-dots') && !event.target.closest('.note-inline-link')) {
+          event.preventDefault();
+          openNote(card.dataset.id);
+        }
+      });
     });
     notesGrid.querySelectorAll('.note-dots').forEach((button) => button.addEventListener('click', (event) => { event.stopPropagation(); showNoteMenu(button, button.dataset.menuId); }));
     const empty = filtered.length === 0;
@@ -330,6 +470,13 @@
     $('pinNoteBtn').setAttribute('aria-label', note.pinned ? 'Unpin note' : 'Pin note');
     $('editorLabelText').textContent = note.label || 'Add label';
     $('editorLabelBtn').querySelector('.label-dot').style.background = note.label ? labelColor(note.label) : '#c1c8bf';
+    isPreviewMode = false;
+    $('previewNoteBtn')?.classList.remove('active');
+    $('previewNoteBtn')?.setAttribute('title', 'Preview note (with clickable links)');
+    $('previewNoteBtn')?.setAttribute('aria-label', 'Preview note');
+    editorBody.hidden = false;
+    $('editorPreview').hidden = true;
+    updateEditorLinks();
     updateWordCount(); noteModal.hidden = false; document.body.style.overflow = 'hidden';
     window.setTimeout(() => editorTitle.focus(), 30);
   }
@@ -337,13 +484,14 @@
     const note = data.notes.find((item) => item.id === activeNoteId); if (!note) return;
     note.title = editorTitle.value; note.body = editorBody.value; note.updatedAt = new Date().toISOString();
     $('saveStatus').textContent = 'Saving…'; persist();
+    updateEditorLinks();
     clearTimeout(saveTimer); saveTimer = setTimeout(() => { $('saveStatus').textContent = 'Saved'; $('editorDate').textContent = `Edited ${relativeDate(note.updatedAt)}`; renderNotes(); renderLabels(); }, 320);
   }
   function closeEditor() {
     if (!activeNoteId) { noteModal.hidden = true; document.body.style.overflow = ''; return; }
     const note = data.notes.find((item) => item.id === activeNoteId);
     if (note && !note.title.trim() && !note.body.trim()) data.notes = data.notes.filter((item) => item.id !== note.id);
-    activeNoteId = null; noteModal.hidden = true; document.body.style.overflow = ''; persist(); renderNotes(); renderLabels();
+    activeNoteId = null; isPreviewMode = false; noteModal.hidden = true; document.body.style.overflow = ''; persist(); renderNotes(); renderLabels();
   }
   function deleteNote(id) {
     const note = data.notes.find((item) => item.id === id); if (!note) return;
@@ -492,6 +640,18 @@
   document.querySelectorAll('.view-button').forEach((button) => button.addEventListener('click', () => { layout = button.dataset.layout; document.querySelectorAll('.view-button').forEach((item) => item.classList.toggle('selected', item === button)); renderNotes(); }));
   editorTitle.addEventListener('input', saveEditor); editorBody.addEventListener('input', () => { updateWordCount(); saveEditor(); });
   $('closeEditorBtn').addEventListener('click', closeEditor); $('pinNoteBtn').addEventListener('click', togglePin);
+  $('previewNoteBtn')?.addEventListener('click', toggleEditorPreview);
+  editorBody.addEventListener('click', (event) => {
+    if (event.metaKey || event.ctrlKey) {
+      const pos = editorBody.selectionStart;
+      const text = editorBody.value;
+      const match = getUrlAtPosition(text, pos);
+      if (match) {
+        window.open(match.href, '_blank', 'noopener,noreferrer');
+        showToast(`Opening ${match.raw} in new tab ↗`);
+      }
+    }
+  });
   $('deleteNoteBtn').addEventListener('click', () => { if (activeNoteId) deleteNote(activeNoteId); });
   noteModal.addEventListener('click', (event) => { if (event.target === noteModal) closeEditor(); });
   $('taskForm').addEventListener('submit', addTask);

@@ -914,6 +914,41 @@ kbd {
   white-space: pre-wrap;
 }
 
+/* Glowing Blue Links in Notes (per user request) */
+.note-inline-link {
+  color: #00E5FF; /* Vivid Electric Blue / Cyan */
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: #00E5FF;
+  font-weight: 500;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.65), 0 0 18px rgba(0, 229, 255, 0.35);
+  transition: all 0.16s ease;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  word-break: break-all;
+}
+
+.note-inline-link:hover,
+.note-inline-link:focus-visible {
+  color: #FFFFFF;
+  text-decoration-color: #FFFFFF;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 1), 0 0 24px rgba(0, 229, 255, 0.8), 0 0 36px rgba(0, 160, 255, 0.6);
+}
+
+.note-inline-link .link-arrow {
+  font-size: 11px;
+  opacity: 0.85;
+  display: inline-block;
+  margin-left: 2px;
+  transition: transform 0.14s ease;
+}
+
+.note-inline-link:hover .link-arrow {
+  transform: translate(2px, -2px);
+  opacity: 1;
+}
+
 .note-card-bottom {
   margin-top: auto;
   padding-top: 18px;
@@ -1500,6 +1535,13 @@ kbd {
   color: #111111;
 }
 
+.editor-icon.active {
+  color: #00E5FF;
+  border-color: #00E5FF;
+  background: rgba(0, 229, 255, 0.12);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+}
+
 .editor-title {
   margin-top: 24px;
   border: none;
@@ -1549,6 +1591,98 @@ kbd {
   height: 5px;
   border-radius: 50%;
   background: var(--color-action);
+}
+
+/* Detected Links Strip in Note Editor */
+.editor-links-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 6px;
+  padding: 8px 12px;
+  background: #111111;
+  border: 1px solid #282828;
+  border-radius: 0.75rem;
+  transition: all 0.2s ease;
+}
+
+.editor-links-strip[hidden] {
+  display: none;
+}
+
+.editor-links-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #777777;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.editor-links-label svg {
+  color: #00E5FF;
+}
+
+.editor-link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 0.5rem;
+  color: #00E5FF;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-decoration: none;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.15);
+  transition: all 0.16s ease;
+  cursor: pointer;
+}
+
+.editor-link-pill:hover,
+.editor-link-pill:focus-visible {
+  background: rgba(0, 229, 255, 0.2);
+  border-color: #00E5FF;
+  color: #FFFFFF;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.95), 0 0 24px rgba(0, 229, 255, 0.65);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.editor-link-pill .link-arrow {
+  font-size: 11px;
+}
+
+/* Editor Rendered Preview Mode */
+.editor-preview {
+  margin-top: 24px;
+  flex: 1;
+  overflow-y: auto;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.75;
+  color: #CCCCCC;
+  word-break: break-word;
+}
+
+.editor-preview[hidden] {
+  display: none;
+}
+
+.editor-preview p {
+  margin: 0 0 16px;
+}
+
+.editor-preview .preview-empty {
+  color: #666666;
+  font-style: italic;
 }
 
 .editor-body {
