@@ -1,6 +1,27 @@
 (() => {
   const STORE_KEY = 'daybook-v1';
-  const LABEL_COLORS = { Ideas: '#D1FF00', Personal: '#D1FF00', Work: '#D1FF00', Journal: '#D1FF00' };
+  const PRESET_LABEL_COLORS = [
+    '#D1FF00', // Neon Lime (Signature)
+    '#00E5FF', // Electric Cyan
+    '#FF3366', // Hyper Coral
+    '#FFB800', // Amber Gold
+    '#A855F7', // Neon Violet
+    '#00E676', // Bright Emerald
+    '#FF6D00', // Hyper Orange
+    '#38BDF8', // Sky Blue
+    '#F43F5E', // Vivid Rose
+    '#10B981', // Mint Teal
+    '#E040FB', // Neon Magenta
+    '#F59E0B', // Golden Orange
+    '#6366F1', // Cobalt Indigo
+    '#EC4899', // Hot Pink
+  ];
+  const defaultLabelColors = {
+    Personal: '#00E5FF',
+    Work: '#FFB800',
+    Ideas: '#D1FF00',
+    Journal: '#A855F7',
+  };
   const defaultLabels = ['Personal', 'Work', 'Ideas'];
   let data = loadData();
   let currentView = 'notes';
@@ -21,13 +42,17 @@
   function loadData() {
     try {
       const parsed = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+      const loadedLabelColors = (typeof parsed.labelColors === 'object' && parsed.labelColors !== null)
+        ? { ...defaultLabelColors, ...parsed.labelColors }
+        : { ...defaultLabelColors };
       return {
         notes: Array.isArray(parsed.notes) ? parsed.notes : [],
         tasks: Array.isArray(parsed.tasks) ? parsed.tasks : [],
         labels: Array.isArray(parsed.labels) && parsed.labels.length ? parsed.labels : [...defaultLabels],
+        labelColors: loadedLabelColors,
         dark: Boolean(parsed.dark),
       };
-    } catch { return { notes: [], tasks: [], labels: [...defaultLabels], dark: false }; }
+    } catch { return { notes: [], tasks: [], labels: [...defaultLabels], labelColors: { ...defaultLabelColors }, dark: false }; }
   }
 
   function persist() {
@@ -52,14 +77,72 @@
     clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 2100);
   }
   function setToday() { $('todayDate').textContent = new Date().toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' }); }
-  function labelColor(label) { return LABEL_COLORS[label] || '#c99670'; }
+  
+  function labelColor(label) {
+    if (!label) return '#D1FF00';
+    if (!data.labelColors) data.labelColors = { ...defaultLabelColors };
+    if (data.labelColors[label]) return data.labelColors[label];
+    let hash = 0;
+    for (let i = 0; i < label.length; i++) hash = (hash * 31 + label.charCodeAt(i)) >>> 0;
+    const color = PRESET_LABEL_COLORS[hash % PRESET_LABEL_COLORS.length];
+    data.labelColors[label] = color;
+    return color;
+  }
+
+  function setLabelColor(label, newColor) {
+    if (!label || !newColor) return;
+    if (!data.labelColors) data.labelColors = {};
+    data.labelColors[label] = newColor;
+    persist();
+    renderLabels();
+    renderNotes();
+    if (activeNoteId) {
+      const note = data.notes.find((item) => item.id === activeNoteId);
+      if (note && note.label === label) {
+        const dot = $('editorLabelBtn')?.querySelector('.label-dot');
+        if (dot) dot.style.background = newColor;
+      }
+    }
+  }
 
   function renderLabels() {
-    $('labelList').innerHTML = data.labels.map((label) => `<button class="label-item ${selectedLabel === label ? 'selected' : ''}" data-label="${safe(label)}"><span class="label-color" style="background:${labelColor(label)}"></span>${safe(label)}</button>`).join('');
-    $('labelList').querySelectorAll('.label-item').forEach((button) => button.addEventListener('click', () => {
-      selectedLabel = selectedLabel === button.dataset.label ? 'all' : button.dataset.label;
-      currentView = 'notes'; updateView(); renderNotes(); renderLabels();
-    }));
+    $('labelList').innerHTML = data.labels.map((label) => `
+      <div class="label-item-wrap">
+        <button class="label-item ${selectedLabel === label ? 'selected' : ''}" data-label="${safe(label)}">
+          <span class="label-color" style="background:${labelColor(label)}; box-shadow: 0 0 6px ${labelColor(label)}" title="Click to customize color"></span>
+          <span class="label-name">${safe(label)}</span>
+        </button>
+        <button class="label-customize-btn" data-label="${safe(label)}" title="Customize color for ${safe(label)}" aria-label="Customize color for ${safe(label)}">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3a9 9 0 0 1 9 9c0 2.2-1.8 4-4 4h-2a2 2 0 0 0-2 2c0 1.1-.9 2-2 2a9 9 0 0 1-1-17Z"/>
+            <circle cx="7.5" cy="10.5" r="1" fill="currentColor"/>
+            <circle cx="12" cy="7.5" r="1" fill="currentColor"/>
+            <circle cx="16.5" cy="10.5" r="1" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    `).join('');
+
+    $('labelList').querySelectorAll('.label-item').forEach((button) => {
+      button.addEventListener('click', (e) => {
+        if (e.target.closest('.label-color')) {
+          e.stopPropagation();
+          showColorPicker(button.querySelector('.label-color'), button.dataset.label);
+          return;
+        }
+        selectedLabel = selectedLabel === button.dataset.label ? 'all' : button.dataset.label;
+        currentView = 'notes'; updateView(); renderNotes(); renderLabels();
+      });
+    });
+
+    $('labelList').querySelectorAll('.label-customize-btn').forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showColorPicker(button, button.dataset.label);
+      });
+    });
+
     $('notesCount').textContent = data.notes.length;
     $('tasksCount').textContent = data.tasks.filter((task) => !task.done).length;
     $('filterLabel').textContent = selectedLabel === 'all' ? 'All labels' : selectedLabel;
@@ -97,6 +180,102 @@
     }
   }
 
+  function showColorPicker(anchor, label) {
+    closePopover();
+    let currentColor = labelColor(label);
+    const popover = document.createElement('div');
+    popover.className = 'color-popover';
+    popover.innerHTML = `
+      <div class="color-popover-header">
+        <span class="color-preview-badge" id="colorPreviewBadge" style="--badge-color:${currentColor}">
+          <span class="color-preview-dot" id="colorPreviewDot" style="background:${currentColor}"></span>
+          <span class="color-preview-label">${safe(label)}</span>
+        </span>
+        <button class="color-popover-close" id="colorPickerCloseBtn" aria-label="Close">×</button>
+      </div>
+      <div class="color-popover-subtitle">PRESET PALETTE</div>
+      <div class="color-swatches-grid">
+        ${PRESET_LABEL_COLORS.map((c) => `
+          <button class="color-swatch-btn ${c.toLowerCase() === currentColor.toLowerCase() ? 'active' : ''}" data-color="${c}" style="background:${c}" title="${c}"></button>
+        `).join('')}
+      </div>
+      <div class="color-popover-subtitle" style="margin-top:12px;">CUSTOM COLOR</div>
+      <div class="color-custom-row">
+        <input type="color" class="color-native-input" id="customColorInput" value="${currentColor}" title="Pick custom color" />
+        <input type="text" class="color-hex-input" id="customHexInput" value="${currentColor}" maxlength="7" spellcheck="false" placeholder="#HEX" />
+        <button class="color-apply-btn" id="customApplyBtn">Save</button>
+      </div>
+    `;
+    document.body.append(popover);
+    positionPopover(popover, anchor);
+
+    const updatePreview = (hex) => {
+      currentColor = hex;
+      const badge = popover.querySelector('#colorPreviewBadge');
+      const dot = popover.querySelector('#colorPreviewDot');
+      const nativeInp = popover.querySelector('#customColorInput');
+      const hexInp = popover.querySelector('#customHexInput');
+      if (badge) badge.style.setProperty('--badge-color', hex);
+      if (dot) dot.style.background = hex;
+      if (nativeInp && nativeInp.value !== hex) nativeInp.value = hex;
+      if (hexInp && hexInp.value !== hex) hexInp.value = hex;
+      popover.querySelectorAll('.color-swatch-btn').forEach((b) => {
+        b.classList.toggle('active', b.dataset.color.toLowerCase() === hex.toLowerCase());
+      });
+      setLabelColor(label, hex);
+    };
+
+    popover.querySelectorAll('.color-swatch-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        updatePreview(btn.dataset.color);
+        showToast(`Color updated for "${label}"`);
+      });
+    });
+
+    const nativeInput = popover.querySelector('#customColorInput');
+    nativeInput.addEventListener('input', (e) => {
+      updatePreview(e.target.value);
+    });
+    nativeInput.addEventListener('change', (e) => {
+      updatePreview(e.target.value);
+      showToast(`Color updated for "${label}"`);
+    });
+
+    const hexInput = popover.querySelector('#customHexInput');
+    const applyBtn = popover.querySelector('#customApplyBtn');
+
+    const applyHex = () => {
+      let val = hexInput.value.trim();
+      if (!val.startsWith('#')) val = `#${val}`;
+      if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+        updatePreview(val);
+        showToast(`Color updated for "${label}"`);
+      } else {
+        showToast('Please enter a valid 6-character hex color (e.g. #FF3366)');
+      }
+    };
+
+    applyBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      applyHex();
+    });
+
+    hexInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        applyHex();
+      }
+    });
+
+    popover.querySelector('#colorPickerCloseBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      closePopover();
+    });
+
+    window.setTimeout(() => document.addEventListener('click', outsidePopover, { once: true }), 0);
+  }
+
   function showNoteMenu(anchor, noteId) {
     closePopover();
     const note = data.notes.find((item) => item.id === noteId); if (!note) return;
@@ -113,10 +292,28 @@
     window.setTimeout(() => document.addEventListener('click', outsidePopover, { once: true }), 0);
   }
   function positionPopover(menu, anchor) {
-    const rect = anchor.getBoundingClientRect(); menu.style.position = 'fixed'; menu.style.zIndex = '25'; menu.style.top = `${Math.min(rect.bottom + 5, innerHeight - 120)}px`; menu.style.left = `${Math.min(rect.right - 145, innerWidth - 155)}px`;
+    const rect = anchor.getBoundingClientRect();
+    menu.style.position = 'fixed';
+    menu.style.zIndex = '130';
+    const menuWidth = 250;
+    const menuHeight = 230;
+    let top = rect.bottom + 6;
+    let left = rect.left;
+    if (top + menuHeight > window.innerHeight) {
+      top = Math.max(10, rect.top - menuHeight - 6);
+    }
+    if (left + menuWidth > window.innerWidth) {
+      left = Math.max(10, window.innerWidth - menuWidth - 16);
+    }
+    menu.style.top = `${top}px`;
+    menu.style.left = `${left}px`;
   }
-  function closePopover() { document.querySelector('.note-popover')?.remove(); document.querySelector('.label-popover')?.remove(); }
-  function outsidePopover(event) { if (!event.target.closest('.note-popover,.label-popover')) closePopover(); }
+  function closePopover() {
+    document.querySelectorAll('.note-popover, .label-popover, .color-popover').forEach((p) => p.remove());
+  }
+  function outsidePopover(event) {
+    if (!event.target.closest('.note-popover, .label-popover, .color-popover')) closePopover();
+  }
 
   function createNote() {
     const now = new Date().toISOString();
@@ -127,7 +324,10 @@
     const note = data.notes.find((item) => item.id === id); if (!note) return;
     activeNoteId = id; editorTitle.value = note.title; editorBody.value = note.body;
     $('editorDate').textContent = `Edited ${relativeDate(note.updatedAt)}`;
-    $('saveStatus').textContent = 'Saved'; $('pinNoteBtn').classList.toggle('pinned', note.pinned);
+    $('saveStatus').textContent = 'Saved';
+    $('pinNoteBtn').classList.toggle('pinned', note.pinned);
+    $('pinNoteBtn').setAttribute('title', note.pinned ? 'Unpin note' : 'Pin note');
+    $('pinNoteBtn').setAttribute('aria-label', note.pinned ? 'Unpin note' : 'Pin note');
     $('editorLabelText').textContent = note.label || 'Add label';
     $('editorLabelBtn').querySelector('.label-dot').style.background = note.label ? labelColor(note.label) : '#c1c8bf';
     updateWordCount(); noteModal.hidden = false; document.body.style.overflow = 'hidden';
@@ -157,20 +357,78 @@
   }
   function togglePin() {
     const note = data.notes.find((item) => item.id === activeNoteId); if (!note) return;
-    note.pinned = !note.pinned; $('pinNoteBtn').classList.toggle('pinned', note.pinned); persist(); renderNotes();
+    note.pinned = !note.pinned;
+    $('pinNoteBtn').classList.toggle('pinned', note.pinned);
+    $('pinNoteBtn').setAttribute('title', note.pinned ? 'Unpin note' : 'Pin note');
+    $('pinNoteBtn').setAttribute('aria-label', note.pinned ? 'Unpin note' : 'Pin note');
+    persist(); renderNotes();
     showToast(note.pinned ? 'Note pinned' : 'Note unpinned');
   }
   function showLabelMenu(anchor, editor = false) {
-    closePopover(); const menu = document.createElement('div'); menu.className = 'label-popover';
-    menu.innerHTML = `<button data-label="">No label</button>${data.labels.map((label) => `<button data-label="${safe(label)}"><span class="label-color" style="background:${labelColor(label)}"></span>${safe(label)}</button>`).join('')}<button data-label="__new" class="add-label-option">＋ New label</button>`;
-    document.body.append(menu); positionPopover(menu, anchor);
+    closePopover();
+    const menu = document.createElement('div');
+    menu.className = 'label-popover';
+    menu.innerHTML = `
+      <button data-label="" class="popover-no-label">No label</button>
+      ${data.labels.map((label) => `
+        <div class="popover-label-row">
+          <button data-label="${safe(label)}" class="popover-label-choice">
+            <span class="label-color" style="background:${labelColor(label)}; box-shadow: 0 0 6px ${labelColor(label)}"></span>
+            <span>${safe(label)}</span>
+          </button>
+          <button class="popover-color-btn" data-customize-label="${safe(label)}" title="Customize color for ${safe(label)}" aria-label="Customize color for ${safe(label)}">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 3a9 9 0 0 1 9 9c0 2.2-1.8 4-4 4h-2a2 2 0 0 0-2 2c0 1.1-.9 2-2 2a9 9 0 0 1-1-17Z"/>
+              <circle cx="7.5" cy="10.5" r="1" fill="currentColor"/>
+              <circle cx="12" cy="7.5" r="1" fill="currentColor"/>
+              <circle cx="16.5" cy="10.5" r="1" fill="currentColor"/>
+            </svg>
+          </button>
+        </div>
+      `).join('')}
+      <button data-label="__new" class="add-label-option">＋ New label</button>
+    `;
+    document.body.append(menu);
+    positionPopover(menu, anchor);
+
     menu.addEventListener('click', (event) => {
-      const button = event.target.closest('button'); if (!button) return;
+      const custBtn = event.target.closest('[data-customize-label]');
+      if (custBtn) {
+        event.stopPropagation();
+        showColorPicker(custBtn, custBtn.dataset.customizeLabel);
+        return;
+      }
+      const button = event.target.closest('button[data-label]');
+      if (!button) return;
       let label = button.dataset.label;
-      if (label === '__new') { label = prompt('Name your label'); if (!label || !label.trim()) { closePopover(); return; } label = label.trim(); if (!data.labels.includes(label)) data.labels.push(label); }
+      if (label === '__new') {
+        label = prompt('Name your label');
+        if (!label || !label.trim()) { closePopover(); return; }
+        label = label.trim();
+        if (!data.labels.includes(label)) {
+          data.labels.push(label);
+          labelColor(label);
+          persist();
+        }
+      }
       if (editor) {
-        const note = data.notes.find((item) => item.id === activeNoteId); if (note) { note.label = label; note.updatedAt = new Date().toISOString(); persist(); $('editorLabelText').textContent = label || 'Add label'; $('editorLabelBtn').querySelector('.label-dot').style.background = label ? labelColor(label) : '#c1c8bf'; renderNotes(); renderLabels(); }
-      } else { selectedLabel = label || 'all'; $('filterLabel').textContent = selectedLabel === 'all' ? 'All labels' : selectedLabel; renderLabels(); renderNotes(); }
+        const note = data.notes.find((item) => item.id === activeNoteId);
+        if (note) {
+          note.label = label;
+          note.updatedAt = new Date().toISOString();
+          persist();
+          $('editorLabelText').textContent = label || 'Add label';
+          $('editorLabelBtn').querySelector('.label-dot').style.background = label ? labelColor(label) : '#c1c8bf';
+          renderNotes();
+          renderLabels();
+        }
+      } else {
+        selectedLabel = label || 'all';
+        $('filterLabel').textContent = selectedLabel === 'all' ? 'All labels' : selectedLabel;
+        renderLabels();
+        renderNotes();
+      }
       closePopover();
     });
     window.setTimeout(() => document.addEventListener('click', outsidePopover, { once: true }), 0);
@@ -185,6 +443,7 @@
     $('pageEyebrow').textContent = currentView === 'tasks' ? 'A GENTLER WAY TO GET THINGS DONE' : 'A LITTLE SPACE FOR YOURSELF';
     document.querySelectorAll('.nav-item').forEach((item) => item.classList.toggle('active', item.dataset.view === currentView));
     $('newNoteBtnTop').hidden = isTasks;
+    if ($('topbarNewNoteBtn')) $('topbarNewNoteBtn').hidden = isTasks;
     if (isTasks) renderTasks(); else renderNotes();
   }
 
@@ -213,11 +472,18 @@
   function addLabel() {
     const label = prompt('Name your label'); if (!label || !label.trim()) return;
     const clean = label.trim(); if (data.labels.some((item) => item.toLowerCase() === clean.toLowerCase())) { showToast('That label already exists'); return; }
-    data.labels.push(clean); persist(); renderLabels(); showToast('Label added');
+    data.labels.push(clean);
+    labelColor(clean);
+    persist();
+    renderLabels();
+    showToast(`Label "${clean}" added`);
+    const btn = document.querySelector(`.label-customize-btn[data-label="${clean}"]`);
+    if (btn) showColorPicker(btn, clean);
   }
 
   document.querySelectorAll('.nav-item').forEach((item) => item.addEventListener('click', () => { currentView = item.dataset.view; if (currentView !== 'pinned') selectedLabel = 'all'; updateView(); if (innerWidth <= 700) $('sidebar').classList.remove('open'); }));
   $('newNoteBtn').addEventListener('click', createNote); $('newNoteBtnTop').addEventListener('click', createNote); $('emptyCreateBtn').addEventListener('click', createNote);
+  if ($('topbarNewNoteBtn')) $('topbarNewNoteBtn').addEventListener('click', createNote);
   $('searchInput').addEventListener('input', renderNotes);
   $('sortBtn').addEventListener('click', () => { sortOrder = sortOrder === 'recent' ? 'oldest' : 'recent'; $('sortBtn').innerHTML = `${sortOrder === 'recent' ? 'Recently edited' : 'Least recently edited'} <span>⌄</span>`; renderNotes(); });
   $('labelFilterBtn').addEventListener('click', () => showLabelMenu($('labelFilterBtn')));

@@ -1,0 +1,1285 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+---
+
+<PageLayout
+  title="365 Days Year in Dots — DayBook"
+  description="Visualize the whole year in 365 daily dots. Track annual progress, review past days, inspect linked notes, and plan ahead with zero tracking."
+  canonicalPath="/year"
+  eyebrow="ANNUAL TELEMETRY // 365 DAYS"
+  headline="365 Days in Dots."
+  subtitle="A full visual year mapped into daily telemetry dots. Track elapsed time, inspect milestones, and view every day of the year at a single glance."
+  activeNav="year"
+>
+  <div class="year-dashboard" id="yearDashboard">
+    <!-- Telemetry Stats Strip -->
+    <div class="telemetry-grid">
+      <div class="telemetry-card">
+        <span class="telemetry-label">ANNUAL PROGRESS</span>
+        <div class="telemetry-val-row">
+          <strong class="telemetry-value" id="statPercent">0%</strong>
+          <span class="telemetry-sub" id="statElapsedDays">0 / 365 DAYS</span>
+        </div>
+        <div class="telemetry-progress-track">
+          <div class="telemetry-progress-fill" id="statProgressBar"></div>
+        </div>
+      </div>
+
+      <div class="telemetry-card">
+        <span class="telemetry-label">DAYS REMAINING</span>
+        <div class="telemetry-val-row">
+          <strong class="telemetry-value" id="statDaysLeft">0</strong>
+          <span class="telemetry-sub" id="statDaysLeftLabel">DAYS LEFT IN 2026</span>
+        </div>
+        <span class="telemetry-footer-note" id="statQuarterProgress">Q4 IN PROGRESS</span>
+      </div>
+
+      <div class="telemetry-card">
+        <span class="telemetry-label">CURRENT SECTOR</span>
+        <div class="telemetry-val-row">
+          <strong class="telemetry-value" id="statCurrentDay">DAY 0</strong>
+          <span class="telemetry-sub" id="statCurrentDate">TODAY</span>
+        </div>
+        <span class="telemetry-footer-note" id="statWeekNum">WEEK 0</span>
+      </div>
+
+      <div class="telemetry-card">
+        <span class="telemetry-label">RECORDED THOUGHTS</span>
+        <div class="telemetry-val-row">
+          <strong class="telemetry-value" id="statLoggedNotes">0</strong>
+          <span class="telemetry-sub">NOTES IN VAULT</span>
+        </div>
+        <span class="telemetry-footer-note">100% PRIVATE LOCAL DATA</span>
+      </div>
+    </div>
+
+    <!-- Controls Toolbar: Year Switcher & Layout Toggles -->
+    <div class="year-toolbar">
+      <div class="year-nav-controls">
+        <button class="year-nav-btn" id="prevYearBtn" aria-label="Previous year">‹</button>
+        <span class="year-active-label" id="activeYearLabel">2026</span>
+        <button class="year-nav-btn" id="nextYearBtn" aria-label="Next year">›</button>
+      </div>
+
+      <!-- Segmented View Toggles per landonorris design -->
+      <div class="year-view-toggles">
+        <button class="year-toggle-btn active" data-view-mode="months">12 MONTHS</button>
+        <button class="year-toggle-btn" data-view-mode="continuous">CONTINUOUS 365</button>
+        <button class="year-toggle-btn" data-view-mode="quarters">QUARTERS</button>
+      </div>
+
+      <div class="year-actions">
+        <button class="year-today-btn" id="jumpTodayBtn">JUMP TO TODAY ⌖</button>
+      </div>
+    </div>
+
+    <!-- Telemetry Legend -->
+    <div class="year-legend">
+      <div class="legend-item"><span class="dot-sample today"></span><span>Today (Active)</span></div>
+      <div class="legend-item"><span class="dot-sample with-notes"></span><span>Day With Notes</span></div>
+      <div class="legend-item"><span class="dot-sample past"></span><span>Completed Day</span></div>
+      <div class="legend-item"><span class="dot-sample future"></span><span>Upcoming Day</span></div>
+    </div>
+
+    <!-- Main Container where views are dynamically injected -->
+    <div id="yearCanvas" class="year-canvas"></div>
+
+    <!-- Motivational Philosophy Quote Bar -->
+    <div class="philosophy-strip">
+      <div class="philosophy-quote">
+        “365 laps around the sun. Make every sector count.”
+      </div>
+      <span class="philosophy-badge">ANNUAL FORMULA // V1.0</span>
+    </div>
+  </div>
+
+  <!-- Day Inspector Modal / Drawer -->
+  <div class="day-modal-backdrop" id="dayModal" hidden>
+    <div class="day-modal-card" role="dialog" aria-modal="true" aria-labelledby="modalDateTitle">
+      <div class="day-modal-header">
+        <div>
+          <span class="day-modal-badge" id="modalDayNumber">DAY 0 OF 365</span>
+          <h3 id="modalDateTitle" class="day-modal-title">November 17, 2026</h3>
+          <p class="day-modal-sub" id="modalDateSub">Tuesday · Week 47 · Q4</p>
+        </div>
+        <button class="day-modal-close" id="closeDayModalBtn" aria-label="Close dialog">×</button>
+      </div>
+
+      <div class="day-modal-body">
+        <div class="day-status-pill" id="modalStatusPill">COMPLETED DAY</div>
+
+        <div class="day-notes-section">
+          <h4 class="day-notes-heading">LOGGED THOUGHTS ON THIS DAY</h4>
+          <div class="day-notes-list" id="modalNotesList">
+            <p class="empty-notes-hint">No notes recorded for this date.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-modal-footer">
+        <a href="/" class="primary-button" id="modalCreateNoteBtn" style="text-decoration:none;">
+          <span>＋</span> Write Note in App
+        </a>
+      </div>
+    </div>
+  </div>
+</PageLayout>
+
+<script is:inline>
+(() => {
+  const STORE_KEY = 'daybook-v1';
+  let currentYear = new Date().getFullYear();
+  let viewMode = 'months'; // 'months' | 'continuous' | 'quarters'
+  let activeSelectedDate = null;
+
+  const MONTH_NAMES = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const WEEKDAY_SHORT = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+  function isLeap(y) {
+    return (y % 4 === 0 && y % 100 !== 0) || (y % 400 === 0);
+  }
+
+  function getDaysInMonth(y, m) {
+    return [31, (isLeap(y) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m];
+  }
+
+  function getDaysInYear(y) {
+    return isLeap(y) ? 366 : 365;
+  }
+
+  function getDayOfYear(date) {
+    const start = new Date(date.getFullYear(), 0, 0);
+    const diff = date - start;
+    const oneDay = 1000 * 60 * 60 * 24;
+    return Math.floor(diff / oneDay);
+  }
+
+  function getWeekNumber(d) {
+    const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const dayNum = date.getUTCDay() || 7;
+    date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+    const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+    return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+  }
+
+  function pad(n) {
+    return String(n).padStart(2, '0');
+  }
+
+  function loadNotes() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+      return Array.isArray(data.notes) ? data.notes : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function getNotesByDateMap(notes) {
+    const map = {};
+    for (const note of notes) {
+      if (!note.createdAt) continue;
+      const d = new Date(note.createdAt);
+      if (Number.isNaN(d.getTime())) continue;
+      const key = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+      if (!map[key]) map[key] = [];
+      map[key].push(note);
+    }
+    return map;
+  }
+
+  function renderStats() {
+    const today = new Date();
+    const isThisYear = currentYear === today.getFullYear();
+    const totalDays = getDaysInYear(currentYear);
+
+    let dayOfYear = 0;
+    let daysLeft = 0;
+    let pct = 0;
+
+    if (currentYear < today.getFullYear()) {
+      dayOfYear = totalDays;
+      daysLeft = 0;
+      pct = 100;
+    } else if (currentYear > today.getFullYear()) {
+      dayOfYear = 0;
+      daysLeft = totalDays;
+      pct = 0;
+    } else {
+      dayOfYear = getDayOfYear(today);
+      daysLeft = Math.max(0, totalDays - dayOfYear);
+      pct = Math.round((dayOfYear / totalDays) * 1000) / 10;
+    }
+
+    document.getElementById('statPercent').textContent = `${pct}%`;
+    document.getElementById('statElapsedDays').textContent = `${dayOfYear} / ${totalDays} DAYS`;
+    document.getElementById('statProgressBar').style.width = `${pct}%`;
+
+    document.getElementById('statDaysLeft').textContent = daysLeft;
+    document.getElementById('statDaysLeftLabel').textContent = `DAYS LEFT IN ${currentYear}`;
+
+    document.getElementById('statCurrentDay').textContent = isThisYear ? `DAY ${dayOfYear}` : `YEAR ${currentYear}`;
+    document.getElementById('statCurrentDate').textContent = isThisYear
+      ? today.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' })
+      : `${totalDays} TOTAL DAYS`;
+
+    document.getElementById('statWeekNum').textContent = isThisYear
+      ? `WEEK ${getWeekNumber(today)} · Q${Math.ceil((today.getMonth() + 1) / 3)}`
+      : `SEASON ${currentYear}`;
+
+    const notes = loadNotes();
+    const yearNotes = notes.filter((n) => {
+      const d = new Date(n.createdAt);
+      return !Number.isNaN(d.getTime()) && d.getFullYear() === currentYear;
+    });
+    document.getElementById('statLoggedNotes').textContent = yearNotes.length;
+    document.getElementById('activeYearLabel').textContent = currentYear;
+  }
+
+  function renderView() {
+    const canvas = document.getElementById('yearCanvas');
+    canvas.innerHTML = '';
+    renderStats();
+
+    const notes = loadNotes();
+    const notesMap = getNotesByDateMap(notes);
+    const today = new Date();
+    const todayKey = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+
+    if (viewMode === 'months') {
+      canvas.className = 'year-canvas view-months';
+      for (let m = 0; m < 12; m++) {
+        const monthCard = document.createElement('div');
+        monthCard.className = 'month-card';
+
+        const monthHeader = document.createElement('div');
+        monthHeader.className = 'month-card-header';
+        monthHeader.innerHTML = `
+          <div>
+            <span class="month-num">${pad(m + 1)} //</span>
+            <strong class="month-name">${MONTH_NAMES[m]}</strong>
+          </div>
+          <span class="month-days-count">${getDaysInMonth(currentYear, m)}D</span>
+        `;
+        monthCard.appendChild(monthHeader);
+
+        // Weekday header letters
+        const weekdaysRow = document.createElement('div');
+        weekdaysRow.className = 'month-weekdays-row';
+        for (const w of WEEKDAY_SHORT) {
+          const span = document.createElement('span');
+          span.textContent = w;
+          weekdaysRow.appendChild(span);
+        }
+        monthCard.appendChild(weekdaysRow);
+
+        // Month grid with offset spacers
+        const grid = document.createElement('div');
+        grid.className = 'month-days-grid';
+
+        // Get starting day (Monday = 0, Sunday = 6)
+        const firstDay = new Date(currentYear, m, 1).getDay();
+        const offset = (firstDay + 6) % 7; // Monday as 0
+
+        for (let i = 0; i < offset; i++) {
+          const empty = document.createElement('div');
+          empty.className = 'day-spacer';
+          grid.appendChild(empty);
+        }
+
+        const daysCount = getDaysInMonth(currentYear, m);
+        for (let d = 1; d <= daysCount; d++) {
+          const dateStr = `${currentYear}-${pad(m + 1)}-${pad(d)}`;
+          const thisDate = new Date(currentYear, m, d);
+          const dayOfYear = getDayOfYear(thisDate);
+          const hasNotes = Boolean(notesMap[dateStr]?.length);
+
+          const dot = document.createElement('button');
+          dot.className = 'day-dot';
+          dot.setAttribute('data-date', dateStr);
+          dot.setAttribute('data-daynum', dayOfYear);
+          dot.setAttribute('aria-label', `${MONTH_NAMES[m]} ${d}, ${currentYear} (Day ${dayOfYear})`);
+
+          const isPast = thisDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+          const isToday = dateStr === todayKey;
+
+          if (isToday) dot.classList.add('is-today');
+          else if (isPast) dot.classList.add('is-past');
+          else dot.classList.add('is-future');
+
+          if (hasNotes) dot.classList.add('has-notes');
+
+          // Hover preview title
+          dot.title = `${MONTH_NAMES[m]} ${d}, ${currentYear} — Day ${dayOfYear}${hasNotes ? ` (${notesMap[dateStr].length} notes)` : ''}`;
+
+          dot.addEventListener('click', () => openDayModal(thisDate, dayOfYear, notesMap[dateStr] || []));
+          grid.appendChild(dot);
+        }
+
+        monthCard.appendChild(grid);
+        canvas.appendChild(monthCard);
+      }
+    } else if (viewMode === 'continuous') {
+      canvas.className = 'year-canvas view-continuous';
+      const matrixCard = document.createElement('div');
+      matrixCard.className = 'matrix-container-card';
+
+      const matrixHeader = document.createElement('div');
+      matrixHeader.className = 'matrix-header';
+      matrixHeader.innerHTML = `
+        <h3>CONTINUOUS 365 DAYS STREAM // ${currentYear}</h3>
+        <span>52 WEEKS · 7 DAYS · FULL REVS</span>
+      `;
+      matrixCard.appendChild(matrixHeader);
+
+      const matrixBody = document.createElement('div');
+      matrixBody.className = 'matrix-grid-scroll';
+
+      const matrixGrid = document.createElement('div');
+      matrixGrid.className = 'matrix-dot-flow';
+
+      const totalDays = getDaysInYear(currentYear);
+      let runningDate = new Date(currentYear, 0, 1);
+
+      for (let i = 1; i <= totalDays; i++) {
+        const m = runningDate.getMonth();
+        const d = runningDate.getDate();
+        const dateStr = `${currentYear}-${pad(m + 1)}-${pad(d)}`;
+        const hasNotes = Boolean(notesMap[dateStr]?.length);
+        const thisDate = new Date(currentYear, m, d);
+
+        const dot = document.createElement('button');
+        dot.className = 'matrix-dot';
+        dot.setAttribute('data-date', dateStr);
+
+        const isPast = thisDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const isToday = dateStr === todayKey;
+
+        if (isToday) dot.classList.add('is-today');
+        else if (isPast) dot.classList.add('is-past');
+        else dot.classList.add('is-future');
+
+        if (hasNotes) dot.classList.add('has-notes');
+
+        dot.title = `Day ${i} · ${MONTH_NAMES[m]} ${d}, ${currentYear}${hasNotes ? ` (${notesMap[dateStr].length} notes)` : ''}`;
+        dot.addEventListener('click', () => openDayModal(thisDate, i, notesMap[dateStr] || []));
+
+        matrixGrid.appendChild(dot);
+        runningDate.setDate(runningDate.getDate() + 1);
+      }
+
+      matrixBody.appendChild(matrixGrid);
+      matrixCard.appendChild(matrixBody);
+      canvas.appendChild(matrixCard);
+    } else if (viewMode === 'quarters') {
+      canvas.className = 'year-canvas view-quarters';
+      const quarterDefs = [
+        { q: 1, name: 'Q1 // LAUNCH', months: [0, 1, 2] },
+        { q: 2, name: 'Q2 // ACCELERATION', months: [3, 4, 5] },
+        { q: 3, name: 'Q3 // DRIFT', months: [6, 7, 8] },
+        { q: 4, name: 'Q4 // FINAL LAP', months: [9, 10, 11] },
+      ];
+
+      for (const qDef of quarterDefs) {
+        const qCard = document.createElement('div');
+        qCard.className = 'quarter-card';
+
+        let qTotalDays = 0;
+        for (const m of qDef.months) qTotalDays += getDaysInMonth(currentYear, m);
+
+        qCard.innerHTML = `
+          <div class="quarter-header">
+            <h4>${qDef.name}</h4>
+            <span class="quarter-meta">${qTotalDays} DAYS · ${MONTH_NAMES[qDef.months[0]].slice(0, 3)} - ${MONTH_NAMES[qDef.months[2]].slice(0, 3)}</span>
+          </div>
+        `;
+
+        const qDotsWrap = document.createElement('div');
+        qDotsWrap.className = 'quarter-dots-flow';
+
+        for (const m of qDef.months) {
+          const daysInM = getDaysInMonth(currentYear, m);
+          for (let d = 1; d <= daysInM; d++) {
+            const dateStr = `${currentYear}-${pad(m + 1)}-${pad(d)}`;
+            const thisDate = new Date(currentYear, m, d);
+            const dayOfYear = getDayOfYear(thisDate);
+            const hasNotes = Boolean(notesMap[dateStr]?.length);
+
+            const dot = document.createElement('button');
+            dot.className = 'day-dot';
+
+            const isPast = thisDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+            const isToday = dateStr === todayKey;
+
+            if (isToday) dot.classList.add('is-today');
+            else if (isPast) dot.classList.add('is-past');
+            else dot.classList.add('is-future');
+
+            if (hasNotes) dot.classList.add('has-notes');
+
+            dot.title = `${MONTH_NAMES[m]} ${d}, ${currentYear} · Day ${dayOfYear}`;
+            dot.addEventListener('click', () => openDayModal(thisDate, dayOfYear, notesMap[dateStr] || []));
+
+            qDotsWrap.appendChild(dot);
+          }
+        }
+
+        qCard.appendChild(qDotsWrap);
+        canvas.appendChild(qCard);
+      }
+    }
+  }
+
+  function openDayModal(date, dayNum, dayNotes) {
+    const modal = document.getElementById('dayModal');
+    const totalDays = getDaysInYear(date.getFullYear());
+    const dateFormatted = date.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const weekNum = getWeekNumber(date);
+    const quarter = Math.ceil((date.getMonth() + 1) / 3);
+
+    document.getElementById('modalDayNumber').textContent = `DAY ${dayNum} OF ${totalDays}`;
+    document.getElementById('modalDateTitle').textContent = dateFormatted;
+    document.getElementById('modalDateSub').textContent = `Week ${weekNum} · Quarter Q${quarter} · ${date.getFullYear()}`;
+
+    const today = new Date();
+    const isToday = date.toDateString() === today.toDateString();
+    const isPast = date < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    const pill = document.getElementById('modalStatusPill');
+    if (isToday) {
+      pill.textContent = 'ACTIVE TODAY';
+      pill.className = 'day-status-pill today';
+    } else if (isPast) {
+      pill.textContent = 'COMPLETED DAY';
+      pill.className = 'day-status-pill past';
+    } else {
+      pill.textContent = 'UPCOMING FUTURE DAY';
+      pill.className = 'day-status-pill future';
+    }
+
+    const notesList = document.getElementById('modalNotesList');
+    if (dayNotes && dayNotes.length > 0) {
+      let labelColors = { Personal: '#00E5FF', Work: '#FFB800', Ideas: '#D1FF00', Journal: '#A855F7' };
+      try {
+        const parsed = JSON.parse(localStorage.getItem('daybook-v1') || '{}');
+        if (parsed.labelColors) labelColors = { ...labelColors, ...parsed.labelColors };
+      } catch {}
+
+      notesList.innerHTML = dayNotes.map((n) => {
+        const color = (n.label && labelColors[n.label]) ? labelColors[n.label] : '#D1FF00';
+        const labelBadge = n.label ? `<div style="margin-bottom:6px;"><span class="note-label" style="--note-color:${color}; font-size:10px; padding:2px 8px;"><span class="label-dot" style="background:${color}; box-shadow:0 0 6px ${color};"></span>${escapeHtml(n.label)}</span></div>` : '';
+        return `
+          <div class="day-note-item">
+            ${labelBadge}
+            <strong>${n.title ? escapeHtml(n.title) : 'Untitled Note'}</strong>
+            <p>${escapeHtml(n.body ? n.body.slice(0, 140) : 'No preview available...')}</p>
+          </div>
+        `;
+      }).join('');
+    } else {
+      notesList.innerHTML = '<p class="empty-notes-hint">No notes logged for this calendar date.</p>';
+    }
+
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, (s) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[s]));
+  }
+
+  function closeDayModal() {
+    const modal = document.getElementById('dayModal');
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('closeDayModalBtn')?.addEventListener('click', closeDayModal);
+  document.getElementById('dayModal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'dayModal') closeDayModal();
+  });
+
+  document.getElementById('prevYearBtn')?.addEventListener('click', () => {
+    currentYear--;
+    renderView();
+  });
+
+  document.getElementById('nextYearBtn')?.addEventListener('click', () => {
+    currentYear++;
+    renderView();
+  });
+
+  document.getElementById('jumpTodayBtn')?.addEventListener('click', () => {
+    currentYear = new Date().getFullYear();
+    renderView();
+    setTimeout(() => {
+      const todayDot = document.querySelector('.day-dot.is-today, .matrix-dot.is-today');
+      if (todayDot) {
+        todayDot.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        todayDot.focus();
+      }
+    }, 50);
+  });
+
+  document.querySelectorAll('.year-toggle-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.year-toggle-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      viewMode = btn.dataset.viewMode;
+      renderView();
+    });
+  });
+
+  // Listen for escape key to close modal
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDayModal();
+  });
+
+  // Initial render
+  renderView();
+})();
+</script>
+
+<style>
+  /* Scoped layout & styling for 365 Days Year in Dots Dashboard */
+  .year-dashboard {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* Telemetry KPI Cards */
+  .telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+
+  .telemetry-card {
+    background: var(--color-surface); /* #1A1A1A */
+    color: #F5F5F0;
+    border: 1px solid var(--color-border); /* #333333 */
+    border-radius: 1rem; /* 16px per DESIGN.md */
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px;
+    transition: border-color 0.16s ease;
+  }
+
+  .telemetry-card:hover {
+    border-color: var(--color-action);
+  }
+
+  .telemetry-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #777777;
+    margin-bottom: 8px;
+  }
+
+  .telemetry-val-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .telemetry-value {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-action);
+    line-height: 1;
+  }
+
+  .telemetry-sub {
+    font-size: 12px;
+    color: #999999;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .telemetry-progress-track {
+    width: 100%;
+    height: 4px;
+    background: #2A2A2A;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-top: 12px;
+  }
+
+  .telemetry-progress-fill {
+    height: 100%;
+    background: var(--color-action);
+    border-radius: 0.75rem;
+    transition: width 0.4s ease;
+  }
+
+  .telemetry-footer-note {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: #777777;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+
+  /* Controls Toolbar */
+  .year-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px 20px;
+    background: #FFFFFF;
+    border: 1px solid #D5D5CF;
+    border-radius: 0.75rem;
+    margin-bottom: 24px;
+  }
+
+  .year-nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .year-nav-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 0.5rem;
+    border: 1px solid #D5D5CF;
+    background: transparent;
+    color: var(--color-ink);
+    font-size: 18px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.16s ease;
+  }
+
+  .year-nav-btn:hover {
+    background: #111111;
+    color: var(--color-action);
+    border-color: #111111;
+  }
+
+  .year-active-label {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
+  }
+
+  .year-view-toggles {
+    display: flex;
+    background: #E8E8E2;
+    border-radius: 0.75rem;
+    padding: 3px;
+    gap: 3px;
+  }
+
+  .year-toggle-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: var(--color-muted-ink);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.16s ease;
+  }
+
+  .year-toggle-btn.active {
+    background: #FFFFFF;
+    color: var(--color-ink);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .year-today-btn {
+    background: var(--color-action);
+    color: #111111;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.16s ease;
+  }
+
+  .year-today-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* Legend */
+  .year-legend {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+    font-size: 12px;
+    color: var(--color-muted-ink);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .dot-sample {
+    width: 11px;
+    height: 11px;
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .dot-sample.today {
+    background: var(--color-action);
+    box-shadow: 0 0 10px rgba(209, 255, 0, 0.9);
+  }
+
+  .dot-sample.with-notes {
+    background: #111111;
+    border: 2px solid var(--color-action);
+  }
+
+  .dot-sample.past {
+    background: #1A1A1A;
+    border: 1px solid #444444;
+  }
+
+  .dot-sample.future {
+    background: transparent;
+    border: 1px solid #D5D5CF;
+  }
+
+  /* 12 Months Grid View */
+  .view-months {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+
+  .month-card {
+    background: var(--color-surface); /* #1A1A1A */
+    border: 1px solid var(--color-border);
+    border-radius: 1rem; /* 16px */
+    padding: 20px;
+    color: #F5F5F0;
+    transition: border-color 0.16s ease;
+  }
+
+  .month-card:hover {
+    border-color: #555555;
+  }
+
+  .month-card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #282828;
+  }
+
+  .month-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-action);
+    margin-right: 4px;
+  }
+
+  .month-name {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: #F5F5F0;
+  }
+
+  .month-days-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #777777;
+    letter-spacing: 0.05em;
+  }
+
+  .month-weekdays-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #666666;
+    margin-bottom: 8px;
+  }
+
+  .month-days-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+
+  .day-spacer {
+    width: 100%;
+    aspect-ratio: 1;
+    pointer-events: none;
+  }
+
+  .day-dot {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 4px;
+    border: 1px solid #2D2D2D;
+    background: #141414;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+    position: relative;
+  }
+
+  .day-dot:hover {
+    transform: scale(1.25);
+    z-index: 5;
+    border-color: var(--color-action) !important;
+  }
+
+  .day-dot.is-past {
+    background: #222222;
+    border-color: #383838;
+  }
+
+  .day-dot.is-today {
+    background: var(--color-action) !important;
+    border-color: var(--color-action) !important;
+    box-shadow: 0 0 10px rgba(209, 255, 0, 0.9), 0 0 20px rgba(209, 255, 0, 0.4);
+    animation: pulseToday 2s infinite ease-in-out;
+  }
+
+  .day-dot.is-future {
+    background: transparent;
+    border-color: #242424;
+  }
+
+  .day-dot.has-notes {
+    border: 1.5px solid var(--color-action) !important;
+  }
+
+  .day-dot.has-notes::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-action);
+    top: 2px;
+    right: 2px;
+  }
+
+  @keyframes pulseToday {
+    0%, 100% {
+      box-shadow: 0 0 8px rgba(209, 255, 0, 0.8);
+    }
+    50% {
+      box-shadow: 0 0 18px rgba(209, 255, 0, 1), 0 0 30px rgba(209, 255, 0, 0.6);
+    }
+  }
+
+  /* Continuous Matrix View */
+  .view-continuous {
+    width: 100%;
+  }
+
+  .matrix-container-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 28px;
+    color: #F5F5F0;
+  }
+
+  .matrix-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #282828;
+  }
+
+  .matrix-header h3 {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .matrix-header span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-action);
+    letter-spacing: 0.05em;
+  }
+
+  .matrix-grid-scroll {
+    overflow-x: auto;
+    padding-bottom: 12px;
+  }
+
+  .matrix-dot-flow {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(7, 18px);
+    gap: 5px;
+    min-width: 820px;
+  }
+
+  .matrix-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1px solid #2D2D2D;
+    background: #141414;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+  .matrix-dot:hover {
+    transform: scale(1.3);
+    border-color: var(--color-action);
+    z-index: 5;
+  }
+
+  .matrix-dot.is-past {
+    background: #222222;
+    border-color: #383838;
+  }
+
+  .matrix-dot.is-today {
+    background: var(--color-action);
+    border-color: var(--color-action);
+    box-shadow: 0 0 10px rgba(209, 255, 0, 0.9);
+  }
+
+  .matrix-dot.is-future {
+    background: transparent;
+    border-color: #242424;
+  }
+
+  .matrix-dot.has-notes {
+    border: 1.5px solid var(--color-action);
+  }
+
+  /* Quarters View */
+  .view-quarters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .quarter-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 24px;
+    color: #F5F5F0;
+  }
+
+  .quarter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #282828;
+  }
+
+  .quarter-header h4 {
+    font-family: var(--font-display);
+    font-size: 19px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-action);
+  }
+
+  .quarter-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #888888;
+  }
+
+  .quarter-dots-flow {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 6px;
+  }
+
+  /* Philosophy Quote Bar */
+  .philosophy-strip {
+    margin-top: 56px;
+    padding: 28px 32px;
+    background: #111111;
+    border: 1px solid #333333;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    color: #F5F5F0;
+  }
+
+  .philosophy-quote {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: #F5F5F0;
+  }
+
+  .philosophy-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-action);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  /* Day Inspector Modal */
+  .day-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(17, 17, 17, 0.85);
+    backdrop-filter: blur(4px);
+    z-index: 150;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+  }
+
+  .day-modal-backdrop[hidden] {
+    display: none;
+  }
+
+  .day-modal-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-action); /* Lime accent border */
+    border-radius: 1.25rem;
+    width: min(520px, 100%);
+    padding: 28px 32px;
+    color: #F5F5F0;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.6);
+  }
+
+  .day-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+  }
+
+  .day-modal-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-action);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .day-modal-title {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #F5F5F0;
+  }
+
+  .day-modal-sub {
+    font-size: 13px;
+    color: #888888;
+    margin: 4px 0 0;
+  }
+
+  .day-modal-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 0.5rem;
+    border: 1px solid #333333;
+    background: #111111;
+    color: #888888;
+    font-size: 20px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  .day-modal-close:hover {
+    color: var(--color-action);
+    border-color: var(--color-action);
+  }
+
+  .day-status-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 0.5rem;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .day-status-pill.today {
+    background: var(--color-action);
+    color: #111111;
+  }
+
+  .day-status-pill.past {
+    background: #222222;
+    border: 1px solid #333333;
+    color: #999999;
+  }
+
+  .day-status-pill.future {
+    background: transparent;
+    border: 1px solid #333333;
+    color: #666666;
+  }
+
+  .day-notes-heading {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #777777;
+    margin: 0 0 10px;
+  }
+
+  .day-notes-list {
+    display: grid;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 24px;
+  }
+
+  .day-note-item {
+    background: #111111;
+    border: 1px solid #282828;
+    border-radius: 0.5rem;
+    padding: 10px 14px;
+  }
+
+  .day-note-item strong {
+    font-size: 13.5px;
+    color: #F5F5F0;
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .day-note-item p {
+    font-size: 12px;
+    color: #888888;
+    margin: 0;
+  }
+
+  .empty-notes-hint {
+    font-size: 13px;
+    color: #666666;
+    margin: 0;
+  }
+
+  .day-modal-footer {
+    border-top: 1px solid #282828;
+    padding-top: 18px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 1200px) {
+    .telemetry-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .view-months {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 800px) {
+    .view-months {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .view-quarters {
+      grid-template-columns: 1fr;
+    }
+    .philosophy-strip {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .telemetry-grid {
+      grid-template-columns: 1fr;
+    }
+    .view-months {
+      grid-template-columns: 1fr;
+    }
+    .year-toolbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .year-view-toggles {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  /* Dark mode overrides */
+  .dark .year-toolbar {
+    background: #1A1A1A;
+    border-color: #333333;
+  }
+  .dark .year-nav-btn {
+    border-color: #333333;
+    color: #F5F5F0;
+  }
+  .dark .year-active-label {
+    color: #F5F5F0;
+  }
+  .dark .year-view-toggles {
+    background: #111111;
+  }
+  .dark .year-toggle-btn.active {
+    background: #1A1A1A;
+    color: var(--color-action);
+  }
+</style>
