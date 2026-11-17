@@ -211,12 +211,150 @@ import "../styles/global.css";
             <div class="empty-state" id="notesEmpty" hidden><div class="empty-illustration"><span>✳</span><i></i></div><h3 id="emptyTitle">A fresh page, just for you.</h3><p id="emptyText">Start with a thought, an idea, or anything you’d like to remember.</p><button class="primary-button" id="emptyCreateBtn">＋ Create your first note</button></div>
           </div>
 
+          <!-- Race-Engineered Telemetry To-Do List per DESIGN.md -->
           <section class="tasks-view" id="tasksView" hidden>
-            <div class="task-summary"><div><span class="summary-label">YOUR PROGRESS</span><strong id="taskProgress">0 of 0 done</strong></div><div class="progress-track"><span id="progressBar"></span></div><span class="progress-percent" id="progressPercent">0%</span></div>
-            <form class="task-composer" id="taskForm"><span class="composer-plus" aria-hidden="true">＋</span><input id="taskInput" name="task" aria-label="New task" placeholder="What needs to get done?" maxlength="180" autocomplete="off" required /><select id="taskPriority" name="priority" aria-label="Task priority"><option value="normal">Normal</option><option value="high">High priority</option><option value="low">Low priority</option></select><button type="submit">Add task <span aria-hidden="true">↗</span></button></form>
-            <div class="task-filters"><div><button class="task-filter active" data-task-filter="all">All <span id="allTaskCount">0</span></button><button class="task-filter" data-task-filter="active">To do <span id="activeTaskCount">0</span></button><button class="task-filter" data-task-filter="completed">Completed</button></div><button class="clear-completed" id="clearCompleted">Clear completed</button></div>
+            <!-- Telemetry Dashboard HUD -->
+            <div class="task-hud-card">
+              <div class="task-hud-header">
+                <div class="hud-brand-tag">
+                  <span class="hud-dot" aria-hidden="true"></span>
+                  <span>SPRINT TELEMETRY // SPEC-04</span>
+                </div>
+                <div class="hud-status-badge" id="hudStatusBadge">OPTIMAL PACE</div>
+              </div>
+
+              <div class="task-hud-body">
+                <div class="hud-metric-main">
+                  <span class="hud-label">COMPLETION RATE</span>
+                  <div class="hud-val-wrap">
+                    <span class="hud-big-num" id="progressPercent">0%</span>
+                    <span class="hud-fraction" id="taskProgress">0 / 0 TASKS</span>
+                  </div>
+                </div>
+
+                <div class="hud-stats-grid">
+                  <div class="hud-stat-box">
+                    <span class="stat-box-label">ACTIVE</span>
+                    <strong class="stat-box-val" id="activeTaskCount">0</strong>
+                  </div>
+                  <div class="hud-stat-box">
+                    <span class="stat-box-label">CRITICAL P1</span>
+                    <strong class="stat-box-val text-urgent" id="criticalTaskCount">0</strong>
+                  </div>
+                  <div class="hud-stat-box">
+                    <span class="stat-box-label">COMPLETED</span>
+                    <strong class="stat-box-val text-success" id="completedTaskCount">0</strong>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sleek Progress Gauge with glowing lime bar -->
+              <div class="hud-progress-gauge">
+                <div class="progress-track" aria-hidden="true">
+                  <span id="progressBar" style="width: 0%;"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Elevated Task Composer with Priority Selector -->
+            <form class="task-composer-card" id="taskForm">
+              <div class="composer-top-row">
+                <span class="composer-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="16"/>
+                    <line x1="8" y1="12" x2="16" y2="12"/>
+                  </svg>
+                </span>
+                <input 
+                  id="taskInput" 
+                  name="task" 
+                  aria-label="New task" 
+                  placeholder="Record an actionable task or sprint milestone…" 
+                  maxlength="180" 
+                  autocomplete="off" 
+                  required 
+                />
+                <button type="submit" class="composer-submit-btn">
+                  <span>ADD TASK</span>
+                  <kbd aria-hidden="true">↵</kbd>
+                </button>
+              </div>
+
+              <div class="composer-bottom-bar">
+                <div class="priority-selector" id="prioritySelector" role="radiogroup" aria-label="Task priority">
+                  <span class="selector-heading">PRIORITY:</span>
+                  <button type="button" class="priority-opt-btn" data-priority="low" role="radio" aria-checked="false">
+                    <span class="p-dot low"></span>
+                    <span>P3 Low</span>
+                  </button>
+                  <button type="button" class="priority-opt-btn active" data-priority="normal" role="radio" aria-checked="true">
+                    <span class="p-dot normal"></span>
+                    <span>P2 Normal</span>
+                  </button>
+                  <button type="button" class="priority-opt-btn" data-priority="high" role="radio" aria-checked="false">
+                    <span class="p-dot high"></span>
+                    <span>P1 High ⚡</span>
+                  </button>
+                </div>
+                <!-- Hidden native select for fallback/form compatibility -->
+                <select id="taskPriority" name="priority" hidden aria-hidden="true">
+                  <option value="low">Low priority</option>
+                  <option value="normal" selected>Normal</option>
+                  <option value="high">High priority</option>
+                </select>
+                <div class="composer-hint">
+                  <span>Press <kbd>↵ Enter</kbd> to add</span>
+                </div>
+              </div>
+            </form>
+
+            <!-- Task Filters & Toolbar -->
+            <div class="task-toolbar">
+              <div class="task-filters-group">
+                <button type="button" class="task-filter-pill active" data-task-filter="all">
+                  <span>ALL</span>
+                  <span class="filter-count" id="allTaskCount">0</span>
+                </button>
+                <button type="button" class="task-filter-pill" data-task-filter="active">
+                  <span>PENDING</span>
+                  <span class="filter-count" id="activeFilterCount">0</span>
+                </button>
+                <button type="button" class="task-filter-pill" data-task-filter="completed">
+                  <span>COMPLETED</span>
+                  <span class="filter-count" id="completedFilterCount">0</span>
+                </button>
+                <button type="button" class="task-filter-pill priority-filter" data-task-filter="high">
+                  <span>⚡ P1 HIGH</span>
+                  <span class="filter-count" id="highFilterCount">0</span>
+                </button>
+              </div>
+
+              <div class="task-toolbar-actions">
+                <button type="button" class="clear-completed-btn" id="clearCompleted" title="Clear all completed tasks" hidden>
+                  <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                  <span>Clear completed</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Task List Cards -->
             <div id="taskList" class="task-list"></div>
-            <div class="task-empty" id="tasksEmpty" hidden><span>✓</span><h3>All clear for now.</h3><p>Add a task above and give your day some shape.</p></div>
+
+            <!-- Elevated High-Tech Empty State -->
+            <div class="task-empty-card" id="tasksEmpty" hidden>
+              <div class="empty-telemetry-badge">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              <h3 id="tasksEmptyTitle">TRACK CLEAR // ALL SYSTEMS GO</h3>
+              <p id="tasksEmptySubtitle">No pending tasks on your sprint board. Add your next objective above.</p>
+            </div>
           </section>
 
           <!-- Editorial Showcase / Telemetry Aero Section (Positioned UNDER notes & tasks) -->

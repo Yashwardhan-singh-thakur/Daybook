@@ -48,7 +48,7 @@
       return {
         notes: Array.isArray(parsed.notes) ? parsed.notes : [],
         tasks: Array.isArray(parsed.tasks) ? parsed.tasks : [],
-        labels: Array.isArray(parsed.labels) && parsed.labels.length ? parsed.labels : [...defaultLabels],
+        labels: Array.isArray(parsed.labels) ? parsed.labels : [...defaultLabels],
         labelColors: loadedLabelColors,
         dark: Boolean(parsed.dark),
       };
@@ -89,6 +89,41 @@
     return color;
   }
 
+  function getNotesWithLabel(label) {
+    if (!label) return [];
+    return data.notes.filter((note) => {
+      if (note.label === label) return true;
+      if (Array.isArray(note.labels) && note.labels.includes(label)) return true;
+      return false;
+    });
+  }
+
+  function deleteLabel(label) {
+    if (!label) return;
+    const notesWithLabel = getNotesWithLabel(label);
+    const count = notesWithLabel.length;
+    if (count > 0) {
+      showToast(`Cannot delete "${label}": it contains ${count} note${count === 1 ? '' : 's'}. Only empty labels can be deleted.`);
+      return;
+    }
+
+    if (!window.confirm(`Delete label "${label}"?`)) return;
+
+    data.labels = data.labels.filter((item) => item !== label);
+    if (data.labelColors && data.labelColors[label]) {
+      delete data.labelColors[label];
+    }
+    if (selectedLabel === label) {
+      selectedLabel = 'all';
+      if ($('filterLabel')) $('filterLabel').textContent = 'All labels';
+    }
+    persist();
+    renderLabels();
+    renderNotes();
+    closePopover();
+    showToast(`Label "${label}" deleted`);
+  }
+
   function setLabelColor(label, newColor) {
     if (!label || !newColor) return;
     if (!data.labelColors) data.labelColors = {};
@@ -106,23 +141,40 @@
   }
 
   function renderLabels() {
-    $('labelList').innerHTML = data.labels.map((label) => `
-      <div class="label-item-wrap">
-        <button class="label-item ${selectedLabel === label ? 'selected' : ''}" data-label="${safe(label)}">
-          <span class="label-color" style="background:${labelColor(label)}; box-shadow: 0 0 6px ${labelColor(label)}" title="Click to customize color"></span>
-          <span class="label-name">${safe(label)}</span>
-        </button>
-        <button class="label-customize-btn" data-label="${safe(label)}" title="Customize color for ${safe(label)}" aria-label="Customize color for ${safe(label)}">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M12 3a9 9 0 0 1 9 9c0 2.2-1.8 4-4 4h-2a2 2 0 0 0-2 2c0 1.1-.9 2-2 2a9 9 0 0 1-1-17Z"/>
-            <circle cx="7.5" cy="10.5" r="1" fill="currentColor"/>
-            <circle cx="12" cy="7.5" r="1" fill="currentColor"/>
-            <circle cx="16.5" cy="10.5" r="1" fill="currentColor"/>
-          </svg>
-        </button>
-      </div>
-    `).join('');
+    $('labelList').innerHTML = data.labels.map((label) => {
+      const noteCount = getNotesWithLabel(label).length;
+      const isEmpty = noteCount === 0;
+      const deleteTooltip = isEmpty
+        ? `Delete empty label "${safe(label)}"`
+        : `Cannot delete: contains ${noteCount} note${noteCount === 1 ? '' : 's'}`;
+      return `
+        <div class="label-item-wrap">
+          <button class="label-item ${selectedLabel === label ? 'selected' : ''}" data-label="${safe(label)}">
+            <span class="label-color" style="background:${labelColor(label)}; box-shadow: 0 0 6px ${labelColor(label)}" title="Click to customize color"></span>
+            <span class="label-name">${safe(label)}</span>
+            ${noteCount > 0 ? `<span class="label-count">${noteCount}</span>` : ''}
+          </button>
+          <div class="label-actions">
+            <button class="label-customize-btn" data-label="${safe(label)}" title="Customize color for ${safe(label)}" aria-label="Customize color for ${safe(label)}">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 3a9 9 0 0 1 9 9c0 2.2-1.8 4-4 4h-2a2 2 0 0 0-2 2c0 1.1-.9 2-2 2a9 9 0 0 1-1-17Z"/>
+                <circle cx="7.5" cy="10.5" r="1" fill="currentColor"/>
+                <circle cx="12" cy="7.5" r="1" fill="currentColor"/>
+                <circle cx="16.5" cy="10.5" r="1" fill="currentColor"/>
+              </svg>
+            </button>
+            <button class="label-delete-btn ${isEmpty ? '' : 'disabled'}" data-label="${safe(label)}" data-count="${noteCount}" title="${deleteTooltip}" aria-label="${deleteTooltip}">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                <line x1="10" y1="11" x2="10" y2="17"/>
+                <line x1="14" y1="11" x2="14" y2="17"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
 
     $('labelList').querySelectorAll('.label-item').forEach((button) => {
       button.addEventListener('click', (e) => {
@@ -140,6 +192,19 @@
       button.addEventListener('click', (e) => {
         e.stopPropagation();
         showColorPicker(button, button.dataset.label);
+      });
+    });
+
+    $('labelList').querySelectorAll('.label-delete-btn').forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const label = button.dataset.label;
+        const count = parseInt(button.dataset.count, 10) || 0;
+        if (count > 0) {
+          showToast(`Cannot delete "${label}": it contains ${count} note${count === 1 ? '' : 's'}. Only empty labels can be deleted.`);
+          return;
+        }
+        deleteLabel(label);
       });
     });
 
@@ -323,6 +388,8 @@
   function showColorPicker(anchor, label) {
     closePopover();
     let currentColor = labelColor(label);
+    const noteCount = getNotesWithLabel(label).length;
+    const isEmpty = noteCount === 0;
     const popover = document.createElement('div');
     popover.className = 'color-popover';
     popover.innerHTML = `
@@ -344,6 +411,16 @@
         <input type="color" class="color-native-input" id="customColorInput" value="${currentColor}" title="Pick custom color" />
         <input type="text" class="color-hex-input" id="customHexInput" value="${currentColor}" maxlength="7" spellcheck="false" placeholder="#HEX" />
         <button class="color-apply-btn" id="customApplyBtn">Save</button>
+      </div>
+      <div class="color-popover-footer">
+        <button class="color-popover-delete-btn ${isEmpty ? '' : 'disabled'}" id="colorPopoverDeleteBtn" title="${isEmpty ? `Delete empty label "${safe(label)}"` : `Cannot delete: contains ${noteCount} note${noteCount === 1 ? '' : 's'}`}">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            <line x1="10" y1="11" x2="10" y2="17"/>
+            <line x1="14" y1="11" x2="14" y2="17"/>
+          </svg>
+          <span>${isEmpty ? 'Delete empty label' : `Cannot delete (${noteCount} note${noteCount === 1 ? '' : 's'})`}</span>
+        </button>
       </div>
     `;
     document.body.append(popover);
@@ -408,6 +485,18 @@
       }
     });
 
+    const popoverDeleteBtn = popover.querySelector('#colorPopoverDeleteBtn');
+    if (popoverDeleteBtn) {
+      popoverDeleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (noteCount > 0) {
+          showToast(`Cannot delete "${label}": it contains ${noteCount} note${noteCount === 1 ? '' : 's'}. Only empty labels can be deleted.`);
+          return;
+        }
+        deleteLabel(label);
+      });
+    }
+
     popover.querySelector('#colorPickerCloseBtn').addEventListener('click', (e) => {
       e.stopPropagation();
       closePopover();
@@ -436,7 +525,7 @@
     menu.style.position = 'fixed';
     menu.style.zIndex = '130';
     const menuWidth = 250;
-    const menuHeight = 230;
+    const menuHeight = menu.offsetHeight || 300;
     let top = rect.bottom + 6;
     let left = rect.left;
     if (top + menuHeight > window.innerHeight) {
@@ -518,29 +607,55 @@
     menu.className = 'label-popover';
     menu.innerHTML = `
       <button data-label="" class="popover-no-label">No label</button>
-      ${data.labels.map((label) => `
+      ${data.labels.map((label) => {
+        const noteCount = getNotesWithLabel(label).length;
+        const isEmpty = noteCount === 0;
+        return `
         <div class="popover-label-row">
           <button data-label="${safe(label)}" class="popover-label-choice">
             <span class="label-color" style="background:${labelColor(label)}; box-shadow: 0 0 6px ${labelColor(label)}"></span>
             <span>${safe(label)}</span>
+            ${noteCount > 0 ? `<small class="popover-count">(${noteCount})</small>` : ''}
           </button>
-          <button class="popover-color-btn" data-customize-label="${safe(label)}" title="Customize color for ${safe(label)}" aria-label="Customize color for ${safe(label)}">
-            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="9"/>
-              <path d="M12 3a9 9 0 0 1 9 9c0 2.2-1.8 4-4 4h-2a2 2 0 0 0-2 2c0 1.1-.9 2-2 2a9 9 0 0 1-1-17Z"/>
-              <circle cx="7.5" cy="10.5" r="1" fill="currentColor"/>
-              <circle cx="12" cy="7.5" r="1" fill="currentColor"/>
-              <circle cx="16.5" cy="10.5" r="1" fill="currentColor"/>
-            </svg>
-          </button>
+          <div class="popover-row-actions">
+            <button class="popover-color-btn" data-customize-label="${safe(label)}" title="Customize color for ${safe(label)}" aria-label="Customize color for ${safe(label)}">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 3a9 9 0 0 1 9 9c0 2.2-1.8 4-4 4h-2a2 2 0 0 0-2 2c0 1.1-.9 2-2 2a9 9 0 0 1-1-17Z"/>
+                <circle cx="7.5" cy="10.5" r="1" fill="currentColor"/>
+                <circle cx="12" cy="7.5" r="1" fill="currentColor"/>
+                <circle cx="16.5" cy="10.5" r="1" fill="currentColor"/>
+              </svg>
+            </button>
+            <button class="popover-delete-btn ${isEmpty ? '' : 'disabled'}" data-delete-label="${safe(label)}" data-count="${noteCount}" title="${isEmpty ? `Delete empty label "${safe(label)}"` : `Cannot delete: contains ${noteCount} note${noteCount === 1 ? '' : 's'}`}" aria-label="Delete label ${safe(label)}">
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                <line x1="10" y1="11" x2="10" y2="17"/>
+                <line x1="14" y1="11" x2="14" y2="17"/>
+              </svg>
+            </button>
+          </div>
         </div>
-      `).join('')}
+      `;
+      }).join('')}
       <button data-label="__new" class="add-label-option">＋ New label</button>
     `;
     document.body.append(menu);
     positionPopover(menu, anchor);
 
     menu.addEventListener('click', (event) => {
+      const delBtn = event.target.closest('[data-delete-label]');
+      if (delBtn) {
+        event.stopPropagation();
+        const label = delBtn.dataset.deleteLabel;
+        const count = parseInt(delBtn.dataset.count, 10) || 0;
+        if (count > 0) {
+          showToast(`Cannot delete "${label}": it contains ${count} note${count === 1 ? '' : 's'}. Only empty labels can be deleted.`);
+          return;
+        }
+        deleteLabel(label);
+        return;
+      }
       const custBtn = event.target.closest('[data-customize-label]');
       if (custBtn) {
         event.stopPropagation();
@@ -595,25 +710,249 @@
     if (isTasks) renderTasks(); else renderNotes();
   }
 
-  function addTask(event) {
-    event.preventDefault(); const input = $('taskInput'); const title = input.value.trim(); if (!title) return;
-    data.tasks.unshift({ id: uid(), title, priority: $('taskPriority').value, done: false, createdAt: new Date().toISOString() });
-    input.value = ''; $('taskPriority').value = 'normal'; persist(); renderTasks(); renderLabels(); input.focus();
+  function syncPriorityUI(priority) {
+    const sel = $('taskPriority');
+    if (sel) sel.value = priority;
+    document.querySelectorAll('.priority-opt-btn').forEach((btn) => {
+      const match = btn.dataset.priority === priority;
+      btn.classList.toggle('active', match);
+      btn.setAttribute('aria-checked', match ? 'true' : 'false');
+    });
   }
+
+  function addTask(event) {
+    event.preventDefault();
+    const input = $('taskInput');
+    const title = input.value.trim();
+    if (!title) return;
+    const priority = $('taskPriority')?.value || 'normal';
+    data.tasks.unshift({
+      id: uid(),
+      title,
+      priority,
+      done: false,
+      pinned: false,
+      createdAt: new Date().toISOString()
+    });
+    input.value = '';
+    syncPriorityUI('normal');
+    persist();
+    renderTasks();
+    renderLabels();
+    input.focus();
+    showToast('Task added to sprint ⚡');
+  }
+
   function renderTasks() {
-    const total = data.tasks.length, done = data.tasks.filter((task) => task.done).length, active = total - done;
-    $('taskProgress').textContent = `${done} of ${total} done`; $('progressPercent').textContent = `${total ? Math.round(done / total * 100) : 0}%`;
-    $('progressBar').style.width = `${total ? done / total * 100 : 0}%`;
-    $('allTaskCount').textContent = total; $('activeTaskCount').textContent = active;
-    document.querySelectorAll('.task-filter').forEach((button) => button.classList.toggle('active', button.dataset.taskFilter === selectedTaskFilter));
-    $('clearCompleted').hidden = done === 0;
-    const tasks = data.tasks.filter((task) => selectedTaskFilter === 'all' || (selectedTaskFilter === 'active' && !task.done) || (selectedTaskFilter === 'completed' && task.done));
-    $('taskList').innerHTML = tasks.map((task) => `<div class="task-row ${task.done ? 'done' : ''}" data-id="${safe(task.id)}"><button class="task-check" aria-label="${task.done ? 'Mark as to do' : 'Mark complete'}">${task.done ? '<svg viewBox="0 0 12 12"><path d="m2 6 2.5 2.5L10 3"/></svg>' : ''}</button><span class="task-title">${safe(task.title)}</span><span class="priority-pill ${task.priority}">${task.priority === 'high' ? 'High priority' : task.priority === 'low' ? 'Low' : 'Normal'}</span><span class="task-date">${relativeDate(task.createdAt)}</span><button class="task-delete" aria-label="Delete task">×</button></div>`).join('');
-    $('tasksEmpty').hidden = tasks.length > 0;
-    $('taskList').querySelectorAll('.task-row').forEach((row) => {
-      const task = data.tasks.find((item) => item.id === row.dataset.id);
-      row.querySelector('.task-check').addEventListener('click', () => { task.done = !task.done; persist(); renderTasks(); renderLabels(); });
-      row.querySelector('.task-delete').addEventListener('click', () => { data.tasks = data.tasks.filter((item) => item.id !== task.id); persist(); renderTasks(); renderLabels(); showToast('Task deleted'); });
+    const total = data.tasks.length;
+    const done = data.tasks.filter((task) => task.done).length;
+    const active = total - done;
+    const critical = data.tasks.filter((task) => !task.done && task.priority === 'high').length;
+    const percent = total ? Math.round((done / total) * 100) : 0;
+
+    if ($('taskProgress')) $('taskProgress').textContent = total ? `${done} / ${total} TASKS` : '0 / 0 TASKS';
+    if ($('progressPercent')) $('progressPercent').textContent = `${percent}%`;
+    if ($('progressBar')) $('progressBar').style.width = `${percent}%`;
+
+    if ($('activeTaskCount')) $('activeTaskCount').textContent = active;
+    if ($('criticalTaskCount')) $('criticalTaskCount').textContent = critical;
+    if ($('completedTaskCount')) $('completedTaskCount').textContent = done;
+
+    if ($('allTaskCount')) $('allTaskCount').textContent = total;
+    if ($('activeFilterCount')) $('activeFilterCount').textContent = active;
+    if ($('completedFilterCount')) $('completedFilterCount').textContent = done;
+    if ($('highFilterCount')) $('highFilterCount').textContent = data.tasks.filter((t) => t.priority === 'high').length;
+
+    if ($('hudStatusBadge')) {
+      if (total === 0) {
+        $('hudStatusBadge').textContent = 'READY // SPRINT CLEAR';
+      } else if (done === total) {
+        $('hudStatusBadge').textContent = 'SPRINT COMPLETE 🏁';
+      } else if (critical > 0) {
+        $('hudStatusBadge').textContent = `${critical} P1 CRITICAL ⚡`;
+      } else {
+        $('hudStatusBadge').textContent = 'OPTIMAL PACE // 4.2G';
+      }
+    }
+
+    document.querySelectorAll('.task-filter-pill, .task-filter').forEach((button) => {
+      button.classList.toggle('active', button.dataset.taskFilter === selectedTaskFilter);
+    });
+
+    if ($('clearCompleted')) $('clearCompleted').hidden = done === 0;
+
+    const filtered = data.tasks.filter((task) => {
+      if (selectedTaskFilter === 'active') return !task.done;
+      if (selectedTaskFilter === 'completed') return task.done;
+      if (selectedTaskFilter === 'high') return task.priority === 'high';
+      return true;
+    });
+
+    const displayTasks = [...filtered].sort((a, b) => {
+      if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+      return 0;
+    });
+
+    $('taskList').innerHTML = displayTasks.map((task) => {
+      const isHigh = task.priority === 'high';
+      const isLow = task.priority === 'low';
+      const priorityLabel = isHigh ? 'P1 HIGH ⚡' : isLow ? 'P3 LOW' : 'P2 NORMAL';
+      return `
+        <div class="task-card ${task.done ? 'is-done' : ''} priority-${task.priority || 'normal'} ${task.pinned ? 'is-pinned' : ''}" data-id="${safe(task.id)}">
+          <div class="task-card-accent" aria-hidden="true"></div>
+          <button type="button" class="task-checkbox-btn" aria-label="${task.done ? 'Mark task active' : 'Mark task completed'}">
+            <span class="checkbox-box">
+              ${task.done ? `
+                <svg viewBox="0 0 14 14" class="check-icon" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="2.5 7 5.5 10 11.5 4"/>
+                </svg>
+              ` : ''}
+            </span>
+          </button>
+          <div class="task-content">
+            <div class="task-title-wrap">
+              <span class="task-text" title="Double click or click edit to rename">${safe(task.title)}</span>
+            </div>
+            <div class="task-meta">
+              <span class="task-priority-tag ${task.priority || 'normal'}">
+                <span class="p-dot ${task.priority || 'normal'}"></span>
+                <span>${priorityLabel}</span>
+              </span>
+              <span class="task-timestamp">
+                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ${relativeDate(task.createdAt)}
+              </span>
+              ${task.done && task.completedAt ? `<span class="task-completed-stamp">✓ Done</span>` : ''}
+            </div>
+          </div>
+          <div class="task-actions">
+            <button type="button" class="task-action-btn pin-btn ${task.pinned ? 'pinned' : ''}" data-action="pin" title="${task.pinned ? 'Unpin task' : 'Pin to top of sprint'}" aria-label="Pin task">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="${task.pinned ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m16 4 4 4-3 1-3 4v4l-2 2-2-5-5-2 2-2h4l4-3zM8 16l-4 4"/>
+              </svg>
+            </button>
+            <button type="button" class="task-action-btn edit-btn" data-action="edit" title="Edit task title" aria-label="Edit task">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+            </button>
+            <button type="button" class="task-action-btn delete-btn" data-action="delete" title="Delete task" aria-label="Delete task">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                <line x1="10" y1="11" x2="10" y2="17"/>
+                <line x1="14" y1="11" x2="14" y2="17"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    const isEmpty = displayTasks.length === 0;
+    if ($('tasksEmpty')) {
+      $('tasksEmpty').hidden = !isEmpty;
+      if (isEmpty) {
+        if (total === 0) {
+          if ($('tasksEmptyTitle')) $('tasksEmptyTitle').textContent = 'TRACK CLEAR // ALL SYSTEMS GO';
+          if ($('tasksEmptySubtitle')) $('tasksEmptySubtitle').textContent = 'No pending tasks on your sprint board. Add your next objective above.';
+        } else if (selectedTaskFilter === 'active') {
+          if ($('tasksEmptyTitle')) $('tasksEmptyTitle').textContent = 'ALL CAUGHT UP // ZERO PENDING';
+          if ($('tasksEmptySubtitle')) $('tasksEmptySubtitle').textContent = 'You have conquered all pending sprint objectives.';
+        } else if (selectedTaskFilter === 'completed') {
+          if ($('tasksEmptyTitle')) $('tasksEmptyTitle').textContent = 'NO COMPLETED TASKS YET';
+          if ($('tasksEmptySubtitle')) $('tasksEmptySubtitle').textContent = 'Check off tasks above as you accomplish them.';
+        } else if (selectedTaskFilter === 'high') {
+          if ($('tasksEmptyTitle')) $('tasksEmptyTitle').textContent = 'NO P1 CRITICAL TASKS';
+          if ($('tasksEmptySubtitle')) $('tasksEmptySubtitle').textContent = 'No high-priority tasks pending right now. Optimal pace.';
+        }
+      }
+    }
+
+    $('taskList').querySelectorAll('.task-card').forEach((card) => {
+      const task = data.tasks.find((item) => item.id === card.dataset.id);
+      if (!task) return;
+
+      // Toggle Done Checkbox
+      card.querySelector('.task-checkbox-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        task.done = !task.done;
+        if (task.done) {
+          task.completedAt = new Date().toISOString();
+        } else {
+          delete task.completedAt;
+        }
+        persist();
+        renderTasks();
+        renderLabels();
+        showToast(task.done ? 'Sprint item completed ✓' : 'Sprint item resumed');
+      });
+
+      // Pin button
+      card.querySelector('.pin-btn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        task.pinned = !task.pinned;
+        persist();
+        renderTasks();
+        showToast(task.pinned ? 'Pinned to top of sprint ⚡' : 'Unpinned from top');
+      });
+
+      // Inline Title Edit
+      const startEditing = () => {
+        const titleWrap = card.querySelector('.task-title-wrap');
+        if (!titleWrap || titleWrap.querySelector('input')) return;
+        const currentTitle = task.title;
+        titleWrap.innerHTML = `
+          <div class="task-edit-row">
+            <input type="text" class="task-edit-input" value="${safe(currentTitle)}" maxlength="180" />
+            <button type="button" class="task-edit-save">SAVE</button>
+            <button type="button" class="task-edit-cancel">CANCEL</button>
+          </div>
+        `;
+        const editInput = titleWrap.querySelector('.task-edit-input');
+        editInput.focus();
+        editInput.select();
+        const saveEdit = () => {
+          const val = editInput.value.trim();
+          if (val) {
+            task.title = val;
+            persist();
+            renderTasks();
+            showToast('Task updated');
+          } else {
+            renderTasks();
+          }
+        };
+        titleWrap.querySelector('.task-edit-save').addEventListener('click', (e) => { e.stopPropagation(); saveEdit(); });
+        titleWrap.querySelector('.task-edit-cancel').addEventListener('click', (e) => { e.stopPropagation(); renderTasks(); });
+        editInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); saveEdit(); }
+          if (e.key === 'Escape') { e.preventDefault(); renderTasks(); }
+        });
+      };
+
+      card.querySelector('.edit-btn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        startEditing();
+      });
+
+      card.querySelector('.task-text')?.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        startEditing();
+      });
+
+      // Delete Task
+      card.querySelector('.delete-btn')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        data.tasks = data.tasks.filter((item) => item.id !== task.id);
+        persist();
+        renderTasks();
+        renderLabels();
+        showToast('Task deleted');
+      });
     });
   }
 
@@ -655,8 +994,27 @@
   $('deleteNoteBtn').addEventListener('click', () => { if (activeNoteId) deleteNote(activeNoteId); });
   noteModal.addEventListener('click', (event) => { if (event.target === noteModal) closeEditor(); });
   $('taskForm').addEventListener('submit', addTask);
-  document.querySelectorAll('.task-filter').forEach((button) => button.addEventListener('click', () => { selectedTaskFilter = button.dataset.taskFilter; renderTasks(); }));
-  $('clearCompleted').addEventListener('click', () => { data.tasks = data.tasks.filter((task) => !task.done); persist(); renderTasks(); renderLabels(); showToast('Completed tasks cleared'); });
+  document.querySelectorAll('.priority-opt-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      syncPriorityUI(btn.dataset.priority);
+    });
+  });
+  document.querySelectorAll('.task-filter-pill, .task-filter').forEach((button) => {
+    button.addEventListener('click', () => {
+      selectedTaskFilter = button.dataset.taskFilter;
+      renderTasks();
+    });
+  });
+  $('clearCompleted')?.addEventListener('click', () => {
+    const doneCount = data.tasks.filter((task) => task.done).length;
+    if (doneCount === 0) return;
+    if (!window.confirm(`Clear all ${doneCount} completed sprint items?`)) return;
+    data.tasks = data.tasks.filter((task) => !task.done);
+    persist();
+    renderTasks();
+    renderLabels();
+    showToast(`Cleared ${doneCount} completed sprint items`);
+  });
   $('themeBtn').addEventListener('click', () => {
     data.dark = !data.dark;
     document.body.classList.toggle('dark', data.dark);
