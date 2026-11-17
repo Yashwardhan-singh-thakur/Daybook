@@ -2,20 +2,20 @@
   <defs>
     <linearGradient id="db-grad" x1="16" y1="9" x2="30" y2="31" gradientUnits="userSpaceOnUse">
       <stop stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#D7D5D8"/>
+      <stop offset="1" stop-color="#E3EDF8"/>
     </linearGradient>
     <linearGradient id="db-ribbon" x1="18" y1="9" x2="22" y2="20" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#E226B8"/>
-      <stop offset="1" stop-color="#CB009E"/>
+      <stop stop-color="#3381F7"/>
+      <stop offset="1" stop-color="#066DE8"/>
     </linearGradient>
   </defs>
-  <rect width="40" height="40" rx="9" fill="#0C0B0E" stroke="#2C2A30" stroke-width="1.2"/>
+  <rect width="40" height="40" rx="10" fill="#0A0E17" stroke="#1E293B" stroke-width="1.2"/>
   <!-- Book spine / Left page block -->
   <path d="M10 11.5A2.5 2.5 0 0 1 12.5 9H16v22h-3.5A2.5 2.5 0 0 1 10 28.5v-17z" fill="#FFFFFF"/>
   <!-- D-curve / Right page folio -->
   <path d="M16 9h5.5C26.5 9 30 12.5 30 20s-3.5 11-8.5 11H16V9z" fill="url(#db-grad)"/>
   <!-- Counter cutout -->
-  <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#0C0B0E"/>
-  <!-- Bookmark ribbon with notch -->
+  <path d="M19.5 13.2h2c3.2 0 5 2.6 5 6.8s-1.8 6.8-5 6.8h-2V13.2z" fill="#0A0E17"/>
+  <!-- Bookmark ribbon with notch in invideo vibrant blue -->
   <path d="M18 9h4.5v11.5L20.25 18.8 18 20.5V9z" fill="url(#db-ribbon)"/>
 </svg>

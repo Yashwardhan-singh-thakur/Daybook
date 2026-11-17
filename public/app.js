@@ -1,6 +1,6 @@
 (() => {
   const STORE_KEY = 'daybook-v1';
-  const LABEL_COLORS = { Ideas: '#a28dc6', Personal: '#9cad70', Work: '#7ba3a4', Journal: '#cf956e' };
+  const LABEL_COLORS = { Ideas: '#6B33F7', Personal: '#066DE8', Work: '#EC6809', Journal: '#C933F7' };
   const defaultLabels = ['Personal', 'Work', 'Ideas'];
   let data = loadData();
   let currentView = 'notes';
@@ -234,7 +234,7 @@
   $('themeBtn').addEventListener('click', () => {
     data.dark = !data.dark;
     document.body.classList.toggle('dark', data.dark);
-    document.querySelector('meta[name="theme-color"]').content = data.dark ? '#151416' : '#000000';
+    document.querySelector('meta[name="theme-color"]').content = data.dark ? '#080C15' : '#066DE8';
     persist();
   });
   $('menuBtn').addEventListener('click', () => {

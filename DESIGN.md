@@ -1,168 +1,143 @@
 <!-- MIT licensed. Copyright and license: https://opendesignmd.com/licenses/ -->
 
-# How invideo.io is designed
+# How landonorris.com is designed
 
 ## Overview
 
-The invideo.io design system serves an AI-powered video creation platform with a visual identity that balances cinematic storytelling and precise product utility. The interface moves between immersive, full-bleed photographic moments and tightly organized, information-dense surfaces like pricing tables and feature grids. A vibrant blue anchors the brand across both light and dark contexts, while accent colors in purple, magenta, and orange differentiate product tiers and highlight promotional moments. The system relies on a single type family—Inter—across all weights and sizes, creating cohesion between expressive headlines and functional UI text. Rounded corners appear at every scale, from small badges to full pill-shaped buttons and cards, giving the interface a friendly, approachable character that softens the density of feature lists and pricing data.
+This design system captures the visual identity of a Formula 1 driver portfolio that merges motorsport energy with editorial sophistication. The interface operates on a stark binary: expansive off-white spaces for editorial content and deep charcoal surfaces for immersive galleries and footer experiences. A signature neon lime accent cuts through both modes, functioning as the primary action color, decorative highlight, and brand signature. The typography pairs an expressive, high-contrast display serif with an ultra-light geometric sans-serif, creating tension between personality and technical precision. Layouts favor asymmetry—split compositions, offset imagery, and generous negative space—while maintaining grid discipline in denser content areas like the helmet gallery. The overall impression is confident, contemporary, and unmistakably racing-oriented without resorting to clichéd motorsport tropes.
 
 ## Colors
 
-The color system operates in three modes: a light product surface for tools and pricing, a dark cinematic mode for hero imagery, and a vibrant blue footer mode that inverts the typical light-on-dark relationship.
+The color system is intentionally restrained, using a near-monochrome foundation with a single high-voltage accent. This creates maximum impact for the lime elements while allowing photography and helmet imagery to dominate visual attention.
 
-| token | hex | use |
+| token | value | use |
 |---|---|---|
-| action | #066DE8 | Primary buttons, plan headers, key CTAs |
-| action-hover | #086DE8 | Button hover states |
-| action-active | #0F76F5 | Button pressed states |
-| ink-primary | #141414 | Main headings, body text on light surfaces |
-| ink-secondary | #222222 | Secondary text, descriptions |
-| ink-tertiary | #2D2D2D | Tertiary information, metadata |
-| muted-ink | #23528C | Subdued text, footer links at reduced opacity |
-| canvas | #FFFFFF | Primary background, card surfaces, button text on dark |
-| surface | #FEFEFE | Near-white backgrounds for subtle depth |
-| surface-dark | #E3EDF8 | Toggle backgrounds, subtle container fills |
-| border | #B1E5FF | Light blue borders, decorative separators |
-| border-subtle | #000000 | Hairline borders on cards and inputs |
-| accent-purple | #6B33F7 | Max plan header, secondary brand moments |
-| accent-magenta | #C933F7 | Generative plan header, promotional badges |
-| accent-orange | #EC6809 | Team plan header, urgency indicators |
-| success | #3381F7 | Confirmation states, positive indicators |
-| footer-background | #277CEE | Full-bleed footer surface |
+| action | #D1FF00 | Primary buttons, link accents, year labels, decorative borders, signature marks |
+| ink | #111111 | Primary text, headings, logo, dark-mode backgrounds |
+| muted-ink | #555555 | Secondary body text, captions, inactive states |
+| canvas | #F5F5F0 | Primary page background, light sections, portrait backdrops |
+| surface | #1A1A1A | Gallery backgrounds, footer panels, dark cards |
+| border | #333333 | Subtle dividers, card outlines on dark, hairline decorations |
 
-The light mode dominates product surfaces: white cards with black text and blue action elements. The footer inverts this with a saturated blue background and white text, creating a strong terminal moment. Cinematic hero sections use full-bleed photography with overlaid white text and semi-transparent or solid white pill buttons. Accent colors appear primarily in pricing tier headers, where each plan receives a distinct hue to aid visual scanning and differentiation.
+The light mode establishes an editorial atmosphere: warm off-white canvas with near-black ink text. The neon lime appears sparingly—on buttons, as underlines, and in year indicators—creating a "spot color" effect borrowed from print design. Dark mode inverts this relationship: charcoal surfaces become dominant, with lime functioning as the primary readable accent against black. The lime maintains consistent hue across both contexts, ensuring brand recognition. No gradients are present; all color transitions are hard edges or opacity shifts. Photography receives no color treatment—images appear in native color, allowing the natural vibrancy of racing helmets to compete with the interface accent.
 
 ## Typography
 
-The system uses Inter exclusively, with weights ranging from Regular (400) through Medium (500) and Semibold (600) to Bold (700). The type scale is tightly calibrated, with display sizes for pricing and hero moments, and a dense cluster of functional sizes for UI elements.
+Two font families drive the typographic hierarchy: Brier for display moments and Mona Sans for all functional text. Brier appears exclusively in bold weight, deployed for headlines and section titles where editorial personality is required. Mona Sans operates at extra-light weight, providing technical contrast and ensuring readability at smaller sizes.
 
 | token | family | size | weight | leading | tracking | use |
 |---|---|---:|---:|---:|---:|---|
-| hero-display | Inter | 3rem | 700 | 1 | -0.02em | Hero headlines, major page titles |
-| section-display | Inter | 2.625rem | 500 | 1.5 | normal | Section headings, pricing page titles |
-| heading-large | Inter | 3rem | 500 | 1.5 | normal | Plan prices, large numerals |
-| heading-medium | Inter | 1.125rem | 500 | 1.5 | normal | Card titles, subsection headers |
-| body | Inter | 1rem | 400 | 1.5 | normal | Primary body text, descriptions |
-| body-small | Inter | 0.875rem | 400 | 1.43 | normal | Secondary descriptions, footer links |
-| label | Inter | 0.75rem | 600 | 1.33 | normal | Badges, tags, category labels |
-| navigation | Inter | 1rem | 400 | 1.5 | normal | Nav items, top-level links |
-| button-primary | Inter | 1rem | 500 | 1.25 | -0.025em | Primary CTA buttons |
-| button-secondary | Inter | 0.875rem | 500 | 1.43 | normal | Secondary actions, footer buttons |
-| price-display | Inter | 3rem | 500 | 1 | normal | Plan dollar amounts |
-| legal-copy | Inter | 0.875rem | 400 | 1.43 | normal | Copyright, terms links |
+| hero-display | Brier | 6rem | 700 | 0.9 | -0.03em | Homepage hero headlines, major section titles |
+| section-display | Brier | 4rem | 700 | 0.95 | -0.02em | Subsection headings, overlay headlines |
+| body | Mona Sans | 1rem | 300 | 1.5 | 0em | Paragraphs, descriptions, general content |
+| label | Mona Sans | 0.75rem | 300 | 1.2 | 0.05em | Buttons, tags, year indicators, captions |
+| navigation | Mona Sans | 0.875rem | 300 | 1.4 | 0.02em | Menu items, footer links, social channels |
 
-Verify licensing for these families before production use. The Inter font is served from a Next.js static asset path in the source implementation.
+Brier is designed by Fatima Abbas. Mona Sans carries no attributed designer in the available records. Verify licensing for these families before production use.
+
+The type scale uses a 4px relative unit, with display sizes at 96px and 64px, body at 16px, and functional sizes at 14px and 12px. Display typography employs tight negative tracking for a compressed, impactful presence. Body text maintains neutral tracking for extended reading. All-caps treatment appears selectively in navigation and footer links, creating a secondary hierarchy without additional font weights.
 
 ## Layout
 
-The layout system uses a fluid container approach with generous section spacing and clear horizontal rhythm. Content areas center within a max-width container, while hero sections break out to full viewport width for cinematic impact.
+The layout system alternates between expansive editorial spreads and dense grid systems. The homepage hero uses an asymmetric split: imagery occupies the left third while typography dominates the right two-thirds, with generous vertical padding creating breathing room. This 1:2 asymmetry repeats across sections, preventing the predictability of centered compositions.
 
-The base spacing unit is 0.125rem (2px), with derived values at 0.5rem, 0.75rem, 1rem, 1.5rem, 2rem, and 2.5rem for component internals. Section spacing operates at 6rem and 10rem, creating dramatic vertical breathing room between major content blocks.
+Section spacing follows an 8rem major rhythm, with 2rem component gaps and 0.5rem tight adjustments for related elements. The grid system uses implicit columns rather than visible rules—content blocks align to an underlying structure while appearing to float freely.
 
-Grid structures vary by content type. The pricing page uses a four-column equal-width grid for plan comparison, with cards that maintain consistent internal padding and aligned action buttons. The footer employs a six-column link grid that distributes category navigation across the full width, collapsing to fewer columns on narrower viewports. Feature lists within pricing cards use a single-column stack with icon-leading rows, maintaining left alignment for easy scanning.
+The gallery section transitions to a strict grid: cards arranged in rows with consistent internal padding and uniform corner radii. Each card contains a single helmet image with a bottom-right label pairing a descriptive name with a year in lime. The grid maintains equal gaps between cards, with the dark surface creating a continuous field that unifies disparate helmet designs.
 
-Card containers use 1.5rem border radius and 1px solid borders in black or subtle tones. Internal padding ranges from 1.5rem to 2rem, with consistent 1.5rem gaps between related elements. Buttons and interactive elements favor full pill shapes (9999px radius), while badges and small containers use 0.5rem to 0.75rem radius values.
+Footer treatment inverts the hero's openness: a contained panel with rounded corners sits within a lime border frame, creating a "card within a card" effect. Navigation splits into three zones—page links left, social channels right, sponsor logos spanning the bottom edge. This creates clear information hierarchy while preserving the asymmetric DNA.
 
 ## Visual language
 
-The visual language merges cinematic photography with clean, systematic UI. Hero sections feature full-bleed imagery with centered overlay text in bold, condensed display type—white against photographic backgrounds for maximum contrast. A prominent pill-shaped Play button with a small triangle icon sits at the visual center, inviting immediate engagement.
+The visual language balances organic and systematic elements. Abstract curved lines—thin, continuous strokes in muted ink—drift across white backgrounds like wind tunnel visualization or track maps. These decorative elements never compete with content; they establish atmosphere and motion without literal representation.
 
-Product surfaces shift to a restrained, information-forward aesthetic. White cards float against white or near-white backgrounds, defined by subtle borders and generous internal spacing. Color enters through intentional accents: blue for primary actions, and a spectrum of purple, magenta, and orange for plan differentiation. Small badges like "Best Value" use the same pill shape as buttons but with contrasting background colors, creating a family of rounded elements across scales.
+The neon lime functions as a signature mark beyond pure utility. It appears in handwritten-style signatures, as button fills, and as the single color accent in otherwise monochrome photography presentations. This restraint makes each lime instance feel intentional and valuable.
 
-The invideo wordmark appears in a custom logotype with distinctive rounded letterforms, paired with a ghost-like mascot icon. This combination anchors the footer and navigation, providing brand recognition without dominating functional content. Social proof and trust elements use simple iconography in circular or rounded-square containers.
+Imagery treatment prioritizes cut-out photography: helmets and portraits float on solid backgrounds without environmental context. This isolation emphasizes form and pattern—the intricate liveries become abstract compositions when removed from track settings. The gallery cards use subtle rounded frames that echo the helmet shapes themselves, creating visual rhyme between container and content.
+
+Sponsor integration appears as a horizontal logo strip, with each mark rendered in monochrome to maintain system coherence. The lime accent reappears here only for interactive states or emphasis, not as default presentation.
 
 ## Components
 
-### Primary button
+**Primary Action Button**
+- Anatomy: Text label with optional external-link icon
+- Surface: Solid lime fill with near-black text
+- Typography: Label token, uppercase, letter-spaced
+- Shape: 0.75rem border radius, compact padding
+- Spacing: Generous horizontal padding relative to text height
+- Composition: Typically appears in pairs or aligned to content blocks
+- States: Default only visible; hover/focus states not captured
 
-- **Anatomy**: Text label centered within a pill-shaped container; may include leading icon
-- **Surface and text color**: Background `{colors.action}`, text `{colors.canvas}`
-- **Typography**: `{typography.button-primary}`
-- **Shape and border**: Full pill radius (`9999px`), no border
-- **Spacing**: Padding `0.75rem 1.5rem` for standard size; `1.5rem 2.5rem` for hero prominence
-- **Composition**: Centered within parent container; full-width in card contexts
-- **Variants**: Dark fill for primary actions; white fill with black text for secondary contexts; ghost variant with border for lowest emphasis
+**Content Card (Gallery)**
+- Anatomy: Image container with bottom-right text overlay
+- Surface: Dark charcoal background, subtle border
+- Typography: Label token for name, action color for year
+- Shape: 1rem border radius, continuous corners
+- Spacing: Internal padding creates breathing room around helmet images
+- Composition: Grid-aligned with consistent gaps
+- Variants: Single helmet per card, varied image aspect ratios contained within
 
-### Pricing card
+**Hero Section**
+- Anatomy: Split composition with imagery left, typography right
+- Surface: Off-white canvas background
+- Typography: Hero-display for primary headline, body for description
+- Shape: Full-bleed horizontally, generous vertical padding
+- Spacing: Asymmetric content distribution with centered text blocks
+- Composition: Diagonal implied energy from helmet positioning against static text
 
-- **Anatomy**: Plan name header, price display with currency and interval, feature list with icon bullets, primary action button, optional dropdown selector for configuration
-- **Surface and text color**: White background (`{colors.canvas}`), black text (`{colors.ink-primary}`), colored plan name in accent hue
-- **Typography**: Plan name `{typography.heading-medium}` in accent color; price `{typography.price-display}`; features `{typography.body-small}`
-- **Shape and border**: `1.5rem` radius, `1px solid {colors.border-subtle}` border
-- **Spacing**: `2rem` internal padding; `1.5rem` gap between price and features; `2rem` gap above button
-- **Composition**: Vertical stack with consistent left alignment; equal card heights in grid
-- **Variants**: Free tier with reduced emphasis; Enterprise with "Custom" pricing and contact CTA; promotional badge overlay for recommended plans
+**Footer Panel**
+- Anatomy: Contained rounded panel with three-zone navigation
+- Surface: Dark charcoal with lime border frame
+- Typography: Navigation token for links, label token for section headers
+- Shape: 1.5rem border radius on panel, full-width lime border
+- Spacing: Comfortable internal padding, clear separation between zones
+- Composition: Page links left-aligned, social right-aligned, sponsors bottom-centered
 
-### Toggle switch
-
-- **Anatomy**: Segmented control with two or three options, active indicator pill
-- **Surface and text color**: Inactive segments use `{colors.surface-dark}` background; active segment uses `{colors.canvas}` with shadow
-- **Typography**: `{typography.body-small}` for labels
-- **Shape and border**: Full pill container radius; individual segments have no visible border
-- **Spacing**: `0.25rem` internal padding; `0.75rem 1rem` per segment
-- **Composition**: Inline, centered above related content
-- **Variants**: Two-option (Monthly/Yearly) with promotional tag; three-option for extended configurations
-
-### Footer
-
-- **Anatomy**: Multi-column link grid, brand logo and mascot, app store download badges, social icon row, legal links and copyright
-- **Surface and text color**: Vibrant blue background (`{colors.footer-background}`), white text (`{colors.canvas}`)
-- **Typography**: Category headers `{typography.body-small}` semibold; links `{typography.body-small}` regular
-- **Shape and border**: Top border in lighter blue (`{colors.border}`) at `1px`; no border radius on container
-- **Spacing**: `2rem` top padding; `4rem` bottom padding; column gaps distribute evenly
-- **Composition**: Six-column grid for links, logo left-aligned below, social icons right-aligned, legal center-aligned at bottom
-- **Variants**: Simplified footer with reduced link columns for secondary pages
-
-### Feature list item
-
-- **Anatomy**: Leading icon, descriptive text, optional trailing badge or value
-- **Surface and text color**: Inherits parent card background; text `{colors.ink-secondary}`
-- **Typography**: `{typography.body-small}`
-- **Shape and border**: No individual border; icon in `1rem` square
-- **Spacing**: `0.75rem` vertical gap between items; `0.75rem` horizontal gap between icon and text
-- **Composition**: Left-aligned stack within card padding
-- **Variants**: Included features with check or lightning icon; unlimited features with infinity icon and highlighted badge
+**Navigation Link Group**
+- Anatomy: Stacked text links with section header
+- Surface: Transparent, inherits parent background
+- Typography: Navigation token, uppercase treatment
+- Spacing: Tight vertical stacking with clear header separation
+- Composition: Left-aligned in footer, implied hierarchy through position
 
 ## Responsive behavior
 
-The design should adapt from a fixed desktop layout to stacked mobile arrangements. The four-column pricing grid should collapse to two columns on tablet and single column on mobile, with cards maintaining full width and internal proportions. The six-column footer link grid should reduce to three columns on tablet and two on mobile, with the logo and social icons stacking vertically.
-
-Hero sections with overlaid text should maintain centered composition but reduce type size proportionally. The display headline should scale from `3rem` to `2rem` to `1.5rem` across breakpoints. Pill buttons should maintain touch-friendly minimum dimensions, with padding increasing slightly on mobile to accommodate finger targets.
-
-Navigation should collapse to a hamburger menu on mobile, with the invideo logo remaining visible. Pricing toggle switches should remain horizontally oriented but may shrink in overall width. Feature lists within pricing cards should remain single-column with no horizontal scrolling.
+The asymmetric hero layout should stack vertically on narrow viewports, with imagery preceding typography to maintain visual interest. The split ON TRACK / OFF TRACK composition becomes a single column with alternating image-text blocks. Gallery grids should reduce column count—four columns to two, then to single column—while maintaining card proportions and internal spacing. The footer panel's three-zone structure collapses to stacked sections: navigation, social, then sponsors. The lime border frame should remain visible at all sizes, potentially converting to full-bleed background on smallest viewports. Type scale should reduce proportionally: hero-display to section-display size, maintaining the Brier/Mona Sans hierarchy.
 
 ## Practical implementation guidance
 
-### Preserve
-- The full pill radius on all buttons and badges—this is a defining visual signature
-- The vibrant blue footer as a strong brand terminal moment with inverted contrast
-- The accent color system for plan differentiation (blue, purple, magenta, orange)
-- The generous internal card padding that prevents information density from feeling cramped
-- The icon-leading feature list pattern for pricing details
+**Preserve**
+- The stark binary between light editorial and dark immersive modes
+- Neon lime as the sole accent, used with surgical precision
+- Asymmetric compositions that favor left-weighted imagery
+- Cut-out photography treatment with solid backgrounds
+- Ultra-light Mona Sans weight for all functional text
+- Brier's tight tracking and bold weight for display moments only
 
-### Avoid
-- Sharp-cornered buttons or cards that break the rounded visual system
-- Replacing the accent colors with a single monochrome scheme, which would eliminate plan differentiation
-- Overlapping hero text on busy photographic regions without sufficient contrast treatment
-- Reducing footer link spacing to the point where touch targets become unreliable
-- Using the display headline weight for body text, which would create excessive visual noise
+**Avoid**
+- Additional accent colors that compete with the lime signature
+- Centered compositions that dilute the asymmetric energy
+- Gradient fills or soft shadows—the system relies on flat color
+- Heavy Mona Sans weights that destroy the technical contrast
+- Rounded corners larger than 1.5rem or smaller than 0.75rem
+- Body text in Brier or display text in Mona Sans
 
-### Recommended build order
-1. Establish the color tokens and type scale with Inter at all specified weights
-2. Implement the pill button component as the foundational interactive element
-3. Build the pricing card with configurable accent color, price display, and feature list
-4. Create the toggle switch for plan interval selection
-5. Assemble the pricing grid with equal-height cards and aligned action buttons
-6. Implement the footer with multi-column link grid and responsive collapse behavior
-7. Add the hero section with full-bleed imagery and centered overlay content
+**Recommended build order**
+1. Establish color tokens and apply canvas/ink foundation
+2. Implement typography scale with correct family/weight pairings
+3. Build hero section with asymmetric split layout
+4. Create primary action button with lime fill
+5. Develop gallery card component with dark surface
+6. Construct footer panel with three-zone navigation
+7. Add decorative line elements as final atmosphere layer
 
-### Accessibility
-- Ensure all text over photography meets WCAG contrast minimums; use text shadows or scrims if needed
-- Maintain visible focus indicators on pill buttons with offset rings or inner shadows
-- Provide aria-labels for icon-only buttons like the Play button in hero sections
-- Use semantic heading hierarchy within pricing cards (plan name as h3, not h2, when nested under page h1)
-- Ensure the Monthly/Yearly toggle communicates state to screen readers via aria-pressed or role="switch"
+**Accessibility**
+- Ensure lime-on-white combinations meet minimum contrast ratios; the lime may need darkening for small text
+- Provide focus indicators that maintain the lime accent without relying solely on color
+- Consider reduced-motion preferences for any decorative line animations
+- Test dark gallery mode with high-contrast settings; the charcoal surface may need adjustment for true black in forced-colors mode
+- Maintain logical tab order through asymmetric layouts that may challenge visual-to-DOM sequence
 
 ## Scope note
 
-This guide covers the invideo.io homepage and pricing page surfaces visible in the captured images, including the hero, pricing grid, and footer components. Navigation dropdowns, mobile menu states, checkout flows, and account dashboard interfaces are not represented. Motion behavior, hover transitions, and loading states are not documented from still images. Measurements are exact values from the captured interface records.
+This guide covers the homepage and visible gallery surfaces. Interior pages, mobile-specific layouts, hover states, loading sequences, and form interactions are not represented in the captured pages. Measurements are practical adaptation targets derived from visual inspection.
