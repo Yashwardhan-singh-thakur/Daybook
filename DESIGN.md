@@ -1,140 +1,168 @@
 <!-- MIT licensed. Copyright and license: https://opendesignmd.com/licenses/ -->
 
-# How evilmartians.com is designed
+# How invideo.io is designed
 
 ## Overview
 
-Evil Martians uses a severe, theatrical developer identity: black first, white second, and color only where the content asks for it. The homepage hero is almost all negative space, oversized headline, and one central 3D illustration. A narrow left rail of section links and a small utility column on the right keep the frame organized without softening it. That same discipline carries into article pages, where the black top stage gives way to a white reading column. The result feels like a studio-built editorial site rather than a product brochure.
-
-The system is defined by contrast more than ornament. Display type is huge and tightly set. Small controls stay square and compact. Tag pills, code blocks, and author details are quiet, but they sit against a stage that makes every detail feel intentional. The color story is restrained at the interface level and vivid inside the article art, charts, and code examples.
+The invideo.io design system serves an AI-powered video creation platform with a visual identity that balances cinematic storytelling and precise product utility. The interface moves between immersive, full-bleed photographic moments and tightly organized, information-dense surfaces like pricing tables and feature grids. A vibrant blue anchors the brand across both light and dark contexts, while accent colors in purple, magenta, and orange differentiate product tiers and highlight promotional moments. The system relies on a single type family—Inter—across all weights and sizes, creating cohesion between expressive headlines and functional UI text. Rounded corners appear at every scale, from small badges to full pill-shaped buttons and cards, giving the interface a friendly, approachable character that softens the density of feature lists and pricing data.
 
 ## Colors
 
-Evil Martians depends on a hard black-and-white chassis, then adds a few saturated accents for technical illustration, syntax examples, and rare emphasis. The black stage is not a neutral backdrop; it is the default visual mode for the home hero and the top of article pages. White takes over for reading sections below the fold. The mauve-rose accent is the most brand-like color in the system, while the brighter violet, magenta, olive, and amber tones appear inside diagrams, charts, and art rather than as broad UI fills.
+The color system operates in three modes: a light product surface for tools and pricing, a dark cinematic mode for hero imagery, and a vibrant blue footer mode that inverts the typical light-on-dark relationship.
 
-| token | value | role |
+| token | hex | use |
 |---|---|---|
-| action | `#663F4C` | Rare brand accent, active links, and emphasized small marks |
-| ink | `#000000` | Body text on white surfaces and dark linework on light cards |
-| muted-ink | `#3B393D` | Secondary copy, metadata, and quieter labels |
-| border | `#89868A` | Hairlines, input edges, and subtle dividers |
-| canvas | `#FFFFFF` | Reading surfaces, buttons, and the light page field under dark sections |
-| surface-dark | `#000000` | Full-bleed hero background and the top of article pages |
-| accent-violet | `#550098` | Color-rich art, chart segments, and supporting chroma |
-| accent-magenta | `#CB009E` | Bright art strokes and spectrum highlights |
-| accent-olive | `#727D00` | Chart greens and technical diagram accents |
-| accent-amber | `#A1490F` | Warm technical accents and code-example color variation |
+| action | #066DE8 | Primary buttons, plan headers, key CTAs |
+| action-hover | #086DE8 | Button hover states |
+| action-active | #0F76F5 | Button pressed states |
+| ink-primary | #141414 | Main headings, body text on light surfaces |
+| ink-secondary | #222222 | Secondary text, descriptions |
+| ink-tertiary | #2D2D2D | Tertiary information, metadata |
+| muted-ink | #23528C | Subdued text, footer links at reduced opacity |
+| canvas | #FFFFFF | Primary background, card surfaces, button text on dark |
+| surface | #FEFEFE | Near-white backgrounds for subtle depth |
+| surface-dark | #E3EDF8 | Toggle backgrounds, subtle container fills |
+| border | #B1E5FF | Light blue borders, decorative separators |
+| border-subtle | #000000 | Hairline borders on cards and inputs |
+| accent-purple | #6B33F7 | Max plan header, secondary brand moments |
+| accent-magenta | #C933F7 | Generative plan header, promotional badges |
+| accent-orange | #EC6809 | Team plan header, urgency indicators |
+| success | #3381F7 | Confirmation states, positive indicators |
+| footer-background | #277CEE | Full-bleed footer surface |
 
-The interface stays calm because the palette is narrow at the structural level. White on black carries the brand voice. The chromatic colors belong to the visual subject matter, not to generic decoration. That split keeps the site sharp: strong contrast for navigation and headings, then full-color illustration where the topic needs it.
+The light mode dominates product surfaces: white cards with black text and blue action elements. The footer inverts this with a saturated blue background and white text, creating a strong terminal moment. Cinematic hero sections use full-bleed photography with overlaid white text and semi-transparent or solid white pill buttons. Accent colors appear primarily in pricing tier headers, where each plan receives a distinct hue to aid visual scanning and differentiation.
 
 ## Typography
 
-Martian Grotesk carries the whole interface, while Martian Mono Vf appears only where code or literal values need a mechanical voice. The pages rely on weight and scale more than on a mix of families. Headline settings are bold, large, and tightly tracked. Supporting copy relaxes into a more open leading so the heavy black-and-white staging does not feel cramped. The system works because the display size is dramatic but the reading text remains controlled and legible.
-
-Verify licensing for these families before production use.
+The system uses Inter exclusively, with weights ranging from Regular (400) through Medium (500) and Semibold (600) to Bold (700). The type scale is tightly calibrated, with display sizes for pricing and hero moments, and a dense cluster of functional sizes for UI elements.
 
 | token | family | size | weight | leading | tracking | use |
 |---|---|---:|---:|---:|---:|---|
-| hero-display | Martian Grotesk | 4.5rem | 700 | 0.9 | -0.04em | Home hero headline and article hero headline |
-| section-display | Martian Grotesk | 3rem | 700 | 0.95 | -0.03em | Major section headings and large callouts |
-| article-title | Martian Grotesk | 2.5rem | 700 | 1 | -0.025em | Dense article subheads and featured pullouts |
-| body | Martian Grotesk | 1rem | 400 | 1.6 | 0em | Article text and general explanatory copy |
-| body-medium | Martian Grotesk | 1rem | 500 | 1.5 | 0em | Buttons, labels in context, and emphasized body text |
-| label | Martian Grotesk | 0.75rem | 700 | 1.2 | 0.08em | Topic tags, nav items, and compact UI text |
-| code | Martian Mono Vf | 0.875rem | 400 | 1.5 | 0em | CSS snippets, color values, and technical literals |
-| caption | Martian Grotesk | 0.75rem | 400 | 1.4 | 0.02em | Dates, bylines, and minor metadata |
+| hero-display | Inter | 3rem | 700 | 1 | -0.02em | Hero headlines, major page titles |
+| section-display | Inter | 2.625rem | 500 | 1.5 | normal | Section headings, pricing page titles |
+| heading-large | Inter | 3rem | 500 | 1.5 | normal | Plan prices, large numerals |
+| heading-medium | Inter | 1.125rem | 500 | 1.5 | normal | Card titles, subsection headers |
+| body | Inter | 1rem | 400 | 1.5 | normal | Primary body text, descriptions |
+| body-small | Inter | 0.875rem | 400 | 1.43 | normal | Secondary descriptions, footer links |
+| label | Inter | 0.75rem | 600 | 1.33 | normal | Badges, tags, category labels |
+| navigation | Inter | 1rem | 400 | 1.5 | normal | Nav items, top-level links |
+| button-primary | Inter | 1rem | 500 | 1.25 | -0.025em | Primary CTA buttons |
+| button-secondary | Inter | 0.875rem | 500 | 1.43 | normal | Secondary actions, footer buttons |
+| price-display | Inter | 3rem | 500 | 1 | normal | Plan dollar amounts |
+| legal-copy | Inter | 0.875rem | 400 | 1.43 | normal | Copyright, terms links |
 
-The type scale is compact in the UI and expansive in the hero. Labels are upper-case and spaced out enough to read like interface markers. Code inherits a separate monospaced family so syntax examples feel like tools, not prose. The whole system reads as one family in two voices: display drama for the marketing shell and technical precision for the content beneath it.
+Verify licensing for these families before production use. The Inter font is served from a Next.js static asset path in the source implementation.
 
 ## Layout
 
-The site is built around a strong vertical sequence. At the top, a black hero spans the viewport edge to edge. The logo sits in the upper left, a small action button sits in the upper right, and the headline occupies the upper center-left with plenty of negative space around it. A large illustration anchors the middle of the page. The side rails are not decorative; they create a controlled frame that keeps the composition from drifting.
+The layout system uses a fluid container approach with generous section spacing and clear horizontal rhythm. Content areas center within a max-width container, while hero sections break out to full viewport width for cinematic impact.
 
-Article pages keep the same dark opening but introduce a reading rhythm below it. The hero stage holds the title, art, topic tags, and author row. Then a hard boundary shifts the page onto white, where the article copy can breathe at a normal measure. This black-to-white transition is the page’s most important structural move. It makes the top feel like a poster and the body feel like a document.
+The base spacing unit is 0.125rem (2px), with derived values at 0.5rem, 0.75rem, 1rem, 1.5rem, 2rem, and 2.5rem for component internals. Section spacing operates at 6rem and 10rem, creating dramatic vertical breathing room between major content blocks.
 
-Spacing is generous at the shell level and tighter inside control clusters. Large outer paddings sit around 3rem to 3.375rem, while internal groupings step down to 1rem, 0.75rem, and 0.5rem. That lets the hero breathe without making the tags, nav links, and code examples loose or floating. Hairline rules and small gaps do most of the separating; heavy card chrome is avoided.
+Grid structures vary by content type. The pricing page uses a four-column equal-width grid for plan comparison, with cards that maintain consistent internal padding and aligned action buttons. The footer employs a six-column link grid that distributes category navigation across the full width, collapsing to fewer columns on narrower viewports. Feature lists within pricing cards use a single-column stack with icon-leading rows, maintaining left alignment for easy scanning.
 
-The layout also favors asymmetry. The black hero is not centered in a strict grid. The left navigation rail, the central art, and the right utility column all claim different amounts of space. On the article page, byline avatars and topic pills sit below the title rather than beside it, which keeps the reading order clear. The result feels editorial, but the geometry is disciplined enough for a software brand.
+Card containers use 1.5rem border radius and 1px solid borders in black or subtle tones. Internal padding ranges from 1.5rem to 2rem, with consistent 1.5rem gaps between related elements. Buttons and interactive elements favor full pill shapes (9999px radius), while badges and small containers use 0.5rem to 0.75rem radius values.
 
 ## Visual language
 
-Evil Martians mixes flat control surfaces with playful technical spectacle. The interface chrome is spare: square pills, thin rules, small icon buttons, and plain white cards. Against that restraint, the illustration style becomes bold and almost cinematic. The home hero uses a sculptural 3D wordmark and bright planetary forms. The article hero uses a colorful OKLCH chart object that looks engineered rather than decorative. Both make color feel like a subject of the site, not merely an accent.
+The visual language merges cinematic photography with clean, systematic UI. Hero sections feature full-bleed imagery with centered overlay text in bold, condensed display type—white against photographic backgrounds for maximum contrast. A prominent pill-shaped Play button with a small triangle icon sits at the visual center, inviting immediate engagement.
 
-The system also likes to show technical information as content, not as dashboard furniture. Code snippets sit on pale cards with monospaced text and tiny swatch markers. Topic chips are compact and dark, with white labels that read like tags in a working editorial system. Avatars and author names stay small so the visual hierarchy remains with the headline and artwork. Even when chroma is intense, the surrounding structure stays nearly black or white.
+Product surfaces shift to a restrained, information-forward aesthetic. White cards float against white or near-white backgrounds, defined by subtle borders and generous internal spacing. Color enters through intentional accents: blue for primary actions, and a spectrum of purple, magenta, and orange for plan differentiation. Small badges like "Best Value" use the same pill shape as buttons but with contrasting background colors, creating a family of rounded elements across scales.
 
-Corners are small and consistent. The 4px radius gives the UI a clipped, precise feel. It works especially well on chips, buttons, and code panels because it prevents the system from becoming soft. The visual language therefore feels both mischievous and exact: the art is loud, the interface is disciplined, and the page never loses its editorial framing.
+The invideo wordmark appears in a custom logotype with distinctive rounded letterforms, paired with a ghost-like mascot icon. This combination anchors the footer and navigation, providing brand recognition without dominating functional content. Social proof and trust elements use simple iconography in circular or rounded-square containers.
 
 ## Components
 
-### Hero stage
+### Primary button
 
-The home and article hero share the same basic structure: a black canvas, white headline, compact utility chrome, and one dominant image. The headline is the largest typographic object on the page and sits close to the top edge. The logo and action button are secondary and should stay visually light. The stage should keep its darkness uninterrupted so the white type and art hold full contrast. Do not add a busy background or a decorative frame; the empty black field is part of the brand.
+- **Anatomy**: Text label centered within a pill-shaped container; may include leading icon
+- **Surface and text color**: Background `{colors.action}`, text `{colors.canvas}`
+- **Typography**: `{typography.button-primary}`
+- **Shape and border**: Full pill radius (`9999px`), no border
+- **Spacing**: Padding `0.75rem 1.5rem` for standard size; `1.5rem 2.5rem` for hero prominence
+- **Composition**: Centered within parent container; full-width in card contexts
+- **Variants**: Dark fill for primary actions; white fill with black text for secondary contexts; ghost variant with border for lowest emphasis
 
-### Navigation rail
+### Pricing card
 
-The left rail is a simple vertical list of uppercase section links. It uses the label style and stays narrow, with generous separation between items but no heavy box around the list. This component should feel like a navigation index pinned to the side of a poster. The selected item can be marked by a small bullet or accent treatment, but the overall treatment stays quiet. The right-side icon rail is even lighter and should remain secondary to the left rail and headline.
+- **Anatomy**: Plan name header, price display with currency and interval, feature list with icon bullets, primary action button, optional dropdown selector for configuration
+- **Surface and text color**: White background (`{colors.canvas}`), black text (`{colors.ink-primary}`), colored plan name in accent hue
+- **Typography**: Plan name `{typography.heading-medium}` in accent color; price `{typography.price-display}`; features `{typography.body-small}`
+- **Shape and border**: `1.5rem` radius, `1px solid {colors.border-subtle}` border
+- **Spacing**: `2rem` internal padding; `1.5rem` gap between price and features; `2rem` gap above button
+- **Composition**: Vertical stack with consistent left alignment; equal card heights in grid
+- **Variants**: Free tier with reduced emphasis; Enterprise with "Custom" pricing and contact CTA; promotional badge overlay for recommended plans
 
-### Primary action
+### Toggle switch
 
-The visible top-right action is a white rectangular button with black text and small rounded corners. It is not a glossy CTA; it reads as a crisp utility control. Keep the padding compact and the border or edge definition minimal so it does not compete with the headline. In the dark stage, the button acts as a bright interruption. On lighter surfaces, the same button can remain plain white with dark text and a restrained border.
+- **Anatomy**: Segmented control with two or three options, active indicator pill
+- **Surface and text color**: Inactive segments use `{colors.surface-dark}` background; active segment uses `{colors.canvas}` with shadow
+- **Typography**: `{typography.body-small}` for labels
+- **Shape and border**: Full pill container radius; individual segments have no visible border
+- **Spacing**: `0.25rem` internal padding; `0.75rem 1rem` per segment
+- **Composition**: Inline, centered above related content
+- **Variants**: Two-option (Monthly/Yearly) with promotional tag; three-option for extended configurations
 
-### Topic chips
+### Footer
 
-Topic chips appear below the article hero as a wrapped row of small dark pills with white labels. They are tight, low-profile, and deliberately repetitive. The shape is almost square at the corners, which keeps them in the same family as the other controls. Their job is to sort the article semantically without stealing attention from the title or the art. Use the label style, short padding, and consistent chip height so the row reads as a set, not as a mixed cluster of buttons.
+- **Anatomy**: Multi-column link grid, brand logo and mascot, app store download badges, social icon row, legal links and copyright
+- **Surface and text color**: Vibrant blue background (`{colors.footer-background}`), white text (`{colors.canvas}`)
+- **Typography**: Category headers `{typography.body-small}` semibold; links `{typography.body-small}` regular
+- **Shape and border**: Top border in lighter blue (`{colors.border}`) at `1px`; no border radius on container
+- **Spacing**: `2rem` top padding; `4rem` bottom padding; column gaps distribute evenly
+- **Composition**: Six-column grid for links, logo left-aligned below, social icons right-aligned, legal center-aligned at bottom
+- **Variants**: Simplified footer with reduced link columns for secondary pages
 
-### Author row
+### Feature list item
 
-The author area combines tiny portraits, names, and roles in a compact horizontal arrangement. Names are stronger than roles, but neither competes with the headline. A thin vertical divider can separate the main article framing from the byline cluster, which helps the lower hero feel composed rather than crowded. Avatar size stays small and square or circular depending on crop, but the whole block remains subordinate to the title and illustration. It is a supportive metadata component, not a feature block.
-
-### Code sample
-
-The code card is one of the clearest expressions of the system’s technical voice. It sits on a pale surface, uses Martian Mono Vf, and keeps syntax color limited to a few precise accents. The swatches in the sample are tiny but meaningful: they show that color is something the system handles with care. Borders should stay hairline-thin, and the card should keep its 4px corners so it feels like a tool sample, not a generic callout. Let the content do the work; do not wrap the sample in extra decorative chrome.
-
-### Calculator-style utility cards
-
-The OKLCH tool screen uses rounded white cards with graph areas, value fields, sliders, and toggle controls. The cards are dense but not cramped. Labels sit close to inputs, and the charts introduce bright chroma only inside the plotted area. The controls stay neutral so the color mathematics can remain the focus. This component family should use the same square-corner discipline as the rest of the site, but with softer overall card framing. It is a utility surface, not a promotional block, and its structure should make the color model feel concrete and editable.
+- **Anatomy**: Leading icon, descriptive text, optional trailing badge or value
+- **Surface and text color**: Inherits parent card background; text `{colors.ink-secondary}`
+- **Typography**: `{typography.body-small}`
+- **Shape and border**: No individual border; icon in `1rem` square
+- **Spacing**: `0.75rem` vertical gap between items; `0.75rem` horizontal gap between icon and text
+- **Composition**: Left-aligned stack within card padding
+- **Variants**: Included features with check or lightning icon; unlimited features with infinity icon and highlighted badge
 
 ## Responsive behavior
 
-On narrower screens, the design should preserve the order of importance: headline, art, tags or metadata, then the reading column. The black hero can stack, but the title must remain dominant and readable before the illustration compresses. Side rails should collapse cleanly into top or inline navigation rather than forcing the page into a cramped three-column layout. Topic chips can wrap, but they should keep their compact height and consistent spacing. Code blocks should remain scrollable only if absolutely necessary; otherwise, they should reflow with readable line lengths. The white article body should keep generous side padding so the page does not become edge-to-edge text on small devices.
+The design should adapt from a fixed desktop layout to stacked mobile arrangements. The four-column pricing grid should collapse to two columns on tablet and single column on mobile, with cards maintaining full width and internal proportions. The six-column footer link grid should reduce to three columns on tablet and two on mobile, with the logo and social icons stacking vertically.
+
+Hero sections with overlaid text should maintain centered composition but reduce type size proportionally. The display headline should scale from `3rem` to `2rem` to `1.5rem` across breakpoints. Pill buttons should maintain touch-friendly minimum dimensions, with padding increasing slightly on mobile to accommodate finger targets.
+
+Navigation should collapse to a hamburger menu on mobile, with the invideo logo remaining visible. Pricing toggle switches should remain horizontally oriented but may shrink in overall width. Feature lists within pricing cards should remain single-column with no horizontal scrolling.
 
 ## Practical implementation guidance
 
 ### Preserve
-
-- Keep the black hero stage as the main brand signal.
-- Keep Martian Grotesk as the default voice and Martian Mono Vf for literal code and notation.
-- Keep the 4px geometry on chips, buttons, and cards.
-- Keep the white reading surface below the dark opening so the page can shift from poster to article.
-- Keep color scarce in the interface and rich only in the art, charts, and code examples.
-- Keep the side rails visually light so they frame the page instead of dominating it.
+- The full pill radius on all buttons and badges—this is a defining visual signature
+- The vibrant blue footer as a strong brand terminal moment with inverted contrast
+- The accent color system for plan differentiation (blue, purple, magenta, orange)
+- The generous internal card padding that prevents information density from feeling cramped
+- The icon-leading feature list pattern for pricing details
 
 ### Avoid
-
-- Avoid soft corporate blues, gradient-heavy hero backgrounds, and glossy shadows.
-- Avoid large-radius cards that make the UI feel friendly in a generic way.
-- Avoid mixing too many text weights or adding a second sans family for decoration.
-- Avoid treating chart colors as brand chrome.
-- Avoid dense bordered boxes around every module; this system depends on contrast and spacing more than on container styling.
+- Sharp-cornered buttons or cards that break the rounded visual system
+- Replacing the accent colors with a single monochrome scheme, which would eliminate plan differentiation
+- Overlapping hero text on busy photographic regions without sufficient contrast treatment
+- Reducing footer link spacing to the point where touch targets become unreliable
+- Using the display headline weight for body text, which would create excessive visual noise
 
 ### Recommended build order
-
-1. Establish the black and white surface tokens and the small accent set.
-2. Build the headline scale and the common label/code styles.
-3. Recreate the dark hero shell with its left rail, right utilities, and top-right button.
-4. Add the article hero pattern with topic chips, author row, and centered illustration.
-5. Build the white reading column and code-sample card.
-6. Add the calculator-style utility cards and graph controls.
-7. Validate spacing, line lengths, and small control geometry against the page rhythm.
+1. Establish the color tokens and type scale with Inter at all specified weights
+2. Implement the pill button component as the foundational interactive element
+3. Build the pricing card with configurable accent color, price display, and feature list
+4. Create the toggle switch for plan interval selection
+5. Assemble the pricing grid with equal-height cards and aligned action buttons
+6. Implement the footer with multi-column link grid and responsive collapse behavior
+7. Add the hero section with full-bleed imagery and centered overlay content
 
 ### Accessibility
-
-- Keep the black-and-white contrast strong enough for all headline and metadata text.
-- Ensure topic chips, buttons, and toggles have visible focus styling.
-- Give code samples and charts enough contrast that the meaning does not depend on hue alone.
-- Use descriptive alt text for the 3D illustration and the chart-like art objects.
-- Keep byline text and article body copy readable at the smaller end of the type scale without tightening tracking further.
+- Ensure all text over photography meets WCAG contrast minimums; use text shadows or scrims if needed
+- Maintain visible focus indicators on pill buttons with offset rings or inner shadows
+- Provide aria-labels for icon-only buttons like the Play button in hero sections
+- Use semantic heading hierarchy within pricing cards (plan name as h3, not h2, when nested under page h1)
+- Ensure the Monthly/Yearly toggle communicates state to screen readers via aria-pressed or role="switch"
 
 ## Scope note
 
-This guide covers the dark home hero, the article hero and reading column, the code sample card, and the OKLCH utility screens. It does not define mobile breakpoints, motion, hover or loading states, footer content, or any unseen account or commerce pages.
+This guide covers the invideo.io homepage and pricing page surfaces visible in the captured images, including the hero, pricing grid, and footer components. Navigation dropdowns, mobile menu states, checkout flows, and account dashboard interfaces are not represented. Motion behavior, hover transitions, and loading states are not documented from still images. Measurements are exact values from the captured interface records.
